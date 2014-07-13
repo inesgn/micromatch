@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>micromatch package</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>micromatch package</h1>
+
+<p>Repository for micromatch package.</p>
+
+<h3>What is the aim of this package?</h3>
+
+<p>The aim of <code>micromatch</code> is to provide the user with some utilities and functions to ease the task of statistical matching of official microdata files.</p>
+
+<h3>What is statistical matching, anyway?</h3>
+
+<p>The methodology of statistical matching (survey linking, or data fusion more generally) is closely related to two projects of the European Statistical System (ESSnet), led by the Italian Statistical Office (ISTAT) during the years 2009-2011 and 2006-2008, and aims to integrate data from independent surveys referred to the same population.</p>
+
+<p>The idea behind this methodology is that many surveys run in the same population (i.e. referred to the same place and time) have certain variables in common that we could use to extract specific conclusions regarding to non-jointly observed measures, that is, variables that are not measured by the same questionnaire.</p>
+
+<p>For example, one survey could measure family expenditures, while another measures income. The solution of designing an unique questionnaire to measure all the dimensions is not always viable: questionnaires quickly become too costly and too long. </p>
+
+<p>Besides, oftentimes, people interested in analyzing survey data are not the ones that produce them; also, surveys are often produced by different institutions; in this cases, statistical matching is the only possible choice. </p>
+
+<h3>Why do we need this package?</h3>
+
+<p>Many functions exists accross R packages that are helpful for the statistical matching task. However, it seems there&#39;s a lack of process view, that is, it seems that no package organizes the statistical matching task according to the different phases it must tackle: variable selection, applying a particular method to get results (usually, in the form of a fused file, or synthetic file with all the variables of interest), and assessing the results.</p>
+
+<p>This package focuses on this process view in order to help the user easily undertake the statistical matching task.</p>
+
+<h3>References</h3>
+
+<ul>
+<li><strong>Data Integration</strong> ESSnet project (<a href="http://www.cros-portal.eu/content/data-integration-finished">http://www.cros-portal.eu/content/data-integration-finished</a>)</li>
+<li><em>ISAD</em> ESSnet project (<a href="http://www.cros-portal.eu/content/isad-finished">http://www.cros-portal.eu/content/isad-finished</a>)</li>
+<li><em>Statistical Matching, Theory and Practice</em>, Marcello D&#39;Orazio, Marco Di Zio, Mauro Scanu, Wiley, 2006.</li>
+<li><em>Statistical Matching: A Frequentist Theory, Practical Applications and Alternative Bayesian Approaches (Lecture Notes in Statistics)</em>, S. Rässler, Springer, 2002.</li>
+</ul>
+
+</body>
+
+</html>
+
