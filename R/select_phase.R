@@ -93,10 +93,10 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
         x2 <- fileB[, varB]
         
         # Create weight vectors, if names given
-        if( !identical(wA, NULL) ){
+        if( !is.null(wA) ){
                 w1 <- fileA[, wA]
         }
-        if( !identical(wB, NULL) ){
+        if( !is.null(wB) ){
                 w2 <- fileB[, wB]
         }       
         
@@ -106,7 +106,7 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
                 stop('x1, x2 are not of the same class')
         
         #checks when wA is given
-        if( !identical(wA, NULL) ) { 
+        if( !is.null(wA) ) { 
                 if( !is.numeric(w1) )
                         stop('w1 is not a numeric vector')
                 
@@ -114,7 +114,7 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
                         stop('lengths of x1, w1 are different')
         }
         #checks when wB is given
-        if( !identical(wB, NULL) ) {
+        if( !is.null(wB) ) {
                 if( !is.numeric(w2) )
                         stop('w2 is not a numeric vector')
                 if( length(x2) != length(w2) )
@@ -122,28 +122,26 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
         } 
         
         ##type tiene que tener un valor en la lista
-        ## WARNINGS: w1, w2 given at the same time 
-        
-        
+        ## WARNINGS: w1, w2 given at the same time        
         
         ## ---- Block if x1,x2 categorical ----- ##
         ##METER TODO ESTO EN UN IF (VAR CATEGORICAL)
         
         if( compareas == "categorical" ){
                 #action if wA is given
-                if( !identical(wA,NULL) ){
+                if( !is.null(wA) ){
                         formula1 <- as.formula("w1~x1")
                 }
                 #action if not given
-                else if( identical(wA,NULL) ){
+                else if( is.null(wA) ){
                         formula1 <- as.formula(" ~x1")
                 }
                 #action if wA is given
-                if( !identical(wA,NULL) ){
+                if( !is.null(wA) ){
                         formula2 <- as.formula("w2~x2")
                 }
                 #action if not given
-                else if( identical(wB,NULL) ){
+                else if( is.null(wB) ){
                         formula2 <- as.formula(" ~x2")
                 }
                 
@@ -170,18 +168,7 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
                 
                 #barplots
                 if( plot == TRUE ){
-                        type <<- type
-                        
-#                         data1 <<- as.data.frame(rt1)
-#                         names(data1) <- c("x", "y")
-#                         g1 <<- plotCat(data=data1, type=type)
-#                         
-#                         data2 <<- as.data.frame(rt2)
-#                         names(data2) <- c("x", "y")
-#                         g2 <<- plotCat(data=data2, type=type)
-#                         
-#                         #arrange plots in grid
-#                         grid.arrange(g1, g2)
+                        type <<- type                        
 
                         g <<- plot2Cat(table1=table1,table2=table2,type=type)
                         print(g)
@@ -199,9 +186,7 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
                 l3 <- NULL
         }
         
-        
-        return( list("table for file #1" = l1, "table for file #2" = l2, "measures"= l3) )
-        
+        return( list("table for file #1" = l1, "table for file #2" = l2, "measures"= l3) )        
 }
 
 #' Comparing multivariate distributions of categorical variables in two files
@@ -237,10 +222,10 @@ compareMultivar <- function( var1A, var1B, var2A, var2B, var3A=NULL, var3B=NULL,
         y2 <- fileB[, var2B]
         
         # Create weight vectors, if names given
-        if( !identical(wA, NULL) ){
+        if( !is.null(wA) ){
                 w1 <- fileA[, wA]
         }
-        if( !identical(wB, NULL) ){
+        if( !is.null(wB) ){
                 w2 <- fileB[, wB]
         }       
         
@@ -251,46 +236,46 @@ compareMultivar <- function( var1A, var1B, var2A, var2B, var3A=NULL, var3B=NULL,
         ## WARNINGS: w1, w2 given at the same time 
         
         ## ---- Block if third variable given ----- ##
-        if( !identical(var3A, NULL) ){
+        if( !is.null(var3A) ){
                 #create vectors
                 z1 <- fileA[, var3A]
                 z2 <- fileB[, var3B]
                 
                 #action if w1 is given
-                if( !identical(wA,NULL) ){
+                if( !is.null(wA) ){
                         formula1 <- as.formula("w1~x1+z1+y1")
                 }
                 #action if not given
-                else if( identical(wA,NULL) ){
+                else if( is.null(wA) ){
                         formula1 <- as.formula(" ~x1+z1+y1")
                 }
                 #action if w2 is given
-                if( !identical(wB,NULL) ){
+                if( !is.null(wB) ){
                         formula2 <- as.formula("w2~x2+z2+y2")
                 }
                 #action if not given
-                else if( identical(wB,NULL) ){
+                else if( is.null(wB) ){
                         formula2 <- as.formula(" ~x2+z2+y2")
                 }
         }
         
         ## ---- Block if third variable NOT given ----- ##
-        else if( identical(var3A, NULL) ){
+        else if( is.null(var3A) ){
                 
                 #action if w1 is given
-                if( !identical(wA,NULL) ){
+                if( !is.null(wA) ){
                         formula1 <- as.formula("w1~x1+y1")
                 }
                 #action if not given
-                else if( identical(wA,NULL) ){
+                else if( is.null(wA) ){
                         formula1 <- as.formula(" ~x1+y1")
                 }
                 #action if w2 is given
-                if( !identical(wB,NULL) ){
+                if( !is.null(wB) ){
                         formula2 <- as.formula("w2~x2+y2")
                 }
                 #action if not given
-                else if( identical(wB,NULL) ){
+                else if( is.null(wB) ){
                         formula2 <- as.formula(" ~x2+y2")
                 }
                 
@@ -370,7 +355,7 @@ predictvalue <- function(varx, vary, data, varw=NULL, plot=FALSE, measures=FALSE
         formula <- as.formula(y ~ x)
         
         # if weights given
-        if( !identical(varw, NULL) ){
+        if( !is.null(varw) ){
                 w <- data[,varw]
                 t <- xtabs(w ~ x+y, data=data) #para representar  
                 if( measures == TRUE ){
@@ -380,7 +365,7 @@ predictvalue <- function(varx, vary, data, varw=NULL, plot=FALSE, measures=FALSE
                         m <- "measured not requested"
                 }
         }
-        else if( identical(varw, NULL) ){
+        else if( is.null(varw) ){
                 m <- pw.assoc(formula, data = data )      
                 t <- xtabs(~x+y, data=data)
                 if( measures == TRUE ){
@@ -430,7 +415,7 @@ predictvalue <- function(varx, vary, data, varw=NULL, plot=FALSE, measures=FALSE
 uncertvarxvary <- function(varx, vary, data1, data2, basedata=NULL, varw1=NULL, varw2=NULL, varlist,...){
         
         #Checks
-        if ( identical(basedata,NULL) ) stop("Indicate which df (data1 or data2) to use to compute marginal distributions for common variables")
+        if ( is.null(basedata) ) stop("Indicate which df (data1 or data2) to use to compute marginal distributions for common variables")
         
         #Create formulas
         if( identical(basedata,data1) ) {#use varw1
