@@ -19,7 +19,7 @@ Internal function to visualize 3-way contingency tables, to be used inside other
 }
 \seealso{
 Other "Select variables": \code{\link{compareMultivar}};
-  \code{\link{plotCat}}; \code{\link{predictvalue}};
+  \code{\link{plot2Cat}}; \code{\link{predictvalue}};
   \code{\link{uncertvarxvary}}
 }
 \keyword{graphics}

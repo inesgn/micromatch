@@ -44,7 +44,7 @@ Compares distribution categorical variables (maximum 3) in two distinct files
 Dependencies: StatMatch, Hmisc, ggplot2, vcd
 }
 \seealso{
-Other "Select variables": \code{\link{plotCat}};
+Other "Select variables": \code{\link{plot2Cat}};
   \code{\link{plotTable}}; \code{\link{predictvalue}};
   \code{\link{uncertvarxvary}}
 }

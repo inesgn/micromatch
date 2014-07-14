@@ -26,6 +26,7 @@ This package focuses on this process view in order to help the user easily under
 ### References
 * *Data Integration* ESSnet project (http://www.cros-portal.eu/content/data-integration-finished)
 * *ISAD* ESSnet project (http://www.cros-portal.eu/content/isad-finished)
+* *Statistical matching: a model based approach for data integration*, Eurostat methodolgies and working papers, 2013.
 * *Statistical Matching, Theory and Practice*, Marcello D'Orazio, Marco Di Zio, Mauro Scanu, Wiley, 2006.
 * *Statistical Matching: A Frequentist Theory, Practical Applications and Alternative Bayesian Approaches (Lecture Notes in Statistics)*, S. Rässler, Springer, 2002.
 

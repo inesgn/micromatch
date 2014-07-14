@@ -32,7 +32,7 @@ Dependencies: StatMatch, Hmisc, ggplot2
 }
 \seealso{
 Other "Select variables": \code{\link{compareMultivar}};
-  \code{\link{plotCat}}; \code{\link{plotTable}};
+  \code{\link{plot2Cat}}; \code{\link{plotTable}};
   \code{\link{uncertvarxvary}}
 }
 

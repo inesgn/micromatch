@@ -1,46 +1,49 @@
 # 1st family of functions: Select variables
 
-#' Barplot for a categorical variable
+#' Grouped bars to compare two categorical variables
 #'
 #' @description 
-#' Internal function that computes barplot for a factor variable, 
+#' Internal function that computes grouped bars for comparting a factor variable between two files, 
 #' to be used inside other functions in micromatch.
 #' @details 
 #' Details here if necessary.
 #' @author "Ines Garmendia <ines.garmendia@@gmail.com>"
-#' @param data data frame result of as.data.frame(xtabs()). 1st col x: levels of variable; 2nd col y: counts or freqs       
+#' @param table1 distribution of the variable in the 1st file, result of as.data.frame(xtabs()). Counts (type='abs') or freqs (type='rel')
+#' @param table2 distribution of the variable in the 2nd file, result of as.data.frame(xtabs()). Counts (type='abs') or freqs (type='rel')
 #' @param type type of values associated with the levels of the factor: absolute (abs) or relative (rel)
 #' @return a graphical object (barplot)
 #' @keywords graphics
 #' @family "Select variables"
 #' @import ggplot2
+#' @export
 
-plotCat <- function( data, type = "rel" ){
+plot2Cat <- function(table1, table2, type="rel"){
         
-        #checks
-        stopifnot( type == "rel" | type =="abs" )
-        #if sentence depending on type rel or abs
-        if( type == "rel" ){
-                #vertical axis scaled between 0,100
-                g <<- ggplot(data=data, aes(x=x, y=y)) +
-                        geom_bar(stat="identity", fill="grey60", colour="darkgreen") +
-                        geom_text(aes(label=round(y,2)), vjust=1.5, colour="white",size=4, position=position_dodge(1)) +
+        #levels to plot
+        lev <<- levels(as.data.frame(table1)$x1)
+        l <<- length(lev)
+        
+        # Prepare data frame to plot
+        df <- as.data.frame(c(table1,table2))
+        df$labels <- c(lev)
+        df$group <- c(rep("fileA",l),rep("fileB",l))
+        names(df)[1] <- "y"
+        
+        # Plot
+        # --> Case type='rel'
+        if(type == 'rel'){
+                g <<- ggplot(df, aes(x=labels,y=y, fill=group)) + 
+                        geom_bar(stat="identity",position="dodge") +
+                        geom_text(aes(label=round(y,1)), vjust=1.5, colour="white",size=4, position=position_dodge(1)) +
                         theme(axis.title.x=element_blank(), axis.title.y=element_blank()) +
                         scale_y_continuous(limits=c(0,100)) 
+                
         }
-        if( type == "abs" ){
-                #vertical axis without limits
-                g <<- ggplot(data=data, aes(x=x, y=y)) +
-                        geom_bar(stat="identity", fill="grey60", colour="darkgreen") +
-                        geom_text(aes(label=round(y,2)), vjust=1.5, colour="white",size=4, position=position_dodge(1)) +
-                        theme(axis.title.x=element_blank(), axis.title.y=element_blank()) 
-        }
-        #return value: a graphical object
-        return(g)        
+        return(g)
 }
 
 
-#' Visual representation of a 2-way&3-way contingency tables based on vcd structplot
+#' Visual representation of a 2-way&3tley contingency tables based on vcd structplot
 #'
 #' @description Internal function to visualize 3-way contingency tables, to be used inside other functions in micromatch. Usage: two ways are for strata variables (e.g. sex and age) and third for variable of interest (common or specific)
 #' 
@@ -162,21 +165,26 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
                 }
                 
                 # ---- Plots
+                table1 <<- rt1
+                table2 <<- rt2
                 
                 #barplots
                 if( plot == TRUE ){
                         type <<- type
                         
-                        data1 <<- as.data.frame(rt1)
-                        names(data1) <- c("x", "y")
-                        g1 <<- plotCat(data=data1, type=type)
-                        
-                        data2 <<- as.data.frame(rt2)
-                        names(data2) <- c("x", "y")
-                        g2 <<- plotCat(data=data2, type=type)
-                        
-                        #arrange plots in grid
-                        grid.arrange(g1, g2)
+#                         data1 <<- as.data.frame(rt1)
+#                         names(data1) <- c("x", "y")
+#                         g1 <<- plotCat(data=data1, type=type)
+#                         
+#                         data2 <<- as.data.frame(rt2)
+#                         names(data2) <- c("x", "y")
+#                         g2 <<- plotCat(data=data2, type=type)
+#                         
+#                         #arrange plots in grid
+#                         grid.arrange(g1, g2)
+
+                        g <<- plot2Cat(table1=table1,table2=table2,type=type)
+                        print(g)
                 }
         }
         

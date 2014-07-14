@@ -3,6 +3,7 @@
 export(compareMultivar)
 export(compareVar)
 export(nnhdbystrata)
+export(plot2Cat)
 export(plotTable)
 export(predictvalue)
 export(tabvisvar)
