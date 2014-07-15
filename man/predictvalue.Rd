@@ -25,7 +25,7 @@ predictvalue(varx, vary, data, varw = NULL, plot = FALSE,
 list: table, measures, plot
 }
 \description{
-Evaluates predictive value of a common variable \texttt{x} with respect to a specific variable \texttt{y}, in the context of statistically matching two independent files.
+Evaluates predictive value of a common variable \code{x} with respect to a specific variable \code{y}, in the context of statistically matching two independent files.
 }
 \details{
 Dependencies: StatMatch, Hmisc, ggplot2
@@ -35,4 +35,3 @@ Other "Select variables": \code{\link{compareMultivar}};
   \code{\link{plot2Cat}}; \code{\link{plotTable}};
   \code{\link{uncertvarxvary}}
 }
-
