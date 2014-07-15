@@ -1,7 +1,7 @@
 ---
 title: "Explaining micromatch package"
 author: "Ines Garmendia"
-date: "`r Sys.Date()`"
+date: "2014-07-16"
 output:
   html_document:
     theme: null
@@ -108,12 +108,13 @@ Los datos de dos encuestas de Eustat, ECV y PRA, se han cargado en el propio paq
 Datos en el mismo micromatch:
 1. PRA: Población en relación con la actividad
 2. ECV: Encuesta de condiciones de vida
-```{r, cargar, echo=FALSE, message=FALSE}
-library(micromatch)
-data(ecv)
-data(pra)
-dim(ecv) #numero de observaciones y variables de ecv
-dim(pra) #numero de observaciones y variables de pra
+
+```
+## [1] 4749  417
+```
+
+```
+## [1] 10865    73
 ```
 
 ### Etapa 1: Definir objetivos
@@ -126,7 +127,8 @@ Luego hay que descartar las que no son concordantes (distribuciones muy distinta
 * Idealmente, _objetivo del enlace_: lo que se quiere obtener (tablas, fichero sintético, etc)
 
 *Listas de variables*
-```{r, listasVariables}
+
+```r
 #variables comunes candidatas: las variables que comparten ecv y pra
 #aun no sabemos si seran coherentes; lo son en cuanto a la definicion
 #(preguntas de los cuestionarios), pero hay que ver si las distribuciones
@@ -176,7 +178,8 @@ Univariate comparisons: Compares one variable at a time
 
 Only check first 2 variables.
 
-```{r, concordancia,eval=TRUE}
+
+```r
 #consultar documentacion: ?compareVar
 #dar valores a los parametros fijos
 fileA <- ecv
@@ -191,6 +194,46 @@ sapply(X=1:2, FUN=function(x){
         c <- compareVar(varA=varA, varB=varB,fileA=fileA,fileB=fileB,wA=wA, wB=wB,plot=FALSE,measures=FALSE,type="abs")
         print(c)
 })
+```
+
+```
+## [1] "Variable:  ED"
+## $`table for file #1`
+## x1
+## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
+##  177684  327581  355344  325660  273009  393715 1852993 
+## 
+## $`table for file #2`
+## x2
+## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
+##  171921  319528  355384  328303  270392  423928 1869456 
+## 
+## $measures
+## NULL
+## 
+## [1] "Variable:  S"
+## $`table for file #1`
+## x1
+##       H       M     Sum 
+##  911419  941573 1852992 
+## 
+## $`table for file #2`
+## x2
+##       H       M     Sum 
+##  903821  965634 1869455 
+## 
+## $measures
+## NULL
+```
+
+```
+##                   [,1]      [,2]     
+## table for file #1 Numeric,7 Numeric,3
+## table for file #2 Numeric,7 Numeric,3
+## measures          NULL      NULL
+```
+
+```r
 #relative values, plotting, with empirical measures (Hellinger's Distance, etc)
 sapply(X=1:2, FUN=function(x){
         print(paste('Variable: ',varCom[x]))
@@ -199,6 +242,66 @@ sapply(X=1:2, FUN=function(x){
         c<- compareVar(varA=varA, varB=varB,fileA=fileA,fileB=fileB,wA=wA, wB=wB,plot=TRUE,measures=TRUE,type="rel")
         print(c)
 })
+```
+
+```
+## [1] "Variable:  ED"
+```
+
+```
+## ymax not defined: adjusting position using y instead
+```
+
+![plot of chunk concordancia](figure/concordancia1.png) 
+
+```
+## $`table for file #1`
+## x1
+## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
+##    9.59   17.68   19.18   17.57   14.73   21.25  100.00 
+## 
+## $`table for file #2`
+## x2
+## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
+##    9.20   17.09   19.01   17.56   14.46   22.68  100.00 
+## 
+## $measures
+##     tvd overlap   Bhatt    Hell 
+## 0.01429 0.98571 0.99983 0.01302 
+## 
+## [1] "Variable:  S"
+```
+
+```
+## ymax not defined: adjusting position using y instead
+```
+
+![plot of chunk concordancia](figure/concordancia2.png) 
+
+```
+## $`table for file #1`
+## x1
+##      H      M    Sum 
+##  49.19  50.81 100.00 
+## 
+## $`table for file #2`
+## x2
+##      H      M    Sum 
+##  48.35  51.65 100.00 
+## 
+## $measures
+##      tvd  overlap    Bhatt     Hell 
+## 0.008396 0.991604 0.999965 0.005939
+```
+
+```
+##                   [,1]      [,2]     
+## table for file #1 Numeric,7 Numeric,3
+## table for file #2 Numeric,7 Numeric,3
+## measures          Numeric,4 Numeric,4
+```
+
+```r
 #To analyze all variables in varCom list, use sapply(X=1:length(varCom), FUN=...)
 ```
 
@@ -209,15 +312,64 @@ sapply(X=1:2, FUN=function(x){
 Elegimos una variable de muestra: el indicador de Estudiante S/N.
 Para estudiar todas a la vez se emplearía, como antes, un sapply.
 
-```{r, concordancia2var,eval=TRUE}
+
+```r
 #consultar documentacion ?compareMultivar
 var1A <- var1B <- varCom[2] #S estrato
 var2A <- var2B <- varCom[4] #variable a estudiar (dependiente)
 var3A <- var3B <- varCom[1] #ED  estrato
 #absolute values, no measures, no plotting
 compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="abs",measures=FALSE,wA=wA, wB=wB, plot=FALSE)
+```
+
+```
+## $`table for file #1`
+##          z1 (15,24] (24,34] (34,44] (44,54] (54,64]    65+
+## x1 y1                                                     
+## H  FALSE      40566  153508  179269  155768  133761 173095
+##    TRUE       51073   13199    2340    7283     896    660
+## M  FALSE      36277  149322  164325  158928  136252 218578
+##    TRUE       49768   11552    9409    3680    2099   1382
+## 
+## $`table for file #2`
+##          z2 (15,24] (24,34] (34,44] (44,54] (54,64]    65+
+## x2 y2                                                     
+## H  FALSE      33498  159737  181957  162409  130940 173849
+##    TRUE       55454    5136     408     151     143    139
+## M  FALSE      24872  144742  170772  164745  138275 249323
+##    TRUE       58098    9914    2246     997    1033    617
+## 
+## $measures
+## NULL
+```
+
+```r
 #relative values, with measures, plotting
 compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
+```
+
+![plot of chunk concordancia2var](figure/concordancia2var1.png) ![plot of chunk concordancia2var](figure/concordancia2var2.png) 
+
+```
+## $`table for file #1`
+##          z1 (15,24] (24,34] (34,44] (44,54] (54,64]   65+
+## x1 y1                                                    
+## H  FALSE       2.19    8.28    9.67    8.41    7.22  9.34
+##    TRUE        2.76    0.71    0.13    0.39    0.05  0.04
+## M  FALSE       1.96    8.06    8.87    8.58    7.35 11.80
+##    TRUE        2.69    0.62    0.51    0.20    0.11  0.07
+## 
+## $`table for file #2`
+##          z2 (15,24] (24,34] (34,44] (44,54] (54,64]   65+
+## x2 y2                                                    
+## H  FALSE       1.79    8.54    9.73    8.69    7.00  9.30
+##    TRUE        2.97    0.27    0.02    0.01    0.01  0.01
+## M  FALSE       1.33    7.74    9.13    8.81    7.40 13.34
+##    TRUE        3.11    0.53    0.12    0.05    0.06  0.03
+## 
+## $measures
+##     tvd overlap   Bhatt    Hell 
+## 0.03319 0.96681 0.99588 0.06418
 ```
 
 *Assess predictive value of concordant variables*
@@ -228,7 +380,8 @@ For each common variable found to be concordant between the files, we assess its
 
 Note that in each assessment, only one of the files is used, i.e. the one that contains the specific variable to predict.
 
-```{r,predictvalue}
+
+```r
 #choose values
 varA <- "EST" #variable to assess, name in file B
 data <- pra
@@ -236,15 +389,69 @@ varw <- "calELE"
 #
 #table with absolute values, no measures, no plotting
 predictvalue(varx=varA, vary=vary, data=data,varw=varw,plot=FALSE,measures=FALSE,type="abs")
+```
+
+```
+## $Table
+##        y
+## x       Occupied Unemployed (unpaid work) Unemployed (strict)
+##   FALSE   934865                    48577               38391
+##   TRUE     12506                     3285                   0
+##   Sum     947371                    51862               38391
+##        y
+## x       Non-active (unpaid work, students) Inactive or retired     Sum
+##   FALSE                             508594              204692 1735119
+##   TRUE                              117930                 615  134336
+##   Sum                               626524              205307 1869455
+## 
+## $Measures
+## [1] "measured not requested"
+```
+
+```r
 #table with relative values, measures, plotting
 predictvalue(varx=varA, vary=vary, data=data,varw=varw,plot=TRUE,measures=TRUE,type="rel")
+```
+
+![plot of chunk predictvalue](figure/predictvalue.png) 
+
+```
+## $Table
+##        y
+## x       Occupied Unemployed (unpaid work) Unemployed (strict)
+##   FALSE    53.88                     2.80                2.21
+##   TRUE      9.31                     2.45                0.00
+##   Sum      63.19                     5.25                2.21
+##        y
+## x       Non-active (unpaid work, students) Inactive or retired    Sum
+##   FALSE                              29.31               11.80 100.00
+##   TRUE                               87.79                0.46 100.01
+##   Sum                               117.10               12.26 200.01
+## 
+## $Measures
+## $Measures$V
+##    y.x 
+## 0.3219 
+## 
+## $Measures$lambda
+##    y.x 
+## 0.1143 
+## 
+## $Measures$tau
+##     y.x 
+## 0.05982 
+## 
+## $Measures$U
+##     y.x 
+## 0.04586
 ```
 
 **Function: uncertvarxvary**
 
 Otra opción interesante para la selección de variables es el cálculo de bandas de incertidumbre. La idea es seleccionar las variables comunes que más reduzcan la incertidumbre (anchura de las bandas) el relacionar las variables específicas de las encuestas.
 
-```{r,selectIncertidubre,warning=FALSE}
+
+```r
 data1 <- ecv
 data2 <- pra
 basedata <- pra
@@ -254,7 +461,28 @@ varx <- varEsp[1]
 vary <- "PRA22"
 varlist <- varCom[1:7] #restricted list of common variables, just to check
 varlist
+```
+
+```
+## [1] "ED"  "S"   "TF2" "EST" "OCP" "PAR" "INA"
+```
+
+```r
 uncertvarxvary(varx=varx,vary=vary,data1=data1,data2=data2,basedata=basedata,varw1=varw1,varw2=varw2,varlist=varlist)
+```
+
+```
+## $Best
+## [1] "|ED+S+TF2+EST+OCP+PAR"
+## 
+## $NumberVariables
+## [1] 6
+## 
+## $NumberCells
+## [1] 288
+## 
+## $OvUncert
+## [1] 0.05638
 ```
 
 **NOTE**
@@ -268,18 +496,34 @@ Generalmente, el enlace se hará por estratos. En el caso de ECV-PRA hemos usado
 
 Mostramos un ejemplo.
 
-```{r,matchingHD}
+
+```r
 #check documentation ?nnhdbystrata
 #select stratum
 i <- 1 ##select here: values between 1-12
 strata <- as.factor(levels(ecv$EDS))
 strata.sel <- strata[i]
 strata.sel #this is selected stratum
+```
+
+```
+## [1] H.(15,24]
+## 12 Levels: H.(15,24] H.(24,34] H.(34,44] H.(44,54] H.(54,64] ... M.65+
+```
+
+```r
 #
 #Select variables for this stratum 
 # The decision must be grounded on the previous phase
 matchvars <- c("EST", "BUSQ")
 matchvars
+```
+
+```
+## [1] "EST"  "BUSQ"
+```
+
+```r
 #
 #donante y receptor
 don <- pra[which(pra$EDS  == strata.sel ), ]
@@ -288,11 +532,29 @@ wA <- wB <- "calELE"
 vary <- "PRA22"
 #
 fused.1 <- nnhdbystrata(rec=rec,don=don,stratalevel=strata.sel,stratavar="EDS",matchvars=matchvars,vary=vary, checkdiffs=TRUE)
+```
+
+```
+##          fused$EST.don
+## fused$EST FALSE TRUE
+##     FALSE    69    0
+##     TRUE      0   88
+##           fused$BUSQ.don
+## fused$BUSQ FALSE TRUE
+##      FALSE   133    0
+##      TRUE      2   22
+```
+
+```r
 #
 #check output (a data frame with fused file)
 #str(fused.1)
 #names(fused.1) ## ECV con la variable PRA22 adicional
 dim(fused.1) #only for strata #1
+```
+
+```
+## [1] 157 418
 ```
 
 **NOTE #1**
@@ -307,7 +569,8 @@ The same functions used for variable selection (concordance assessment) can be u
 
 **Function: compareVar**
 
-```{r, validateResults}
+
+```r
 #compare observed/imputed distributions
 varA <- varB <- "PRA22"
 wA <- wB <- "calELE"
@@ -317,8 +580,39 @@ fileB <- don
 compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
 ```
 
+```
+## ymax not defined: adjusting position using y instead
+```
+
+![plot of chunk validateResults](figure/validateResults.png) 
+
+```
+## $`table for file #1`
+## x1
+##                           Occupied           Unemployed (unpaid work) 
+##                              30.47                               3.72 
+##                Unemployed (strict) Non-active (unpaid work, students) 
+##                               8.42                              52.41 
+##                Inactive or retired                                Sum 
+##                               4.98                             100.00 
+## 
+## $`table for file #2`
+## x2
+##                           Occupied           Unemployed (unpaid work) 
+##                              25.22                               1.98 
+##                Unemployed (strict) Non-active (unpaid work, students) 
+##                               7.63                              60.45 
+##                Inactive or retired                                Sum 
+##                               4.72                             100.00 
+## 
+## $measures
+##     tvd overlap   Bhatt    Hell 
+## 0.08042 0.91958 0.99585 0.06443
+```
+
 **Function: compareMultivar**
-```{r}
+
+```r
 #compare observed/imputed distributions by levels of a second variable
 var1A <- var1B <- "PRA22"
 var2A <- var2B <- "EST"
@@ -326,6 +620,32 @@ wA <- wB <- "calELE"
 fileA <- fused.1
 fileB <- don
 compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,fileA=fileA,fileB=fileB,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-11.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-12.png) 
+
+```
+## $`table for file #1`
+##                                    y1 FALSE  TRUE
+## x1                                               
+## Occupied                              27.28  3.19
+## Unemployed (unpaid work)               1.45  2.27
+## Unemployed (strict)                    8.42  0.00
+## Non-active (unpaid work, students)     2.13 50.28
+## Inactive or retired                    4.98  0.00
+## 
+## $`table for file #2`
+##                                    y2 FALSE  TRUE
+## x2                                               
+## Occupied                              22.35  2.87
+## Unemployed (unpaid work)               1.32  0.66
+## Unemployed (strict)                    7.63  0.00
+## Non-active (unpaid work, students)     1.87 58.58
+## Inactive or retired                    4.48  0.24
+## 
+## $measures
+##     tvd overlap   Bhatt    Hell 
+## 0.08537 0.91463 0.99334 0.08163
 ```
 
 
@@ -342,7 +662,8 @@ To this class, we will pass:
 * Specific variables in A
 * Specific variables in B
 
-```{r,pruebaClasesyMetodos,eval=TRUE}
+
+```r
 rec <- ecv
 don <- pra
 matchvars <- varCom[-c(1,2)]#Eliminamos ED, S que son de estrato
@@ -359,6 +680,12 @@ d1 <- new("matchdesign",rec=rec,
 class(d1) #comprobacion de que la clase es 'matchdesign'
 ```
 
+```
+## [1] "matchdesign"
+## attr(,"package")
+## [1] "micromatch"
+```
+
 Dos métodos sencillos
 
 **Method: Describe**
@@ -368,9 +695,45 @@ Dos métodos sencillos
 _describe_ nos devuelve los parámetros especificados en matchdesign
 _compare1_ realiza un cálculo rápido de distancias de Hellinger para cada variable común especificada en matchdesign, por separado (sin considerar estratos)
 
-```{r, methodsPrueba, eval=TRUE}
+
+```r
 describe(d1)
+```
+
+```
+## $`Number of receptor rows:`
+## [1] 4749
+## 
+## $`Number of donor rows:`
+## [1] 10865
+## 
+## $`Common matching variables:`
+## [1] "TF2"      "EST"      "OCP"      "PAR"      "INA"      "BUSQ"    
+## [7] "DOM.com2"
+## 
+## $`Specific vars receptor file:`
+## [1] "SAL"
+## 
+## $`Specific vars donor file:`
+## [1] "PRA22"
+## 
+## $`Strata variable:`
+## [1] "ED"
+```
+
+```r
 compare1(x=d1)
+```
+
+```
+##     varCom    tvd overlap  Bhatt   Hell
+## 1      TF2 0.0739  0.9261 0.9943 0.0752
+## 2      EST 0.0086  0.9914 0.9999 0.0122
+## 3      OCP 0.0081  0.9919      1 0.0057
+## 4      PAR  0.006   0.994 0.9999 0.0099
+## 5      INA 0.0021  0.9979      1 0.0015
+## 6     BUSQ 0.0121  0.9879 0.9997 0.0173
+## 7 DOM.com2 0.0648  0.9352 0.9978 0.0466
 ```
 
 ### Probar con otros datos externos
@@ -381,7 +744,8 @@ compare1(x=d1)
 Filtramos los mayores de 16 y datos de Euskadi, para poder comparar con PRA
 2. EES: Encuesta de estructura salarial
 
-```{r, cargarExternos,eval=FALSE}
+
+```r
 #cargar datos del INE
 #microdatos ya descargados desde la web
 library(MicroDatosEs)

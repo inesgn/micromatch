@@ -10,7 +10,6 @@ The aim of `micromatch` is to provide the user with some utilities and functions
 
 ### What is statistical matching, anyway?
 The methodology of statistical matching (survey linking, or data fusion more generally) is closely related to two projects of the European Statistical System (ESSnet), led by the Italian Statistical Office (ISTAT) during the years 2009-2011 and 2006-2008, and aims to integrate data from independent surveys referred to the same population.
-
 The idea behind this methodology is that many surveys run in the same population (i.e. referred to the same place and time) have certain variables in common that we could use to extract specific conclusions regarding to non-jointly observed measures, that is, variables that are not measured by the same questionnaire.
 
 For example, one survey could measure family expenditures, while another measures income. The solution of designing an unique questionnaire to measure all the dimensions is not always viable: questionnaires quickly become too costly and too long. 
@@ -29,5 +28,3 @@ This package focuses on this process view in order to help the user easily under
 * *Statistical matching: a model based approach for data integration*, Eurostat methodolgies and working papers, 2013.
 * *Statistical Matching, Theory and Practice*, Marcello D'Orazio, Marco Di Zio, Mauro Scanu, Wiley, 2006.
 * *Statistical Matching: A Frequentist Theory, Practical Applications and Alternative Bayesian Approaches (Lecture Notes in Statistics)*, S. Rässler, Springer, 2002.
-
-* More information on uses & actual degree of development: (http://rpubs.com/inesgn/micromatch_explained)
