@@ -136,11 +136,7 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
                 else if( is.null(wA) ){
                         formula1 <- as.formula(" ~x1")
                 }
-<<<<<<< HEAD
                 #action if wB is given
-=======
-                #action if wA is given
->>>>>>> FETCH_HEAD
                 if( !is.null(wB) ){
                         formula2 <- as.formula("w2~x2")
                 }
