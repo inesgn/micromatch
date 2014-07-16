@@ -17,7 +17,7 @@
 #' @import ggplot2
 #' @export
 
-plot2Cat <- function(table1, table2, type="rel"){
+plot2Cat <- function(table1, table2, type="rel",fileA="fileA",fileB="fileB"){
 
         #levels to plot
         lev <<- levels(as.data.frame(table1)$x1)
@@ -26,15 +26,16 @@ plot2Cat <- function(table1, table2, type="rel"){
         # Prepare data frame to plot
         df <- as.data.frame(c(table1,table2))
         df$labels <- c(lev)
-        df$group <- c(rep("fileA",l),rep("fileB",l))
+        df$group <- c(rep(fileA,l),rep(fileB,l))
         names(df)[1] <- "y"
 
         # Plot
         # --> Case type='rel'
         if(type == 'rel'){
-                g <<- ggplot(df, aes(x=labels,y=y, fill=group)) +
+                g <- ggplot(df, aes(x=labels,y=y, fill=group)) +
                         geom_bar(stat="identity",position="dodge") +
-                        geom_text(aes(label=round(y,1)), vjust=1.5, colour="white",size=4, position=position_dodge(1)) +
+                        geom_text(aes(label=round(y,1)), vjust=1.5, colour="white",
+                                  size=4, position=position_dodge(1)) +
                         theme(axis.title.x=element_blank(), axis.title.y=element_blank()) +
                         scale_y_continuous(limits=c(0,100))
 
@@ -84,7 +85,8 @@ plotTable <- function( table ){
 #' @import StatMatch ggplot2 gridExtra
 #' @export
 
-compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, compareas = "categorical", type="abs", measures=FALSE, ... ){
+compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL,
+                       plot=FALSE, compareas = "categorical", type="abs", measures=FALSE, ... ){
 
         ##dependencies with own functions: plotCat.R
 
@@ -168,12 +170,14 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
 
                 #barplots
                 if( plot == TRUE ){
-                        type <<- type
+                  type <<- type
 
-                        g <<- plot2Cat(table1=table1,table2=table2,type=type)
-                        print(g)
+                  g <- plot2Cat(table1=table1,table2=table2,type=type,
+                                fileA=deparse(substitute(fileA)),
+                                fileB=deparse(substitute(fileB)))
+                  print(g)
                 }
-        }
+              }
 
         # ---- Return
 
@@ -185,9 +189,13 @@ compareVar <- function( varA, varB, fileA, fileB, wA=NULL, wB=NULL, plot=FALSE, 
         else if( measures == FALSE ){
                 l3 <- NULL
         }
-
-        return( list("table for file #1" = l1, "table for file #2" = l2, "measures"= l3) )
+        l <- list(l1,l2,l3)
+        names(l) <- c(paste("Table for file:", deparse(substitute(fileA))),
+                      paste("Table for file:", deparse(substitute(fileB))),
+                      "measures")
+        return(l)
 }
+
 
 #' Comparing multivariate distributions of categorical variables in two files
 #'
