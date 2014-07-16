@@ -3,7 +3,7 @@
 \alias{plot2Cat}
 \title{Grouped bars to compare two categorical variables}
 \usage{
-plot2Cat(table1, table2, type = "rel")
+plot2Cat(table1, table2, type = "rel", fileA = "fileA", fileB = "fileB")
 }
 \arguments{
 \item{table1}{distribution of the variable in the 1st file, result of as.data.frame(xtabs()). Counts (type='abs') or freqs (type='rel')}
