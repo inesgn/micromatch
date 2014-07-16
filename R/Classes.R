@@ -45,7 +45,8 @@ setMethod("describe", "matchdesign",
                             'Common matching variables:'=x@matchvars,
                             'Specific vars receptor file:'=x@recvars,
                             'Specific vars donor file:'=x@donvars,
-                            'Strata variable:'=x@stratavar)
+                            'Strata variable:'=x@stratavar,
+                            'Stratalevels:'=levels(x@rec[,x@stratavar]))
                   return(l)}
 )
 
