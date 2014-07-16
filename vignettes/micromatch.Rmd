@@ -1,14 +1,15 @@
 ---
 title: "Explaining micromatch package"
 author: "Ines Garmendia"
-date: "`r Sys.Date()`"
+date: '`r Sys.Date()`'
 output:
+  pdf_document: default
   html_document:
-    theme: null
     highlight: null
-    self_contained: no
     includes:
       in_header: assets/header.html
+    self_contained: no
+    theme: null
 ---
 
 <!--
@@ -212,9 +213,9 @@ var1A <- var1B <- varCom[2] #S estrato
 var2A <- var2B <- varCom[4] #variable a estudiar (dependiente)
 var3A <- var3B <- varCom[1] #ED  estrato
 #absolute values, no measures, no plotting
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="abs",measures=FALSE,wA=wA, wB=wB, plot=FALSE)
+compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=ecv, fileB=pra, type="abs",measures=FALSE,wA=wA, wB=wB, plot=FALSE)
 #relative values, with measures, plotting
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
+compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=ecv, fileB=pra, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
 ```
 
 *Assess predictive value of concordant variables*
@@ -308,10 +309,8 @@ The same functions used for variable selection (concordance assessment) can be u
 #compare observed/imputed distributions
 varA <- varB <- "PRA22"
 wA <- wB <- "calELE"
-fileA <- fused.1
-fileB <- don
 #
-compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+compareVar(varA=varA,varB=varB,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
 ```
 
 **Function: compareMultivar**
@@ -320,9 +319,7 @@ compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type=
 var1A <- var1B <- "PRA22"
 var2A <- var2B <- "EST"
 wA <- wB <- "calELE"
-fileA <- fused.1
-fileB <- don
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,fileA=fileA,fileB=fileB,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
 ```
 
 
