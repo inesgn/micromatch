@@ -26,12 +26,12 @@ Statistical matching (also known as data fusion data merging or synthetic matchi
 
 ### The starting point
 
-The statistical matching task usually begins with two independent survey samples from the same population of interest, each of which produces measures regarding specific questions (for example, living styles and wages), but sharing a block of common variables (usually sociodemographic variables such as the age, sex, or social status), see Fig.1. The basic assumption is that the number of individuals or units appearing in both samples (i.e., the overlap) is negligible. In this respect, the fundamental difference with respect to other methods such as record linkage is that, in the latter, we have identical units that we want to match exactly, while in statistical matching we _know_ the units are different, but we _wish_ to find similar ones. 
+The statistical matching task usually begins with two independent survey samples from the same population of interest, each of which produces measures regarding specific questions (for example, living styles and wages), but sharing a block of common variables (usually sociodemographic variables such as the age, sex, or social status), see Fig.1. The basic assumption is that the number of individuals or units appearing in both samples (i.e., the overlap) is negligible. In this respect, the fundamental difference with respect to other methods such as record linkage is that, in the latter, we have identical units that we want to match exactly, while in statistical matching we _know_ the units are different, but we _wish_ to find similar ones.
 
 ![alt text](fig1.png)
 
 ### When should we consider using `micromatch?
-The user will be ready to use `micromatch` when having two separate files, A and B, with _distinct units_ referred to the _same population of interest_, having two sets of distinct variables in each file (which we call _specific variables_), and sharing a common block of variables (which we call _common variables_). The user wishes to do specific statistical analyses that combine variables coming from the distinct files or sources, and faces the problem of lacking observations with information for all the variables. 
+The user will be ready to use `micromatch` when having two separate files, A and B, with _distinct units_ referred to the _same population of interest_, having two sets of distinct variables in each file (which we call _specific variables_), and sharing a common block of variables (which we call _common variables_). The user wishes to do specific statistical analyses that combine variables coming from the distinct files or sources, and faces the problem of lacking observations with information for all the variables.
 
 By applying statistical matching methods, the user will typically obtain either a synthetic file containing information on all the variables and all units from both sources (so in this case statistical matching could be viewed as a kind of missing data imputation procedure). Sometimes, when only two variables in separate files are of specific interest, the user could more efficiently estimate a contingency table or correlation coefficient, or any parameter of interest regarding only those two variables of interest. The former is named the _micro_ approach, while the latter is the _macro_ approach.
 
@@ -55,54 +55,54 @@ First of all the matching objectives must be specified, which means that the use
 * A list of specific variables for the second file
 * Ideally, the desired result (a synthetic file or contingency table, for example)
 
-        * Funciones implementadas: en este momento solamente disponemos de la clase `matchdesign` que encapsularía toda esta información así como del método `describe`, que la extraería de un objeto de esta clase.
+	* Funciones implementadas: en este momento solamente disponemos de la clase `matchdesign` que encapsularía toda esta información así como del método `describe`, que la extraería de un objeto de esta clase.
 
 #### Family 2: Select matching variables
 
 In this step one most select a set of variables that will be used by the matching procedure, such that:
 
 * They are concordant across the files; i.e. besides having the same definition (i.e. comparable questions in the questionnaires), they produce the same observed marginal distributions.
-* They have predictive value with respect to the specific variables (in each file) 
+* They have predictive value with respect to the specific variables (in each file)
 
-        * Funciones implementadas:
+	* Funciones implementadas:
 
-        *compareVar*
-        Compara la distribución marginal observada para una única variable categórica en los dos ficheros. Produce gráficos de barras y medidas empíricas como la distancia de Hellinger. Se pueden emplear pesos, y las tablas generadas. Futuros desarrollos: extenderlo a variables continuas.
+	*compareVar*
+	Compara la distribución marginal observada para una única variable categórica en los dos ficheros. Produce gráficos de barras y medidas empíricas como la distancia de Hellinger. Se pueden emplear pesos, y las tablas generadas. Futuros desarrollos: extenderlo a variables continuas.
 
-        *compareMultivar*
-        Extiende la anterior para poder analizar la concordancia de distribuciones al condicionar por alguna otra variable, generalmente, estratos (como la edad y sexo). La lógica es la misma. Futuros desarrollos: los mismos. Adicionalmente, se debería estudiar la posibilidad de emplear técnicas multivariantes para comparar espacios factoriales, por ejemplo, un análisis de correspondencias y el coeficiente RV. esto es muy fácil de hacer con FactoMineR. También aportaría una visualización del espacio de variables comunes, donde además podríamos proyectar las específicas.
+	*compareMultivar*
+	Extiende la anterior para poder analizar la concordancia de distribuciones al condicionar por alguna otra variable, generalmente, estratos (como la edad y sexo). La lógica es la misma. Futuros desarrollos: los mismos. Adicionalmente, se debería estudiar la posibilidad de emplear técnicas multivariantes para comparar espacios factoriales, por ejemplo, un análisis de correspondencias y el coeficiente RV. esto es muy fácil de hacer con FactoMineR. También aportaría una visualización del espacio de variables comunes, donde además podríamos proyectar las específicas.
 
-        *predictvalue*
-        Solamente válida para variables categóricas, mide el valor predictivo de una variable común cada vez para una variable específica dada. Produce valores dados por la función `pw.assoc` de `StatMatch`: la V de Cramer, etc, y se le añade un gráfico de mosaico dado por `structplot`. Con un `sapply` se puede analizar el valor predictivo de una lista de variables comunes en una sola iteración. Futuros desarrollos: esta aproximación univariante es demasido básica, sería deseable poder hacer modelos de regresión o bien implementar el random forest (fácil con `randomForest`), o algo similar, pero con fundamento estadística adecuado.
-        
-        *uncertvarxvary*
-        Aún en modo de prueba, implementa la idea reflejada en StatMatch de seleccionar aquellas variables que más reduzcan la incertidumbre en cuanto a las distribuciones conjuntas no-observadas. También es un elemento esencial de la validación, con lo que también pertenecería a la Familia 4
-        
+	*predictvalue*
+	Solamente válida para variables categóricas, mide el valor predictivo de una variable común cada vez para una variable específica dada. Produce valores dados por la función `pw.assoc` de `StatMatch`: la V de Cramer, etc, y se le añade un gráfico de mosaico dado por `structplot`. Con un `sapply` se puede analizar el valor predictivo de una lista de variables comunes en una sola iteración. Futuros desarrollos: esta aproximación univariante es demasido básica, sería deseable poder hacer modelos de regresión o bien implementar el random forest (fácil con `randomForest`), o algo similar, pero con fundamento estadística adecuado.
+
+	*uncertvarxvary*
+	Aún en modo de prueba, implementa la idea reflejada en StatMatch de seleccionar aquellas variables que más reduzcan la incertidumbre en cuanto a las distribuciones conjuntas no-observadas. También es un elemento esencial de la validación, con lo que también pertenecería a la Familia 4
+
 #### Family 3: Apply matching method
 
 At this step a matching method is applied to either a synthetic file or a macro parameter estimation.
 
-        *Funciones implementadas:
+	*Funciones implementadas:
 
-        *nnhdbystrata*
-        
-        Básicamente es la nearest-neighbour hot-deck implementada en StatMatch, función `NND.hotdeck`, pero lo que aporta es que se efectúa un hot-deck para un estrato dado. Esto nos da la posibilidad de aplicar el matching por estratos de forma rápida usando un solo `sapply` que itere sobre todos los estratos. Futuros desarrollos: queda implementar una función similar que emplee funciones de `mice` (idealmente predictive mean matching que al parecer es muy robusto). Entonces seguramente será necesario crear una función intermedia que genere un fichero concatenado para pasar a `mice`.
+	*nnhdbystrata*
+
+	Básicamente es la nearest-neighbour hot-deck implementada en StatMatch, función `NND.hotdeck`, pero lo que aporta es que se efectúa un hot-deck para un estrato dado. Esto nos da la posibilidad de aplicar el matching por estratos de forma rápida usando un solo `sapply` que itere sobre todos los estratos. Futuros desarrollos: queda implementar una función similar que emplee funciones de `mice` (idealmente predictive mean matching que al parecer es muy robusto). Entonces seguramente será necesario crear una función intermedia que genere un fichero concatenado para pasar a `mice`.
 
 
 #### Family 4: Validation
 
 At this step a thorough validation of results must be performed.
 
-        *Se pueden utilizar `compareVar` y `compareMultiVar` para comparar las distribuciones de variables observadas vs imputadas, una vez producido el fichero sintético. Sería muy interesante añadir funciones para poder hacer ejercicios de simulación (que servirían para probar si el matching es robusto, entender mejor sus tripas, etc). Hay referencias al respecto, y darían un valor añadido ya que en `StatMatch` no hay nada parecido.
+	*Se pueden utilizar `compareVar` y `compareMultiVar` para comparar las distribuciones de variables observadas vs imputadas, una vez producido el fichero sintético. Sería muy interesante añadir funciones para poder hacer ejercicios de simulación (que servirían para probar si el matching es robusto, entender mejor sus tripas, etc). Hay referencias al respecto, y darían un valor añadido ya que en `StatMatch` no hay nada parecido.
 
 
 ### Ejemplo de uso
 
 #### Cargar paquete y datos
 
-Los datos de dos encuestas de Eustat, ECV y PRA, se han cargado en el propio paquete micromatch. 
+Los datos de dos encuestas de Eustat, ECV y PRA, se han cargado en el propio paquete micromatch.
 
-        * Está pendiente documentarlas: parece que no funciona el script ecv-data.R
+	* Está pendiente documentarlas: parece que no funciona el script ecv-data.R
 
 **Encuestas de Eustat**
 Datos en el mismo micromatch:
@@ -133,37 +133,37 @@ Luego hay que descartar las que no son concordantes (distribuciones muy distinta
 #aun no sabemos si seran coherentes; lo son en cuanto a la definicion
 #(preguntas de los cuestionarios), pero hay que ver si las distribuciones
 #observadas coinciden.
-#Esto hay que analizarlo no solo en general, sino en funcion de los valores 
+#Esto hay que analizarlo no solo en general, sino en funcion de los valores
 #de otras variables, por ejemplo, por edad y sexo
 #
 varCom <- c("ED", #Edad: estrato
-            "S",  #Sexo: estrato
-            "TF2", #Tamanyo familiar
-            "EST", #Estudiante si (1) o no (0)
-            "OCP", #Ocupado si/no
-            "PAR", #Parado si/no
-            "INA", #Inactivo si/no
-            "BUSQ", #Buscando empleo si/no
-            "DOM.com2") #Dedicacion a las tareas domesticas
+	    "S",  #Sexo: estrato
+	    "TF2", #Tamanyo familiar
+	    "EST", #Estudiante si (1) o no (0)
+	    "OCP", #Ocupado si/no
+	    "PAR", #Parado si/no
+	    "INA", #Inactivo si/no
+	    "BUSQ", #Buscando empleo si/no
+	    "DOM.com2") #Dedicacion a las tareas domesticas
 #
 #variables especificas ECV
 varEsp <- c("SAL",  #condiciones de salud
-            "IDM",  #conocimiento idiomas
-            #"DOM",  #(la ponemos como variable comun) dedicacion tareas domesticas
-            "NIN", #cuidado de ninyos
-            "VAC", #lugar de vacaciones
-            "LIB", 
-            "RELI", 
-            "RELF", 
-            "EQP",
-            "VIV",
-            "VEH",
-            "SRV", 
-            "AMB",
-            "DOM2",
-            "ECO",
-            "ING",
-            "FIN" )
+	    "IDM",  #conocimiento idiomas
+	    #"DOM",  #(la ponemos como variable comun) dedicacion tareas domesticas
+	    "NIN", #cuidado de ninyos
+	    "VAC", #lugar de vacaciones
+	    "LIB",
+	    "RELI",
+	    "RELF",
+	    "EQP",
+	    "VIV",
+	    "VEH",
+	    "SRV",
+	    "AMB",
+	    "DOM2",
+	    "ECO",
+	    "ING",
+	    "FIN" )
 #variable especifica de PRA
 vary <- "PRA22"
 ```
@@ -182,28 +182,26 @@ Only check first 2 variables.
 ```r
 #consultar documentacion: ?compareVar
 #dar valores a los parametros fijos
-fileA <- ecv
-fileB <- pra
 wA <- wB <- "calELE" #variable de peso calibrada
 #
 # all comparisons for a list of common vars at once
 #absolute values, no plotting, no empirical measures
-sapply(X=1:2, FUN=function(x){
-        print(paste('Variable: ',varCom[x]))
-        varA <- varB <- varCom[x]
-        c <- compareVar(varA=varA, varB=varB,fileA=fileA,fileB=fileB,wA=wA, wB=wB,plot=FALSE,measures=FALSE,type="abs")
-        print(c)
+sapply(X=varCom[1:2], FUN=function(x){
+	print(paste('Variable: ',x))
+	varA <- varB <- varCom[x]
+	c <- compareVar(varA=x, varB=x,fileA=ecv,fileB=pra,wA=wA, wB=wB,plot=FALSE,measures=FALSE,type="abs")
+	print(c)
 })
 ```
 
 ```
 ## [1] "Variable:  ED"
-## $`table for file #1`
+## $`Table for file: ecv`
 ## x1
 ## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
 ##  177684  327581  355344  325660  273009  393715 1852993 
 ## 
-## $`table for file #2`
+## $`Table for file: pra`
 ## x2
 ## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
 ##  171921  319528  355384  328303  270392  423928 1869456 
@@ -212,12 +210,12 @@ sapply(X=1:2, FUN=function(x){
 ## NULL
 ## 
 ## [1] "Variable:  S"
-## $`table for file #1`
+## $`Table for file: ecv`
 ## x1
 ##       H       M     Sum 
 ##  911419  941573 1852992 
 ## 
-## $`table for file #2`
+## $`Table for file: pra`
 ## x2
 ##       H       M     Sum 
 ##  903821  965634 1869455 
@@ -227,20 +225,19 @@ sapply(X=1:2, FUN=function(x){
 ```
 
 ```
-##                   [,1]      [,2]     
-## table for file #1 Numeric,7 Numeric,3
-## table for file #2 Numeric,7 Numeric,3
-## measures          NULL      NULL
+##                     ED        S        
+## Table for file: ecv Numeric,7 Numeric,3
+## Table for file: pra Numeric,7 Numeric,3
+## measures            NULL      NULL
 ```
 
 ```r
 #relative values, plotting, with empirical measures (Hellinger's Distance, etc)
-sapply(X=1:2, FUN=function(x){
-        print(paste('Variable: ',varCom[x]))
-        varA <- varB <- varCom[x]
-        #relative values, with plot
-        c<- compareVar(varA=varA, varB=varB,fileA=fileA,fileB=fileB,wA=wA, wB=wB,plot=TRUE,measures=TRUE,type="rel")
-        print(c)
+sapply(X=varCom[1:2], FUN=function(x){
+	print(paste('Variable: ',x))
+	#relative values, with plot
+	c<- compareVar(varA=x, varB=x,fileA=ecv,fileB=pra,wA=wA, wB=wB,plot=TRUE,measures=TRUE,type="rel")
+	print(c)
 })
 ```
 
@@ -255,12 +252,12 @@ sapply(X=1:2, FUN=function(x){
 ![plot of chunk concordancia](figure/concordancia1.png) 
 
 ```
-## $`table for file #1`
+## $`Table for file: ecv`
 ## x1
 ## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
 ##    9.59   17.68   19.18   17.57   14.73   21.25  100.00 
 ## 
-## $`table for file #2`
+## $`Table for file: pra`
 ## x2
 ## (15,24] (24,34] (34,44] (44,54] (54,64]     65+     Sum 
 ##    9.20   17.09   19.01   17.56   14.46   22.68  100.00 
@@ -279,12 +276,12 @@ sapply(X=1:2, FUN=function(x){
 ![plot of chunk concordancia](figure/concordancia2.png) 
 
 ```
-## $`table for file #1`
+## $`Table for file: ecv`
 ## x1
 ##      H      M    Sum 
 ##  49.19  50.81 100.00 
 ## 
-## $`table for file #2`
+## $`Table for file: pra`
 ## x2
 ##      H      M    Sum 
 ##  48.35  51.65 100.00 
@@ -295,10 +292,10 @@ sapply(X=1:2, FUN=function(x){
 ```
 
 ```
-##                   [,1]      [,2]     
-## table for file #1 Numeric,7 Numeric,3
-## table for file #2 Numeric,7 Numeric,3
-## measures          Numeric,4 Numeric,4
+##                     ED        S        
+## Table for file: ecv Numeric,7 Numeric,3
+## Table for file: pra Numeric,7 Numeric,3
+## measures            Numeric,4 Numeric,4
 ```
 
 ```r
@@ -323,24 +320,7 @@ compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3
 ```
 
 ```
-## $`table for file #1`
-##          z1 (15,24] (24,34] (34,44] (44,54] (54,64]    65+
-## x1 y1                                                     
-## H  FALSE      40566  153508  179269  155768  133761 173095
-##    TRUE       51073   13199    2340    7283     896    660
-## M  FALSE      36277  149322  164325  158928  136252 218578
-##    TRUE       49768   11552    9409    3680    2099   1382
-## 
-## $`table for file #2`
-##          z2 (15,24] (24,34] (34,44] (44,54] (54,64]    65+
-## x2 y2                                                     
-## H  FALSE      33498  159737  181957  162409  130940 173849
-##    TRUE       55454    5136     408     151     143    139
-## M  FALSE      24872  144742  170772  164745  138275 249323
-##    TRUE       58098    9914    2246     997    1033    617
-## 
-## $measures
-## NULL
+## Error: objeto 'fileA' no encontrado
 ```
 
 ```r
@@ -348,28 +328,8 @@ compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3
 compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
 ```
 
-![plot of chunk concordancia2var](figure/concordancia2var1.png) ![plot of chunk concordancia2var](figure/concordancia2var2.png) 
-
 ```
-## $`table for file #1`
-##          z1 (15,24] (24,34] (34,44] (44,54] (54,64]   65+
-## x1 y1                                                    
-## H  FALSE       2.19    8.28    9.67    8.41    7.22  9.34
-##    TRUE        2.76    0.71    0.13    0.39    0.05  0.04
-## M  FALSE       1.96    8.06    8.87    8.58    7.35 11.80
-##    TRUE        2.69    0.62    0.51    0.20    0.11  0.07
-## 
-## $`table for file #2`
-##          z2 (15,24] (24,34] (34,44] (44,54] (54,64]   65+
-## x2 y2                                                    
-## H  FALSE       1.79    8.54    9.73    8.69    7.00  9.30
-##    TRUE        2.97    0.27    0.02    0.01    0.01  0.01
-## M  FALSE       1.33    7.74    9.13    8.81    7.40 13.34
-##    TRUE        3.11    0.53    0.12    0.05    0.06  0.03
-## 
-## $measures
-##     tvd overlap   Bhatt    Hell 
-## 0.03319 0.96681 0.99588 0.06418
+## Error: objeto 'fileA' no encontrado
 ```
 
 *Assess predictive value of concordant variables*
@@ -513,7 +473,7 @@ strata.sel #this is selected stratum
 
 ```r
 #
-#Select variables for this stratum 
+#Select variables for this stratum
 # The decision must be grounded on the previous phase
 matchvars <- c("EST", "BUSQ")
 matchvars
@@ -587,7 +547,7 @@ compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type=
 ![plot of chunk validateResults](figure/validateResults.png) 
 
 ```
-## $`table for file #1`
+## $`Table for file: fileA`
 ## x1
 ##                           Occupied           Unemployed (unpaid work) 
 ##                              30.47                               3.72 
@@ -596,7 +556,7 @@ compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type=
 ##                Inactive or retired                                Sum 
 ##                               4.98                             100.00 
 ## 
-## $`table for file #2`
+## $`Table for file: don`
 ## x2
 ##                           Occupied           Unemployed (unpaid work) 
 ##                              25.22                               1.98 
@@ -670,12 +630,12 @@ matchvars <- varCom[-c(1,2)]#Eliminamos ED, S que son de estrato
 donvars <- c("PRA22") #variable especifica de PRA, la unica que se considera: PRA22
 recvars <- "SAL" #variable especifica de ECV, un ejemplo: SAL 'trastornos de salud'
 stratavar <- "ED" #variable de estrato
-d1 <- new("matchdesign",rec=rec, 
-                don=don, 
-                matchvars=matchvars, 
-                donvars=donvars,
-                recvars=recvars,
-                stratavar=stratavar
+d1 <- new("matchdesign",rec=rec,
+		don=don,
+		matchvars=matchvars,
+		donvars=donvars,
+		recvars=recvars,
+		stratavar=stratavar
 )
 class(d1) #comprobacion de que la clase es 'matchdesign'
 ```
@@ -752,7 +712,7 @@ library(MicroDatosEs)
 setwd("~/Documents/micromatch-ejemplosUso/datosINE")
 epa4T2009 <- epa2005( epa.file = "datos_t409" )
 #
-#Filtrar: 
+#Filtrar:
 ## datos de Eusadi, mayores de 16
 nrow(epa4T2009[which(epa4T2009$ccaa==16 & epa4T2009$nivel==1 ),]) #con 16 anyos o mas
 epa <- epa4T2009[which(epa4T2009$ccaa==16 & epa4T2009$nivel==1 ),]
