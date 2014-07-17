@@ -2,18 +2,25 @@
 \docType{data}
 \name{ecv}
 \alias{ecv}
-\title{Living Conditions Survey data frame}
-\format{description A textual description of the format of the object.}
+\title{Living Conditions Survey data}
+\format{data frame with 4749 rows (observations) and 417 columns (variables).}
 \source{
-microdata for the Living Conditions Survey year 2009, Eustat, the Statistical Office of the Basque Government
+microdata for the Living Conditions Survey, year 2009. Reference page:
+\link{http://en.eustat.es/estadisticas/tema_172/opt_0/ti_Condiciones_de_vida/temas.html#axzz37iVNbE00}
 }
 \description{
-Microdata file with the Living Conditions Survey 2009 questionnaire as provided by Eustat, the Statistical Office of the Basque Government
+Microdata file containing data from the Living Conditions Survey
+(Encuesta de Condiciones de Vida, ECV), as provided by Eustat - the Basque Statistical Office
+\link{http://en.eustat.es/ci_ci/indice.htlm}.
+
+The reference period is the 4th quarter of 2009,
+and the reference population is people living in households at the Basque Autonomous Community (Spain),
 }
 \details{
-Microdata files
+The original microdata contains 5242 observations, which are reduced to 4749 after
+filtering people aged 16 and over. Main variables here.
 }
 \author{
-Ines Garmendia, 2014-07-11
+Ines Garmendia.
 }
 

@@ -1,6 +1,6 @@
 Package: micromatch
 Type: Package
-Title: Functions and utilities for statistical matching for official microdata
+Title: Functions and utilities for statistical matching of official microdata
     files
 Version: 1.0
 Date: 2014-07-01

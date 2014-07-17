@@ -55,9 +55,3 @@ tabvisvar <- function(varEsp, varEspText, vary, index, data, wvar=NULL, table=TR
                 }
         }     
 }
-
-
-
-
-
-
