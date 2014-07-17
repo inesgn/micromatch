@@ -11,27 +11,30 @@
 #' @param matchvars character vector with names of matching variables
 #' @param vary variables in donor file to be imputed to the recipient file
 #' @param checdiffs logical value indicating if a check of differences between donor-recipient files is desired
+#' @param distance distance to be used in matching; defaults to 'Gower'.
 #' @return Fused file
 #' @family "Apply matching method"
 #' @import StatMatch
 #' @export
 
-nnhdbystrata <- function(rec, don, stratalevel, stratavar, matchvars, vary, checkdiffs=FALSE){
-        
+nnhdbystrata <- function(rec, don, stratalevel, stratavar, matchvars, vary, 
+                         checkdiffs=FALSE, distance="Gower")
+{ 
         #require(StatMatch)
-        
+          
         #donor and recipient files filtered by stratavar
-        don.strata <-  don[which(don[,stratavar] == stratalevel), ]
-        rec.strata <-  rec[which(rec[,stratavar] == stratalevel), ]
+        don.strata <-  subset(don, don[,stratavar] == stratalevel)
+        rec.strata <-  subset(rec, rec[,stratavar] == stratalevel)
         
         #compute recipient-donor pairs
-        out.nnd <- NND.hotdeck(data.rec = rec.strata, data.don = don.strata, dist.fun = "Gower", match.vars = matchvars, 
+        out.nnd <- StatMatch::NND.hotdeck(data.rec = rec.strata, data.don = don.strata, 
+                               dist.fun = distance, match.vars = matchvars, 
                                constrained = TRUE)
+        
         #create fused file
-        fused <- create.fused(data.rec=rec.strata, data.don=don.strata,
+        fused <- StatMatch::create.fused(data.rec=rec.strata, data.don=don.strata,
                               mtc.ids=out.nnd$mtc.ids,
                               z.vars=c(vary,matchvars) )
-        
         
         ## Check differences between recipient-donor files
         #Change matching variable names for traceability
