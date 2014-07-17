@@ -80,28 +80,24 @@ setMethod("compare1", "matchdesign",
 
 setMethod("compare2", "matchdesign",
           function(x,...){
-                  varCom <<- as.character(x@matchvars)
-                  varStrata <<- as.character(x@stratavar)
-                  rec <<- x@rec
-                  don <<- x@don
-                  slevels <<- levels(rec[,varStrata])
-                  #slevels
-                  #nrow(rec[which(rec[,varStrata] == slevels[1]),])
-                  l <<- list()
-                  sapply(X=1:length(slevels), FUN=function(s){
-                          srec <<- rec[which(rec[,varStrata] == slevels[s]),]
-                          sdon <<- don[which(don[,varStrata] == slevels[s]),]
-                          m <- sapply(X=1:length(varCom), FUN=function(v){
-                                  formula1 <- as.formula(paste("~",varCom[v]))
-                                  formula2 <- as.formula(paste("~",varCom[v]))
-                                  p1 <- xtabs(formula1, data=srec)
-                                  p2 <- xtabs(formula2, data=sdon)
-                                  comp <- comp.prop(p1=p1,p2=p2,n1=nrow(srec), n2=nrow(sdon),ref=FALSE)
-                                  return(round(comp$meas,4))
-                          })
-                          l[[s]] <- as.data.frame(cbind(varCom,t(m))) 
-                  }
-                )
-                 return(l)
+                  varStrata <- as.character(x@stratavar)
+                  slevels <- levels(x@rec[,varStrata])                  
+                  #res <- compare1(x)
+                  lnames <- character()
+                  sapply(X=1:length(slevels),FUN=function(s){
+                          srec <- x@rec[which(x@rec[,varStrata] == slevels[s]),]
+                          sdon <- x@don[which(x@don[,varStrata] == slevels[s]),]
+                          #l[[s]] <- nrow(srec)
+                          
+                          ds <- new(Class='matchdesign', rec=srec, don=sdon, 
+                                    matchvars = x@matchvars,
+                                    recvars = x@recvars,
+                                    donvars = x@donvars
+                          )
+                          lnames <- c(lnames,slevels[s])
+                          l <- list(compare1(ds))
+                          l
+                          structure(l, names=lnames)
+                  })
           }
 )

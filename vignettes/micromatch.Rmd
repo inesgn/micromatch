@@ -376,25 +376,6 @@ _compare2_ realiza el mismo cálculo que _compare1_, pero lo hace por estratos (
 describe(d1)
 compare1(x=d1)
 compare2(x=d1)
-#error: se obtiene list()
-#en cambio ejecutando los 'code chunks' en una sesión
-#se obtiene el resultado correcto:
-# $H
-#     varCom    tvd overlap  Bhatt   Hell
-# 1      OCP 0.0561  0.9439 0.9984 0.0397
-# 2      PAR 0.0025  0.9975      1  0.004
-# 3      INA 0.0536  0.9464 0.9985 0.0384
-# 4     BUSQ 0.0169  0.9831 0.9995 0.0231
-# 5 DOM.com2 0.0118  0.9882 0.9999 0.0087
-# 
-# $M
-#     varCom    tvd overlap  Bhatt   Hell
-# 1      OCP  0.036   0.964 0.9993 0.0257
-# 2      PAR 0.0092  0.9908 0.9997  0.016
-# 3      INA 0.0452  0.9548  0.999  0.032
-# 4     BUSQ 0.0081  0.9919 0.9999 0.0121
-# 5 DOM.com2 0.1393  0.8607 0.9852 0.1218
-
 ```
 
 ### Probar con otros datos externos

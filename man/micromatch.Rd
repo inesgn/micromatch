@@ -58,7 +58,7 @@ Example data is also available in \code{micromatch}
 
 \itemize{
      \item \code{\link{ecv}}: Data from the Living Conditions Survey, year 2009, run by Eustat (Basque Statistical Office, Spain)
-     \item \code{\link{pra}}: Data from the Populatin with Relation to Activity Survey, 4th quarter of 2009, run by Eustat (Basque Statistical Office, Spain)
+     \item \code{\link{pra}}: Data from the Population with Relation to Activity Survey, 4th quarter of 2009, run by Eustat (Basque Statistical Office, Spain)
 }
 }
 \author{
