@@ -330,7 +330,10 @@ compareMultivar <- function( var1A, var1B, var2A, var2B, var3A=NULL, var3B=NULL,
                 l3 <- NULL
         }
 
-
+        l <- list(l1,l2,l3)
+        names(l) <- c(deparse(substitute(fileA)),
+                      deparse(substitute(fileB)),
+                      "measures")
         return( list("table for file #1" = l1, "table for file #2" = l2, "measures"= l3) )
 
 }
@@ -374,7 +377,7 @@ predictvalue <- function(varx, vary, data, varw=NULL, plot=FALSE, measures=FALSE
                 }
         }
         else if( is.null(varw) ){
-                m <- pw.assoc(formula, data = data )
+                m <- StatMatch::pw.assoc(formula, data = data )
                 t <- xtabs(~x+y, data=data)
                 if( measures == TRUE ){
                         m <- pw.assoc(formula, data = data, weights=varw)
@@ -442,7 +445,7 @@ uncertvarxvary <- function(varx, vary, data1, data2, basedata=NULL, varw1=NULL, 
         yz <- xtabs(formula=formulayz, data = data2)
 
         #compute uncertainty bounds
-        out.fbw <- Fbwidths.by.x(tab.x=zz, tab.xy=xz, tab.xz=yz)
+        out.fbw <- StatMatch::Fbwidths.by.x(tab.x=zz, tab.xy=xz, tab.xz=yz)
         best <- out.fbw$sum.unc[order(out.fbw$sum.unc$ov.unc),][1,]
 
         #return values

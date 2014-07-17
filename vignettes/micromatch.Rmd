@@ -3,13 +3,13 @@ title: "Explaining micromatch package"
 author: "Ines Garmendia"
 date: '`r Sys.Date()`'
 output:
-  pdf_document: default
   html_document:
     highlight: null
     includes:
       in_header: assets/header.html
     self_contained: no
     theme: null
+  pdf_document: default
 ---
 
 <!--
@@ -104,6 +104,7 @@ At this step a thorough validation of results must be performed.
 Los datos de dos encuestas de Eustat, ECV y PRA, se han cargado en el propio paquete micromatch.
 
 	* Está pendiente documentarlas: parece que no funciona el script ecv-data.R
+  * FT 17/Jul: Ya funciona; replicar para pra.
 
 **Encuestas de Eustat**
 Datos en el mismo micromatch:
@@ -243,16 +244,10 @@ predictvalue(varx=varA, vary=vary, data=data,varw=varw,plot=TRUE,measures=TRUE,t
 Otra opción interesante para la selección de variables es el cálculo de bandas de incertidumbre. La idea es seleccionar las variables comunes que más reduzcan la incertidumbre (anchura de las bandas) el relacionar las variables específicas de las encuestas.
 
 ```{r,selectIncertidubre,warning=FALSE}
-data1 <- ecv
-data2 <- pra
-basedata <- pra
-varw1 <- "calELE"
-varw2 <- "calELE"
-varx <- varEsp[1]
-vary <- "PRA22"
 varlist <- varCom[1:7] #restricted list of common variables, just to check
 varlist
-uncertvarxvary(varx=varx,vary=vary,data1=data1,data2=data2,basedata=basedata,varw1=varw1,varw2=varw2,varlist=varlist)
+uncertvarxvary(varx="SAL",vary="PRA22",data1=ecv,data2=pra,basedata=pra,
+               varw1="calELE",varw2="calELE",varlist=varlist)
 ```
 
 **NOTE**
@@ -279,13 +274,18 @@ strata.sel #this is selected stratum
 matchvars <- c("EST", "BUSQ")
 matchvars
 #
+########################################################################
+# Hasta la siguiente línea ##### me parece que no tiene objeto; en el 
+# interior de nnhdbystrata ya se seleccionan las filas de pra y ecv que 
+# corresponden a strata.sel. No es preciso (y confunde) hacerlo ahora.
 #donante y receptor
-don <- pra[which(pra$EDS  == strata.sel ), ]
-rec <- ecv[which(ecv$EDS  == strata.sel ), ]
+# don <- subset(pra, EDS  == strata.sel )
+# rec <- subset(ecv, EDS  == strata.sel )
+########################################################################
 wA <- wB <- "calELE"
 vary <- "PRA22"
 #
-fused.1 <- nnhdbystrata(rec=rec,don=don,stratalevel=strata.sel,stratavar="EDS",matchvars=matchvars,vary=vary, checkdiffs=TRUE)
+fused.1 <- nnhdbystrata(rec=ecv,don=pra,stratalevel=strata.sel,stratavar="EDS",matchvars=matchvars,vary=vary, checkdiffs=TRUE)
 #
 #check output (a data frame with fused file)
 #str(fused.1)
@@ -310,17 +310,23 @@ The same functions used for variable selection (concordance assessment) can be u
 varA <- varB <- "PRA22"
 wA <- wB <- "calELE"
 #
-compareVar(varA=varA,varB=varB,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+compareVar(varA="PRA22",varB="PRA22",
+           fileA=fused.1,
+           fileB=subset(pra, EDS  == strata.sel ),
+           wA="calELE",wB="calELE",plot=TRUE,type="rel",measures=TRUE)
 ```
 
 **Function: compareMultivar**
 
 ```{r}
 #compare observed/imputed distributions by levels of a second variable
-var1A <- var1B <- "PRA22"
-var2A <- var2B <- "EST"
-wA <- wB <- "calELE"
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+# var1A <- var1B <- "PRA22"
+# var2A <- var2B <- "EST"
+# wA <- wB <- "calELE"
+compareMultivar(var1A="PRA22",var1B="PRA22",var2A="EST",var2B="EST",
+                fileA=fused.1,
+                fileB=subset(pra, EDS  == strata.sel ),
+                wA="calELE",wB="calELE",plot=TRUE,type="rel",measures=TRUE)
 ```
 
 
