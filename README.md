@@ -3,7 +3,7 @@ micromatch package
 
 Repository for micromatch package.
 
-More information on uses & actual degree of development: (http://rpubs.com/inesgn/micromatch_explained)
+For more information on the uses & actual functionality of the package, as well as future developments, you can have a look at the package vignette.
 
 ### What is the aim of this package?
 The aim of `micromatch` is to provide the user with some utilities and functions to ease the task of statistical matching of official microdata files.
@@ -25,6 +25,6 @@ This package focuses on this process view in order to help the user easily under
 ### References
 * *Data Integration* ESSnet project (http://www.cros-portal.eu/content/data-integration-finished)
 * *ISAD* ESSnet project (http://www.cros-portal.eu/content/isad-finished)
-* *Statistical matching: a model based approach for data integration*, Eurostat methodolgies and working papers, 2013.
+* *Statistical matching: a model based approach for data integration*, Eurostat methodolgies and working papers, 2013. Download (http://epp.eurostat.ec.europa.eu/cache/ITY_OFFPUB/KS-RA-13-020/EN/KS-RA-13-020-EN.PDF)
 * *Statistical Matching, Theory and Practice*, Marcello D'Orazio, Marco Di Zio, Mauro Scanu, Wiley, 2006.
 * *Statistical Matching: A Frequentist Theory, Practical Applications and Alternative Bayesian Approaches (Lecture Notes in Statistics)*, S. Rässler, Springer, 2002.

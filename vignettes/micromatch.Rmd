@@ -314,6 +314,7 @@ compareVar(varA=varA,varB=varB,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,typ
 ```
 
 **Function: compareMultivar**
+
 ```{r}
 #compare observed/imputed distributions by levels of a second variable
 var1A <- var1B <- "PRA22"
@@ -337,14 +338,12 @@ To this class, we will pass:
 * Specific variables in B
 
 ```{r,pruebaClasesyMetodos,eval=TRUE}
-rec <- ecv
-don <- pra
 matchvars <- varCom[-c(1,2)]#Eliminamos ED, S que son de estrato
 donvars <- c("PRA22") #variable especifica de PRA, la unica que se considera: PRA22
 recvars <- "SAL" #variable especifica de ECV, un ejemplo: SAL 'trastornos de salud'
-stratavar <- "ED" #variable de estrato
-d1 <- new("matchdesign",rec=rec,
-		don=don,
+stratavar <- "S" #variable de estrato
+d1 <- new("matchdesign",rec=ecv,
+		don=pra,
 		matchvars=matchvars,
 		donvars=donvars,
 		recvars=recvars,
@@ -360,11 +359,36 @@ Dos métodos sencillos
 **Method: Compare1**
 
 _describe_ nos devuelve los parámetros especificados en matchdesign
-_compare1_ realiza un cálculo rápido de distancias de Hellinger para cada variable común especificada en matchdesign, por separado (sin considerar estratos)
+
+_compare1_ realiza un cálculo rápido de medidas empíricas de comparación de distribuciones marginales (distancias de Hellinger y otras) para cada variable común especificada en la lista al definir el objeto de la clase matchdesign, por separado (sin considerar estratos)
+
+_compare2_ realiza el mismo cálculo que _compare1_, pero lo hace por estratos (es decir para cada nivel del factor que define el estrato, extrae una tabla de medidas empíricas con tantas filas como variables comunes en el objeto de la clase matchdesign)
+
+        * NOTA. compare2 aún en desarrollo. Con el estrato "S", sexo, funciona tal como se desea, es decir: extrae una matriz con tantas filas como variables comunes y tantas columnas como medidas empíricas (distancias, etc), por cada uno de los niveles de la variable de estrato (en el caso del sexo, dos matrices). Ahora bien, si se introduce una variable como "ED", edad, con más niveles, parece que algo falla en la función de StatMatch comp.prop(), puede que porque no se cumple algún criterio o tolerancia. Eso hay que investigarlo. Otro problema es que el resultado no es correcto al compilar en knitr este archivo .Rmd.; sin embargo, es correcto en una sesión interactiva donde se ejecutan todos los code-chunks.
 
 ```{r, methodsPrueba, eval=TRUE}
 describe(d1)
 compare1(x=d1)
+compare2(x=d1)
+#error: se obtiene list()
+#en cambio ejecutando los 'code chunks' en una sesión
+#se obtiene el resultado correcto:
+# $H
+#     varCom    tvd overlap  Bhatt   Hell
+# 1      OCP 0.0561  0.9439 0.9984 0.0397
+# 2      PAR 0.0025  0.9975      1  0.004
+# 3      INA 0.0536  0.9464 0.9985 0.0384
+# 4     BUSQ 0.0169  0.9831 0.9995 0.0231
+# 5 DOM.com2 0.0118  0.9882 0.9999 0.0087
+# 
+# $M
+#     varCom    tvd overlap  Bhatt   Hell
+# 1      OCP  0.036   0.964 0.9993 0.0257
+# 2      PAR 0.0092  0.9908 0.9997  0.016
+# 3      INA 0.0452  0.9548  0.999  0.032
+# 4     BUSQ 0.0081  0.9919 0.9999 0.0121
+# 5 DOM.com2 0.1393  0.8607 0.9852 0.1218
+
 ```
 
 ### Probar con otros datos externos

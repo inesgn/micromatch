@@ -1,12 +1,22 @@
 Package: micromatch
 Type: Package
-Title: Functions and utilities for statistical matching for official microdata files
+Title: Functions and utilities for statistical matching for official microdata
+    files
 Version: 1.0
 Date: 2014-07-01
 Author: Ines Garmendia <ines.garmendia@gmail.com>
 Maintainer: Ines Garmendia <ines.garmendia@gmail.com>
-Description: micromatch package provides some utilities and functions to help in the process of statistically matching independent microdata files referred to the same population of interest
+Description: micromatch package provides some utilities and functions to help
+    in the process of statistically matching independent microdata files
+    referred to the same population of interest
 License: GPL-3
-Depends: R (>= 3.1.0), StatMatch, ggplot2, gridExtra, mice, vcd
-Suggests: knitr
+Depends:
+    R (>= 3.1.0),
+    StatMatch,
+    ggplot2,
+    gridExtra,
+    mice,
+    vcd
+Suggests:
+    knitr
 VignetteBuilder: knitr

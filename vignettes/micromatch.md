@@ -1,14 +1,15 @@
 ---
 title: "Explaining micromatch package"
 author: "Ines Garmendia"
-date: "2014-07-16"
+date: '2014-07-16'
 output:
+  pdf_document: default
   html_document:
-    theme: null
     highlight: null
-    self_contained: no
     includes:
       in_header: assets/header.html
+    self_contained: no
+    theme: null
 ---
 
 <!--
@@ -316,20 +317,57 @@ var1A <- var1B <- varCom[2] #S estrato
 var2A <- var2B <- varCom[4] #variable a estudiar (dependiente)
 var3A <- var3B <- varCom[1] #ED  estrato
 #absolute values, no measures, no plotting
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="abs",measures=FALSE,wA=wA, wB=wB, plot=FALSE)
+compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=ecv, fileB=pra, type="abs",measures=FALSE,wA=wA, wB=wB, plot=FALSE)
 ```
 
 ```
-## Error: objeto 'fileA' no encontrado
+## $`table for file #1`
+##          z1 (15,24] (24,34] (34,44] (44,54] (54,64]    65+
+## x1 y1                                                     
+## H  FALSE      40566  153508  179269  155768  133761 173095
+##    TRUE       51073   13199    2340    7283     896    660
+## M  FALSE      36277  149322  164325  158928  136252 218578
+##    TRUE       49768   11552    9409    3680    2099   1382
+## 
+## $`table for file #2`
+##          z2 (15,24] (24,34] (34,44] (44,54] (54,64]    65+
+## x2 y2                                                     
+## H  FALSE      33498  159737  181957  162409  130940 173849
+##    TRUE       55454    5136     408     151     143    139
+## M  FALSE      24872  144742  170772  164745  138275 249323
+##    TRUE       58098    9914    2246     997    1033    617
+## 
+## $measures
+## NULL
 ```
 
 ```r
 #relative values, with measures, plotting
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=fileA, fileB=fileB, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
+compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=ecv, fileB=pra, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
 ```
 
+![plot of chunk concordancia2var](figure/concordancia2var1.png) ![plot of chunk concordancia2var](figure/concordancia2var2.png) 
+
 ```
-## Error: objeto 'fileA' no encontrado
+## $`table for file #1`
+##          z1 (15,24] (24,34] (34,44] (44,54] (54,64]   65+
+## x1 y1                                                    
+## H  FALSE       2.19    8.28    9.67    8.41    7.22  9.34
+##    TRUE        2.76    0.71    0.13    0.39    0.05  0.04
+## M  FALSE       1.96    8.06    8.87    8.58    7.35 11.80
+##    TRUE        2.69    0.62    0.51    0.20    0.11  0.07
+## 
+## $`table for file #2`
+##          z2 (15,24] (24,34] (34,44] (44,54] (54,64]   65+
+## x2 y2                                                    
+## H  FALSE       1.79    8.54    9.73    8.69    7.00  9.30
+##    TRUE        2.97    0.27    0.02    0.01    0.01  0.01
+## M  FALSE       1.33    7.74    9.13    8.81    7.40 13.34
+##    TRUE        3.11    0.53    0.12    0.05    0.06  0.03
+## 
+## $measures
+##     tvd overlap   Bhatt    Hell 
+## 0.03319 0.96681 0.99588 0.06418
 ```
 
 *Assess predictive value of concordant variables*
@@ -534,10 +572,8 @@ The same functions used for variable selection (concordance assessment) can be u
 #compare observed/imputed distributions
 varA <- varB <- "PRA22"
 wA <- wB <- "calELE"
-fileA <- fused.1
-fileB <- don
 #
-compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+compareVar(varA=varA,varB=varB,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
 ```
 
 ```
@@ -547,7 +583,7 @@ compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type=
 ![plot of chunk validateResults](figure/validateResults.png) 
 
 ```
-## $`Table for file: fileA`
+## $`Table for file: fused.1`
 ## x1
 ##                           Occupied           Unemployed (unpaid work) 
 ##                              30.47                               3.72 
@@ -572,14 +608,13 @@ compareVar(varA=varA,varB=varB,fileA=fileA,fileB=don,wA=wA,wB=wB,plot=TRUE,type=
 
 **Function: compareMultivar**
 
+
 ```r
 #compare observed/imputed distributions by levels of a second variable
 var1A <- var1B <- "PRA22"
 var2A <- var2B <- "EST"
 wA <- wB <- "calELE"
-fileA <- fused.1
-fileB <- don
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,fileA=fileA,fileB=fileB,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
+compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,fileA=fused.1,fileB=don,wA=wA,wB=wB,plot=TRUE,type="rel",measures=TRUE)
 ```
 
 ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-11.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-12.png) 
@@ -624,14 +659,12 @@ To this class, we will pass:
 
 
 ```r
-rec <- ecv
-don <- pra
 matchvars <- varCom[-c(1,2)]#Eliminamos ED, S que son de estrato
 donvars <- c("PRA22") #variable especifica de PRA, la unica que se considera: PRA22
 recvars <- "SAL" #variable especifica de ECV, un ejemplo: SAL 'trastornos de salud'
-stratavar <- "ED" #variable de estrato
-d1 <- new("matchdesign",rec=rec,
-		don=don,
+stratavar <- "S" #variable de estrato
+d1 <- new("matchdesign",rec=ecv,
+		don=pra,
 		matchvars=matchvars,
 		donvars=donvars,
 		recvars=recvars,
@@ -653,7 +686,12 @@ Dos métodos sencillos
 **Method: Compare1**
 
 _describe_ nos devuelve los parámetros especificados en matchdesign
-_compare1_ realiza un cálculo rápido de distancias de Hellinger para cada variable común especificada en matchdesign, por separado (sin considerar estratos)
+
+_compare1_ realiza un cálculo rápido de medidas empíricas de comparación de distribuciones marginales (distancias de Hellinger y otras) para cada variable común especificada en la lista al definir el objeto de la clase matchdesign, por separado (sin considerar estratos)
+
+_compare2_ realiza el mismo cálculo que _compare1_, pero lo hace por estratos (es decir para cada nivel del factor que define el estrato, extrae una tabla de medidas empíricas con tantas filas como variables comunes en el objeto de la clase matchdesign)
+
+        * NOTA. compare2 aún en desarrollo. Con el estrato "S", sexo, funciona tal como se desea, es decir: extrae una matriz con tantas filas como variables comunes y tantas columnas como medidas empíricas (distancias, etc), por cada uno de los niveles de la variable de estrato (en el caso del sexo, dos matrices). Ahora bien, si se introduce una variable como "ED", edad, con más niveles, parece que algo falla en la función de StatMatch comp.prop(), puede que porque no se cumple algún criterio o tolerancia. Eso hay que investigarlo. Otro problema es que el resultado no es correcto al compilar en knitr este archivo .Rmd.; sin embargo, es correcto en una sesión interactiva donde se ejecutan todos los code-chunks.
 
 
 ```r
@@ -678,7 +716,10 @@ describe(d1)
 ## [1] "PRA22"
 ## 
 ## $`Strata variable:`
-## [1] "ED"
+## [1] "S"
+## 
+## $`Stratalevels:`
+## [1] "H" "M"
 ```
 
 ```r
@@ -694,6 +735,35 @@ compare1(x=d1)
 ## 5      INA 0.0021  0.9979      1 0.0015
 ## 6     BUSQ 0.0121  0.9879 0.9997 0.0173
 ## 7 DOM.com2 0.0648  0.9352 0.9978 0.0466
+```
+
+```r
+compare2(x=d1)
+```
+
+```
+## list()
+```
+
+```r
+#error: se obtiene list()
+#en cambio ejecutando los 'code chunks' en una sesión
+#se obtiene el resultado correcto:
+# $H
+#     varCom    tvd overlap  Bhatt   Hell
+# 1      OCP 0.0561  0.9439 0.9984 0.0397
+# 2      PAR 0.0025  0.9975      1  0.004
+# 3      INA 0.0536  0.9464 0.9985 0.0384
+# 4     BUSQ 0.0169  0.9831 0.9995 0.0231
+# 5 DOM.com2 0.0118  0.9882 0.9999 0.0087
+# 
+# $M
+#     varCom    tvd overlap  Bhatt   Hell
+# 1      OCP  0.036   0.964 0.9993 0.0257
+# 2      PAR 0.0092  0.9908 0.9997  0.016
+# 3      INA 0.0452  0.9548  0.999  0.032
+# 4     BUSQ 0.0081  0.9919 0.9999 0.0121
+# 5 DOM.com2 0.1393  0.8607 0.9852 0.1218
 ```
 
 ### Probar con otros datos externos

@@ -35,3 +35,4 @@ Other "Select variables": \code{\link{compareMultivar}};
   \code{\link{plot2Cat}}; \code{\link{plotTable}};
   \code{\link{uncertvarxvary}}
 }
+
