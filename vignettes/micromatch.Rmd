@@ -1,411 +1,469 @@
 ---
-title: "Explaining micromatch package"
+title: "`micromatch` package: new version"
 author: "Ines Garmendia"
 date: '`r Sys.Date()`'
-output:
-  html_document:
-    highlight: null
-    includes:
-      in_header: assets/header.html
-    self_contained: no
-    theme: null
-  pdf_document: default
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Vignette Title}
+  %\usepackage[utf8]{inputenc}
 ---
 
 <!--
 %\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Explaining micromatch package}
+%\VignetteIndexEntry{micromatch package: Making statistical matching easier}
 -->
 
-Explaining `micromatch` package
-================================
-The `micromatch` package provides a set of utilities and functions to ease the task of statistical matching of official microdata files.
+`micromatch`  provides a set of utilities to ease the task of  statistically matching microdata files from Official Statistics.
 
 What is statistical matching?
------------------------------
-Statistical matching (also known as data fusion data merging or synthetic matching) is set of techniques for providing joint information on variables or indicators collected through multiple sources, usually, surveys drawn from the same population. The potential benefits of this approach lie in the possibility to enhance the complementary use and analytical potential of existing data sources. (A. Leulescu & M. Agafitei, 2013).
+=============================
+Statistical matching (also known as data fusion, data merging or synthetic matching) is set of techniques for providing joint information on variables or indicators collected through multiple sources, usually, surveys drawn from the same population. The potential benefits of this approach lie in the possibility to enhance the complementary use and analytical potential of existing data sources. (A. Leulescu & M. Agafitei, 2013).
 
-### The starting point
+The starting point
+------------------
 
-The statistical matching task usually begins with two independent survey samples from the same population of interest, each of which produces measures regarding specific questions (for example, living styles and wages), but sharing a block of common variables (usually sociodemographic variables such as the age, sex, or social status), see Fig.1. The basic assumption is that the number of individuals or units appearing in both samples (i.e., the overlap) is negligible. In this respect, the fundamental difference with respect to other methods such as record linkage is that, in the latter, we have identical units that we want to match exactly, while in statistical matching we _know_ the units are different, but we _wish_ to find similar ones.
+The statistical matching task starts by considering two independent survey samples from the same population of interest, each of which produces measures regarding specific questions (for example, living styles and wages). 
+
+The basic assumption is that the sources share a block of variables (usually sociodemographic variables such as the age, sex, or social status), see Fig.1. 
 
 ![alt text](fig1.png)
 
-### When should we consider using `micromatch?
-The user will be ready to use `micromatch` when having two separate files, A and B, with _distinct units_ referred to the _same population of interest_, having two sets of distinct variables in each file (which we call _specific variables_), and sharing a common block of variables (which we call _common variables_). The user wishes to do specific statistical analyses that combine variables coming from the distinct files or sources, and faces the problem of lacking observations with information for all the variables.
+**Fig 1. The starting point**
 
-By applying statistical matching methods, the user will typically obtain either a synthetic file containing information on all the variables and all units from both sources (so in this case statistical matching could be viewed as a kind of missing data imputation procedure). Sometimes, when only two variables in separate files are of specific interest, the user could more efficiently estimate a contingency table or correlation coefficient, or any parameter of interest regarding only those two variables of interest. The former is named the _micro_ approach, while the latter is the _macro_ approach.
+The basic assumption is that the number of individuals or units appearing in both samples (i.e., the overlap) is negligible. In this respect, the fundamental difference with respect to other methods such as _record linkage_ is that in the latter, we have identical units and we wish to find a correspondence between them; on the contrary, in in statistical matching, we _know_ the units are different, but we _wish_ to find similar ones.
 
-Also, the distiction of _donor_ and _recipient_ files is useful if a micro method is applied (that is, a synthetic file is produced): sometimes, only one of the files (the one having more observations, the _recipient_) is filled with the variables from the other file (the _donor_). In this case, the synthetic file will have as much observations as the recipient file.
+When should we use `micromatch`?
+-------------------------------
 
-The statistical matching methods efficiently use the information provided by the block of common variables in order to produce a plausible or valid synthetic file.
+We should use `micromatch` when having two separate files, A and B, with:
 
-### What is the particular solution implemented in `micromatch`?
-The functions currently available in `micromatch` are organized in four families, which closely follow the main steps in the statistical matching process, see Fig 2.
+1. _distinct units_ referred to the _same population of interest_, 
+2. a common block of variables (which we call _common variables_), and 
+3. two sets of distinct variables in each file (which we call _specific variables_),
 
-![alt text](fig2.png)
+and we wish to relate the specific variables in order to produce combined statistical analyses. 
 
-### Functions by families in `micromatch`
+What kind of result should we expect?
+-------------------------------------
 
-#### Family 1: Specify matching objectives
+We will typically obtain one of these results:
 
-First of all the matching objectives must be specified, which means that the user has to define:
+* a synthetic file containing full information on the variables and all units from both sources. This _enhanced_ dataset can be used later to make combined statistical analyses.
 
-* A list of common variables (i.e. variables which are, by definition, identical accross the files. Ex. age, sex, education level)
-* A list of specific variables for the first file (usually called the )
-* A list of specific variables for the second file
-* Ideally, the desired result (a synthetic file or contingency table, for example)
+* particular estimates regarding variables living in separate files. The user might wish to estimate a contingency table or correlation coefficient, or any parameter of interest regarding variables in separate files. 
 
-	* Funciones implementadas: en este momento solamente disponemos de la clase `matchdesign` que encapsularía toda esta información así como del método `describe`, que la extraería de un objeto de esta clase.
+The former is named the _micro_ approach; the latter is the _macro_ approach.
 
-#### Family 2: Select matching variables
+What is the solution implemented in `micromatch`?
+-------------------------------------------------
 
-In this step one most select a set of variables that will be used by the matching procedure, such that:
+### Input and output
 
-* They are concordant across the files; i.e. besides having the same definition (i.e. comparable questions in the questionnaires), they produce the same observed marginal distributions.
-* They have predictive value with respect to the specific variables (in each file)
+Insertar un diagrama.
 
-	* Funciones implementadas:
+### The matching process
 
-	*compareVar*
-	Compara la distribución marginal observada para una única variable categórica en los dos ficheros. Produce gráficos de barras y medidas empíricas como la distancia de Hellinger. Se pueden emplear pesos, y las tablas generadas. Futuros desarrollos: extenderlo a variables continuas.
+`micromatch` is organized around four families of functions related to the main steps of the statistical matching process, see Fig 2.
 
-	*compareMultivar*
-	Extiende la anterior para poder analizar la concordancia de distribuciones al condicionar por alguna otra variable, generalmente, estratos (como la edad y sexo). La lógica es la misma. Futuros desarrollos: los mismos. Adicionalmente, se debería estudiar la posibilidad de emplear técnicas multivariantes para comparar espacios factoriales, por ejemplo, un análisis de correspondencias y el coeficiente RV. esto es muy fácil de hacer con FactoMineR. También aportaría una visualización del espacio de variables comunes, donde además podríamos proyectar las específicas.
+<img src="fig2.png" alt="Statistical Matching Process" style="width:500px;height:600px">
 
-	*predictvalue*
-	Solamente válida para variables categóricas, mide el valor predictivo de una variable común cada vez para una variable específica dada. Produce valores dados por la función `pw.assoc` de `StatMatch`: la V de Cramer, etc, y se le añade un gráfico de mosaico dado por `structplot`. Con un `sapply` se puede analizar el valor predictivo de una lista de variables comunes en una sola iteración. Futuros desarrollos: esta aproximación univariante es demasido básica, sería deseable poder hacer modelos de regresión o bien implementar el random forest (fácil con `randomForest`), o algo similar, pero con fundamento estadística adecuado.
+**Fig 2: The statistical matching process.**
 
-	*uncertvarxvary*
-	Aún en modo de prueba, implementa la idea reflejada en StatMatch de seleccionar aquellas variables que más reduzcan la incertidumbre en cuanto a las distribuciones conjuntas no-observadas. También es un elemento esencial de la validación, con lo que también pertenecería a la Familia 4
+In a micro setting, we may want to fill one of the files. Then we say that:
 
-#### Family 3: Apply matching method
+* The file to be completed is the _recipient_ file, whereas
+* The file that donates variables the other file is the _donor_. 
 
-At this step a matching method is applied to either a synthetic file or a macro parameter estimation.
-
-	*Funciones implementadas:
-
-	*nnhdbystrata*
-
-	Básicamente es la nearest-neighbour hot-deck implementada en StatMatch, función `NND.hotdeck`, pero lo que aporta es que se efectúa un hot-deck para un estrato dado. Esto nos da la posibilidad de aplicar el matching por estratos de forma rápida usando un solo `sapply` que itere sobre todos los estratos. Futuros desarrollos: queda implementar una función similar que emplee funciones de `mice` (idealmente predictive mean matching que al parecer es muy robusto). Entonces seguramente será necesario crear una función intermedia que genere un fichero concatenado para pasar a `mice`.
+We may also want to fill variables in _both_ files: in this case no distinction is made between receptor and donor files, and we will say the files have a `symmetric` role.
 
 
-#### Family 4: Validation
+**`receptor` and `donor` files in `micromatch`**
 
-At this step a thorough validation of results must be performed.
+In a typical session with `micromatch`, we will start by defining a `receptor` and a `donor` file, or two `symmetric` files. These special _objects_ will contain not only the data frames with observations and variables (i.e. the microdata files themselves), but also some key information related to the statistical matching process. 
 
-	*Se pueden utilizar `compareVar` y `compareMultiVar` para comparar las distribuciones de variables observadas vs imputadas, una vez producido el fichero sintético. Sería muy interesante añadir funciones para poder hacer ejercicios de simulación (que servirían para probar si el matching es robusto, entender mejor sus tripas, etc). Hay referencias al respecto, y darían un valor añadido ya que en `StatMatch` no hay nada parecido.
+In the following we will illustrate this working mechanism by means of real examples.
 
+The first example: matching `ecv` and `pra`
+===========================================
 
-### Ejemplo de uso
+Two microdata files have been included in `micromatch`, which correspond to two separate surveys conducted by Eustat (The Basque Statistical Office) during the 4th quarter of 2009: 
 
-#### Cargar paquete y datos
+1. the Labour Force Survey (Encuesta de Población en Relación con la Actividad, `pra`), and 
+2. the Living Conditions Survey (Encuesta de Condiciones de Vida, `ecv`)
 
-Los datos de dos encuestas de Eustat, ECV y PRA, se han cargado en el propio paquete micromatch.
+(Please refer to the package documentation for a full description of these datasets).
 
-	* Está pendiente documentarlas: parece que no funciona el script ecv-data.R
-  * FT 17/Jul: Ya funciona; replicar para pra.
+In the following steps, we will see how a synthetic file can be obtained starting from these two separate data frames. Each step of the matching task (Fig 2) is covered by a set of functions in `micromatch`.
 
-**Encuestas de Eustat**
-Datos en el mismo micromatch:
-1. PRA: Población en relación con la actividad
-2. ECV: Encuesta de condiciones de vida
-```{r, cargar, echo=FALSE, message=FALSE}
-library(micromatch)
-data(ecv)
+### Step 1: Specify the purpose of matching
+
+First of the main elements of the matching task need to be specified:
+
+* The list of _shared variables_ (i.e. the variables common to both files. Typically: age, sex, education level...)
+* A list of _specific variables_ for the first file, A
+* A list of _specific variables_ for the second file, B
+* Optionally, some _stratum variables_, i.e. variables defining separate sub-groups on the population (typically sex or age)
+* Possibly, some _weight variables_, i.e. variables used for estimating values for all the population)
+
+`ecv` gives a bunch of living condition measures such as frequency of social relations, economic status, health problems, and so on. `pra` focuses on the labour market and produces a segmentation of the population in 5 categories. In this example we will try to obtain contingency tables crossing each of the `ecv` items with the labour market segmentation provieded by `pra`.
+
+Because `pra` has more than twice as observations than `ecv`, `pra` will act as donor and `ecv` as recipient. This means that the unique specific variable in `pra` (i.e. the labour market segmentation) will be donated (i.e. imputed) into the `ecv` file. This will produce a synthetic file with one additional variable (column) in the initial `ecv` file.
+
+The specific variable in `pra` is the labour market segmentation (variable `labour`) with the following categories:
+
+```{r, warning=FALSE, message=FALSE}
+library(micromatchdev)
 data(pra)
-dim(ecv) #numero de observaciones y variables de ecv
-dim(pra) #numero de observaciones y variables de pra
+levels(pra$labour)
 ```
 
-### Etapa 1: Definir objetivos
-
-Primero definir lo que se quiere hacer:
-
-* _Variables comunes candidatas_: en principio, se introducen todas las que podrian valer.
-Luego hay que descartar las que no son concordantes (distribuciones muy distintas), y las que no tienen capacidad predictiva (no tienen relación con las variables específicas)
-* _Variables especificas_
-* Idealmente, _objetivo del enlace_: lo que se quiere obtener (tablas, fichero sintético, etc)
-
-*Listas de variables*
-```{r, listasVariables}
-#variables comunes candidatas: las variables que comparten ecv y pra
-#aun no sabemos si seran coherentes; lo son en cuanto a la definicion
-#(preguntas de los cuestionarios), pero hay que ver si las distribuciones
-#observadas coinciden.
-#Esto hay que analizarlo no solo en general, sino en funcion de los valores
-#de otras variables, por ejemplo, por edad y sexo
-#
-varCom <- c("ED", #Edad: estrato
-	    "S",  #Sexo: estrato
-	    "TF2", #Tamanyo familiar
-	    "EST", #Estudiante si (1) o no (0)
-	    "OCP", #Ocupado si/no
-	    "PAR", #Parado si/no
-	    "INA", #Inactivo si/no
-	    "BUSQ", #Buscando empleo si/no
-	    "DOM.com2") #Dedicacion a las tareas domesticas
-#
-#variables especificas ECV
-varEsp <- c("SAL",  #condiciones de salud
-	    "IDM",  #conocimiento idiomas
-	    #"DOM",  #(la ponemos como variable comun) dedicacion tareas domesticas
-	    "NIN", #cuidado de ninyos
-	    "VAC", #lugar de vacaciones
-	    "LIB",
-	    "RELI",
-	    "RELF",
-	    "EQP",
-	    "VIV",
-	    "VEH",
-	    "SRV",
-	    "AMB",
-	    "DOM2",
-	    "ECO",
-	    "ING",
-	    "FIN" )
-#variable especifica de PRA
-vary <- "PRA22"
-```
-
-### Etapa 2: Selección de variables
-
-*Coherencia de fuentes*
-
-**Función: compareVar**
-
-Univariate comparisons: Compares one variable at a time
-
-Only check first 2 variables.
-
-```{r, concordancia,eval=TRUE}
-#consultar documentacion: ?compareVar
-#dar valores a los parametros fijos
-wA <- wB <- "calELE" #variable de peso calibrada
-#
-# all comparisons for a list of common vars at once
-#absolute values, no plotting, no empirical measures
-sapply(X=varCom[1:2], FUN=function(x){
-	print(paste('Variable: ',x))
-	varA <- varB <- varCom[x]
-	c <- compareVar(varA=x, varB=x,fileA=ecv,fileB=pra,wA=wA, wB=wB,plot=FALSE,measures=FALSE,type="abs")
-	print(c)
-})
-#relative values, plotting, with empirical measures (Hellinger's Distance, etc)
-sapply(X=varCom[1:2], FUN=function(x){
-	print(paste('Variable: ',x))
-	#relative values, with plot
-	c<- compareVar(varA=x, varB=x,fileA=ecv,fileB=pra,wA=wA, wB=wB,plot=TRUE,measures=TRUE,type="rel")
-	print(c)
-})
-#To analyze all variables in varCom list, use sapply(X=1:length(varCom), FUN=...)
-```
-
-*Coherence of variables by strata (facets) in separate sources*
-
-**Función: compareMultivar**
-
-Elegimos una variable de muestra: el indicador de Estudiante S/N.
-Para estudiar todas a la vez se emplearía, como antes, un sapply.
-
-```{r, concordancia2var,eval=TRUE}
-#consultar documentacion ?compareMultivar
-var1A <- var1B <- varCom[2] #S estrato
-var2A <- var2B <- varCom[4] #variable a estudiar (dependiente)
-var3A <- var3B <- varCom[1] #ED  estrato
-#absolute values, no measures, no plotting
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=ecv, fileB=pra, type="abs",measures=FALSE,wA=wA, wB=wB, plot=FALSE)
-#relative values, with measures, plotting
-compareMultivar(var1A=var1A,var1B=var1B,var2A=var2A,var2B=var2B,var3A=var3A,var3B=var3B,fileA=ecv, fileB=pra, type="rel",measures=TRUE,wA=wA, wB=wB, plot=TRUE)
-```
-
-*Assess predictive value of concordant variables*
-
-**Function: predictvalue**
-
-For each common variable found to be concordant between the files, we assess its predictive value with respect to the chosen specific variables. One variable at a time.
-
-Note that in each assessment, only one of the files is used, i.e. the one that contains the specific variable to predict.
-
-```{r,predictvalue}
-#choose values
-varA <- "EST" #variable to assess, name in file B
-data <- pra
-varw <- "calELE"
-#
-#table with absolute values, no measures, no plotting
-predictvalue(varx=varA, vary=vary, data=data,varw=varw,plot=FALSE,measures=FALSE,type="abs")
-#table with relative values, measures, plotting
-predictvalue(varx=varA, vary=vary, data=data,varw=varw,plot=TRUE,measures=TRUE,type="rel")
-```
-
-**Function: uncertvarxvary**
-
-Otra opción interesante para la selección de variables es el cálculo de bandas de incertidumbre. La idea es seleccionar las variables comunes que más reduzcan la incertidumbre (anchura de las bandas) el relacionar las variables específicas de las encuestas.
-
-```{r,selectIncertidubre,warning=FALSE}
-varlist <- varCom[1:7] #restricted list of common variables, just to check
-varlist
-uncertvarxvary(varx="SAL",vary="PRA22",data1=ecv,data2=pra,basedata=pra,
-               varw1="calELE",varw2="calELE",varlist=varlist)
-```
-
-**NOTE**
-Note that warnings are generated because observed distributions are not concordant between the files when crossing so many variables. Uncertainty evaluation might make more sense in specific stratum and with less variables, controlling that a minimum level of coherence between the sources is satisfied.
-
-### Etapa 3: Aplicar un método de enlace
-
-**Function: nnhdbystrata**
-
-Generalmente, el enlace se hará por estratos. En el caso de ECV-PRA hemos usado 12 grupos de edad y sexo, y dentro de cada uno se ha realizado un hot-deck independiente, usando variables distintas cada vez.
-
-Mostramos un ejemplo.
-
-```{r,matchingHD}
-#check documentation ?nnhdbystrata
-#select stratum
-i <- 1 ##select here: values between 1-12
-strata <- as.factor(levels(ecv$EDS))
-strata.sel <- strata[i]
-strata.sel #this is selected stratum
-#
-#Select variables for this stratum
-# The decision must be grounded on the previous phase
-matchvars <- c("EST", "BUSQ")
-matchvars
-#
-########################################################################
-# Hasta la siguiente línea ##### me parece que no tiene objeto; en el 
-# interior de nnhdbystrata ya se seleccionan las filas de pra y ecv que 
-# corresponden a strata.sel. No es preciso (y confunde) hacerlo ahora.
-#donante y receptor
-# don <- subset(pra, EDS  == strata.sel )
-# rec <- subset(ecv, EDS  == strata.sel )
-########################################################################
-wA <- wB <- "calELE"
-vary <- "PRA22"
-#
-fused.1 <- nnhdbystrata(rec=ecv,don=pra,stratalevel=strata.sel,stratavar="EDS",matchvars=matchvars,vary=vary, checkdiffs=TRUE)
-#
-#check output (a data frame with fused file)
-#str(fused.1)
-#names(fused.1) ## ECV con la variable PRA22 adicional
-dim(fused.1) #only for strata #1
-```
-
-**NOTE #1**
-Note that the by setting the logical parameter checkdiff to TRUE, a table is generated for each selected matching variable to check for differences between the values in that variable for the recipient-donor files. If all values are placed in the diagonal then all recipient-donor pairs will be equal in that variable.
-
-**NOTE #2**
-In this example, the fused file was only obtained for the first stratum. The usage is to perform hot-deck for all the strata, store results in 12 data frames and then appy rbind to get a fused file with all the rows of the original recipient file.
-
-### Etapa 4: Validar resultados
-
-The same functions used for variable selection (concordance assessment) can be used to compare distributions of observed/imputed variables. Thus, these function belong to two families in the package.
-
-**Function: compareVar**
-
-```{r, validateResults}
-#compare observed/imputed distributions
-varA <- varB <- "PRA22"
-wA <- wB <- "calELE"
-#
-compareVar(varA="PRA22",varB="PRA22",
-           fileA=fused.1,
-           fileB=subset(pra, EDS  == strata.sel ),
-           wA="calELE",wB="calELE",plot=TRUE,type="rel",measures=TRUE)
-```
-
-**Function: compareMultivar**
+Since `ecv` is a quite long questionnaire measuring many different aspects of quality and style of life, a sample of interesting items was selected for inclusion in this package:
 
 ```{r}
-#compare observed/imputed distributions by levels of a second variable
-# var1A <- var1B <- "PRA22"
-# var2A <- var2B <- "EST"
-# wA <- wB <- "calELE"
-compareMultivar(var1A="PRA22",var1B="PRA22",var2A="EST",var2B="EST",
-                fileA=fused.1,
-                fileB=subset(pra, EDS  == strata.sel ),
-                wA="calELE",wB="calELE",plot=TRUE,type="rel",measures=TRUE)
+data(ecv)
+str(ecv[,13:25])
 ```
 
+### Step 2: Select matching variables
 
-## Extensions: What if we create a new, specific class for matching?
+The shared variables between `ecv` and `pra` are shown in Table 1:
 
-*Class: matchdesign*
+Variable   | Short Name | Type
+------------- | ----- | -------------
+Territory  | territory | 3 categories
+Age  | age | 6 categories
+Sex  | sex | 2 categories
+Agesex  | agesex | 12 categories (combination of age and sex)
+Family size  | famsize | 3 categories
+Student?  | student | TRUE, FALSE
+Seeking job?  | seekjob | TRUE, FALSE
+Employed?  | employed | TRUE, FALSE
+Unemployed?  | unemployed | TRUE, FALSE
+Inactive?  | inactive | TRUE, FALSE
+Hours at work  | workhours | 4 categories
+Dedication to housework  | housework | 2 categories
 
-Define a matchdesign class that encapsulates the type of matching that we want.
-To this class, we will pass:
+**Table 1: Shared variables between `ecv` and `pra`**
 
-* recipient file A
-* donor file B
-* Common variables (both in A & B)
-* Specific variables in A
-* Specific variables in B
+        * Important Note: The data frames have been pre-processed in order to provide 
+        the same names for the common variables, and the same category levels for the
+        categorical values. These preprocessing task will have to be tackled prior to 
+        using `micromatch`.
 
-```{r,pruebaClasesyMetodos,eval=TRUE}
-matchvars <- varCom[-c(1,2)]#Eliminamos ED, S que son de estrato
-donvars <- c("PRA22") #variable especifica de PRA, la unica que se considera: PRA22
-recvars <- "SAL" #variable especifica de ECV, un ejemplo: SAL 'trastornos de salud'
-stratavar <- "S" #variable de estrato
-d1 <- new("matchdesign",rec=ecv,
-		don=pra,
-		matchvars=matchvars,
-		donvars=donvars,
-		recvars=recvars,
-		stratavar=stratavar
-)
-class(d1) #comprobacion de que la clase es 'matchdesign'
+The shared variables have been unified:
+
+```{r}
+# In the first data frame: pra
+str(pra[,1:12])
+# In the second data frame: ecv
+str(ecv[,1:12])
 ```
 
-Dos métodos sencillos
+Each data frame has its weight variable, named `weights`.
 
-**Method: Describe**
+For convenience, we will specify character vectors for each type of variable, as follows:
 
-**Method: Compare1**
-
-_describe_ nos devuelve los parámetros especificados en matchdesign
-
-_compare1_ realiza un cálculo rápido de medidas empíricas de comparación de distribuciones marginales (distancias de Hellinger y otras) para cada variable común especificada en la lista al definir el objeto de la clase matchdesign, por separado (sin considerar estratos)
-
-_compare2_ realiza el mismo cálculo que _compare1_, pero lo hace por estratos (es decir para cada nivel del factor que define el estrato, extrae una tabla de medidas empíricas con tantas filas como variables comunes en el objeto de la clase matchdesign)
-
-        * NOTA. compare2 aún en desarrollo. Con el estrato "S", sexo, funciona tal como se desea, es decir: extrae una matriz con tantas filas como variables comunes y tantas columnas como medidas empíricas (distancias, etc), por cada uno de los niveles de la variable de estrato (en el caso del sexo, dos matrices). Ahora bien, si se introduce una variable como "ED", edad, con más niveles, parece que algo falla en la función de StatMatch comp.prop(), puede que porque no se cumple algún criterio o tolerancia. Eso hay que investigarlo. Otro problema es que el resultado no es correcto al compilar en knitr este archivo .Rmd.; sin embargo, es correcto en una sesión interactiva donde se ejecutan todos los code-chunks.
-
-```{r, methodsPrueba, eval=TRUE}
-describe(d1)
-compare1(x=d1)
-compare2(x=d1)
+```{r defineVariables}
+# Shared variables
+varshared <- c("territory", "sex", "age", "agesex",
+            "famsize", "student", "seekjob", "employed",
+            "unemployed", "inactive", "workhours", "housework")
+# Specific variables in the 1st file
+varesp_A <- "labour"
+# Specific variables in the 2nd file
+varesp_B <- c("healthproblems", "languages", "holidaydest","sparetime",
+              "indsocial", "famsocial", "equipment", "housemode",
+              "ownvehicles", "ambientalcond", "econstatus", "income","moneyend")
+# Weight variables (named the same way for both files)
+weights <- "weights"
 ```
 
-### Probar con otros datos externos
+Now we proceed to define the recipient and donor files with all the previous variables:
 
-**Datos del INE**
+```{r createObjects}
+# Create recipient and donor files
+# Donor: pra
+don <- donor(data = pra, matchvars = varshared, specvars = varesp_A, weights = weights)
+# Receptor: ecv
+rec <- receptor(data = ecv, matchvars = varshared, specvars = varesp_B, weights = weights)
+```
 
-1. EPA: Encuesta de poblacion activa
-Filtramos los mayores de 16 y datos de Euskadi, para poder comparar con PRA
-2. EES: Encuesta de estructura salarial
+Now we will manipulate these objets in order to we reach a final definition for the matching task. More specifically: 
 
-```{r, cargarExternos,eval=FALSE}
-#cargar datos del INE
-#microdatos ya descargados desde la web
-library(MicroDatosEs)
-setwd("~/Documents/micromatch-ejemplosUso/datosINE")
-epa4T2009 <- epa2005( epa.file = "datos_t409" )
+* we will select an optimal subset of `varshared`, which will act as the common variables (thus we will update the character vector for `mathcvars`), and 
+
+* we will introduce stratum (i.e. group) variables: `stratavars`.
+
+The common variables selected for matching must meet two conditions:
+
+1. **Coherence**: The selected variables must show the same information across the files. The coherence refers both comparable definitions (i.e. wording of items in questionnaires) and to comparable empirical (observed) distributions.
+
+2. **Predictive value**: The selected variables must be highly related to the specific variables in each of the files.
+
+If these two conditions are met, then statistical matching will produce results which are (at least) coherent with the original information sources. 
+
+(Please refer to the chapter on Validation to see what other conditions must be met in order to produce high quality results from a broader point of view.)
+
+#### Step 2-1: Compare empirical distributions
+
+First we need to discard variables whose empirical distributions are not comparable between the files. (Note that lack of equivalence with respect to the definition of concepts i.e., wording of items in the questionnaires, is also an important criterion in this step). 
+
+We can use the `tabulate2cat` function to tabulate a single categorical variable in both files. Using `weights` is optional, and we can choose absolute or relative cell values with the argument `cell_values`:
+
+```{r tabulateExample}
+# Tabulate "territory", using weights and with absolute cell values
+tabulate2cat(data_A = ecv, data_B = pra, var_A = "territory", var_B = "territory", 
+             weights_A = "weights", weights_B = "weights", cell_values = "abs")
+# Proportions (i.e. cell values relative to totals)
+tabulate2cat(data_A = ecv, data_B = pra, var_A = "territory", var_B = "territory", 
+             weights_A = "weights", weights_B = "weights", cell_values = "rel")
+```
+
+`plot2cat` function produces a barplot for a single categorical variable. As before, `weights` is optional, and we can choose absolute or relative cell values with the argument `cell_values`:
+
+```{r plotExample}
+# Plot "territory", using weights and with relative cell values (i.e. proportions)
+plot2cat(data_A = ecv, data_B = pra, var_A = "territory", var_B = "territory", 
+             weights_A = "weights", weights_B = "weights", cell_values = "rel")
+```
+
+Finally `similarity2cat` produces disimilarity/similarity measures for empirical distributions based on `StatMatch` package. Again, `weights` is optional:
+
+```{r measuresExample}
+# Plot "territory", using weights and with relative cell values (i.e. proportions)
+similarity2cat(data_A = ecv, data_B = pra, var_A = "territory", var_B = "territory", 
+             weights_A = "weights", weights_B = "weights")
+```
+
+Doing this on a variable-by-variable basis can be time-consuming; for this reason, specific methods have been included in `micromatch` that handle all variables defined as `matchvars` (i.e. common variables betwen the files) at once. Here is an illustration:
+
+**All common variables at once**
+
+* Tables.
+
+```{r compareMatchvarsTables, eval=TRUE}
+# Tables: proportions and weights
+compare_matchvars(x = rec, y = don, cell_values = "rel", weights = TRUE)
+```
+
+* Plots. 
+
+```{r compareMatchvarsPlots, eval=TRUE}
+# Plots: proportions and weights
+compare_matchvars(x = rec, y = don, type = "plot", cell_values = "rel", 
+                  weights = TRUE)
+```
+
+* Disimilarity measures.
+
+```{r compareMatchvarsMeasures, eval=TRUE}
+# Measures: weights
+compare_matchvars(x = rec, y = don, type = "measures", weights = TRUE)
+```
+
+Globally, we suspect there could be some type of incoherence in variables `famsize` (category 1 person), `unemployed` and `housework`. In any case, coherence between variables should be investigated further.
+
+In the `ecv`-`pra` example, age and sex groups are determinant both for the labour market segmentation and for living conditions. The combined variable, `agesex`, has been created to include as a group/strata variable. 
+
+We now remove variable `age`, `sex` and `agesex` from the common variables and include it as `stratavars` variable. `micromatch` has specific functions for easy removal (`remove`) and inclusion (`include`) of variables:
+
+```{r}
+rec1 <- remove(x = rec, vars = c("age", "sex", "agesex")) 
+#removes variables and creates new object
+rec2 <- include(x = rec1, vars = "agesex", as = "stratavars") 
+#includes 'agesex' as strata
+##
+don1 <- remove(x = don, vars = c("age", "sex", "agesex"))
+don2 <- include(don1, vars = "agesex", as = "stratavars")
+```
+
+Now we will repeat the analyses with objects `rec2` and `don2`, which include `agesex` as stratum variables. By setting option `strata` to `TRUE` in `compare_matchvars` method we get the same answers as before, by each stratum value (12 groups of age and sex, in this case):
+
+**Results by `agesex` groups**
+
+* Tables
+
+```{r compareMatchStrataTables, eval=FALSE}
+# Tables: proportions and weights
+compare_matchvars(x = rec2, y = don2, type = "table", weights = TRUE, 
+                  cell_values = "rel", strata = TRUE)
+```
+
+(Not printed)
+
+* Plots
+
+```{r compareMatchStrataPlots, eval= FALSE}
+# Plots: proportions and weights
+compare_matchvars(x = rec2, y = don2, type = "plot", weights = TRUE, strata = TRUE, 
+                  cell_values = "rel")
+```
+
+(Not printed)
+
+* Measures
+
+```{r compareMatchStrataMeasures, eval= TRUE}
+# Measures: weights
+#compare_matchvars(x = rec2, y = don2, type = "measures", weights = TRUE, strata = TRUE)
+#da error, porque hay casos con 0 casos en el estrato +65
+compare_matchvars(x = remove(rec2, vars=c("unemployed", "employed", "inactive", "seekjob")), 
+                  y = remove(don2, vars=c("unemployed", "employed", "inactive", "seekjob")),
+                  type = "measures", weights = TRUE, strata = TRUE)
+```
+
+**First selection**
+
+A first, tentative selection of variables by `agesex` values is done in table 2:
+
+Stratum   | Selected variables
+------------- | ------------------
+Male.15-24  | student, seekjob
+Female.15-24  | student, seekjob
+Male.25-34  | seekjob, housework  
+Female.25-34  | unemployed, housework
+Male.35-44  | unemployed, famsize
+Female.35-44  | unemployed, occupied
+Male.45-54  | unemployed, seekjob
+Female.45-54  | unemployed, seekjob
+Male.55-64  | inactive, seekjob
+Female.55-64  | inactive
+Male.65+  | famsize
+Female.65+  | famsize
+
+*Table 2. A tentative selection of shared variables based on coherence study*
+
+#### Step 2-2: Assess predictive value
+
+For the pre-selected variables, we will assess the predictive value with respect to the `specvars` in each of the files.
+
+We can use `predictvalue` method to assess the predictive value of `matchvars` with respect to `specvars`:
+
+* In `pra` file, the (unique) specific variable is `labour`:
+
+```{r,eval=TRUE}
+predictvalue(x = remove(don, "workhours")) 
+```
+
+        * Note. `workhours` is excluded since the original function in `StatMatch`, 
+        `pw.assoc`, returns an error. This is because this variable only applies to 
+        occupied people:
+        
+```{r}
+table(pra$labour, pra$workhours)
+```
+
+* In `ecv` file, we have a set of `specvars`:
+
+```{r, eval=TRUE}
+predictvalue(x = remove(rec, "workhours"))
+```
+
+Now we should inspect what happens within levels of `agesex`, i.e. repeat the previous analysis by strata.
+
+For the pre-selected variables (see Table 2), the `select` and `predictvalue` methods can be easily combined to obtain results for `agesex` groups:
+
+**Example: strata Male.15-24**
+
+We inspect the predictive value of preselected variables: `student`, `seekjob` within this group.
+
+In `pra`:
+
+```{r}
+levels(ecv$agesex)
+don2.M1524 <- select_strata(x = don2, value = "Male.(15,24]")
+table(slot(don2.M1524, "data")[,"agesex"]) #ok
+varshared[-c(6,7)] #variables to keep
 #
-#Filtrar:
-## datos de Eusadi, mayores de 16
-nrow(epa4T2009[which(epa4T2009$ccaa==16 & epa4T2009$nivel==1 ),]) #con 16 anyos o mas
-epa <- epa4T2009[which(epa4T2009$ccaa==16 & epa4T2009$nivel==1 ),]
-#
-setwd("~/Documents/micromatch")
+predictvalue(x = remove(don2.M1524 , varshared[-c(6,7)]))
 ```
 
+In this case the predictive value is high so we decide to keep both: `student` and `seekjob`.
+TODO: PRINT TABLES.
 
+Proceeding this way, we finally keep all variables in Table 2 and proceed to perform hot-deck imputation.
 
-## References
-* A. Leulescu & M. Agafitei, *Statistical matching: a model based approach for data integration*, Eurostat methodolgies and working papers, 2013.
-* *Data Integration* ESSnet project (http://www.cros-portal.eu/content/data-integration-finished)
-* *ISAD* ESSnet project (http://www.cros-portal.eu/content/isad-finished)
-* *Statistical Matching, Theory and Practice*, Marcello D'Orazio, Marco Di Zio, Mauro Scanu, Wiley, 2006.
-* *Statistical Matching: A Frequentist Theory, Practical Applications and Alternative Bayesian Approaches (Lecture Notes in Statistics)*, S. Rässler, Springer, 2002.
+### Step 3: Nearest neighbour hot-deck imputation
+
+Take first 10 rows and concatenate
+
+```{r}
+rec2.prueba <- select_observations(x = rec2, obs = 1:5)
+don2.prueba <- select_observations(x = don2, obs = 1:5)
+concat.prueba <- concatenate(x = rec2.prueba, y = don2.prueba)
+concat.prueba
+```
+
+Match via hot-deck
+```{r}
+filled.rec2.prueba <- match.hotdeck(x = rec2.prueba, y = don2.prueba)
+filled.rec2.prueba
+```
+
+Match obsevations for strata "Male.15-24".
+
+**With all variables!**
+
+* Match
+
+```{r}
+#Select strata
+rec2.M1524 <- select_strata(x = rec2, value = "Male.(15,24]")
+don2.M1524 <- select_strata(x = don2, value = "Male.(15,24]")
+#Match
+filled.rec2.M1524 <- match.hotdeck(x = rec2.M1524, y = don2.M1524)
+```
+
+* Validate observed vs imputed `labour` variable.
+
+```{r}
+plot2cat(data_A = slot(filled.rec2.M1524, "data"), 
+             data_B = slot(don2.M1524, "data"),
+             var_A = "labour",
+             var_B = "labour",
+             weights_A = "weights",
+             weights_B = "weights",
+             cell_values = "rel")
+```
+
+Bad results!
+
+**With variable selection**
+
+* Match
+
+```{r}
+#Match
+varshared[-c(6,7)] #variables to keep
+filled.rec2.M1524 <- match.hotdeck(x = remove(rec2.M1524, vars = varshared[-c(6,7)]),
+                                   y = remove(don2.M1524, vars = varshared[-c(6,7)]))
+```
+
+* Validate
+
+```{r}
+plot2cat(data_A = slot(filled.rec2.M1524, "data"), 
+             data_B = slot(don2.M1524, "data"),
+             var_A = "labour",
+             var_B = "labour",
+             weights_A = "weights",
+             weights_B = "weights",
+             cell_values = "rel")
+```
+
+Results are much better with variable selection.
+
+        *TODO. Programar matching por estratos identificando una lista tipo...
+
+```{r}
+#c("student", "seekjob") %in% varshared
+#varselected <- list(c("student", "seekjob"), )
+#luego lapply replicando lo hecho con el primer estrato.
+#englobar los resultados en un unico objeto.
+```
+
+        *TODO.Validar los resultados con un objeto que englobe los 'fusedfile' 
+        imputados de todos los estratos.Con esto, termina el ejemplo ecv-pra.
+
+        *TODO. Siguiente ejemplo: pisa-talis y MICE sobre fichero concatenado.
