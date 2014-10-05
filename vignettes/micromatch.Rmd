@@ -14,24 +14,41 @@ vignette: >
 %\VignetteIndexEntry{micromatch package: Making statistical matching easier}
 -->
 
-`micromatch`  provides a set of utilities to ease the task of  statistically matching microdata files from Official Statistics.
+`micromatch` provides a set of utilities to ease the task of statistically matching microdata files from official statistics.
+
+The main methods that `micromatch` relies on are described in two books: [1] and [2], and are also a result of two Eurostat projects in data integration and statistical matching (see references [3] and [4]).
 
 What is statistical matching?
 =============================
 Statistical matching (also known as data fusion, data merging or synthetic matching) is set of techniques for providing joint information on variables or indicators collected through multiple sources, usually, surveys drawn from the same population. The potential benefits of this approach lie in the possibility to enhance the complementary use and analytical potential of existing data sources. (A. Leulescu & M. Agafitei, 2013).
 
+Statistical matching has been widely used in market research, to link consumer behavior data and media consumption data to design better advertising campaigns.
+
+In official statistics, the main interest lies in the possibility to link different aspects that are usually studied separately for the same target population (i.e. the inhabitants in a country or a particular geographic area). The reason is that a long questionnaire covering all aspects such as population health, income, consumption, labour market, social capital... is seldom conceived; such a questionnaire would be too long, leading to a higher response burden, and to poor quality. Normally, a separate survey is conducted to study each specific aspect, the drawback being that the responses lie in separate files.
+
+Statistical matching provides a methodology to explore ways for producing combined analyses or indicators from independent surveys. 
+
 The starting point
 ------------------
 
-The statistical matching task starts by considering two independent survey samples from the same population of interest, each of which produces measures regarding specific questions (for example, living styles and wages). 
-
-The basic assumption is that the sources share a block of variables (usually sociodemographic variables such as the age, sex, or social status), see Fig.1. 
+Consider two independent survey samples from the same population of interest, each of which produces measures regarding a specific field (for example, living styles and consumer behavior). The surveys share a block of variables (sociodemographic variables such as the age, sex, or social status). When putting all the observations surveys together, a particular _missing data_ pattern due to the non-observed values emerges (i.e., answers we don't have in one survey just because they correspond to the other, independent survey), see Fig 1.
 
 ![alt text](fig1.png)
 
-**Fig 1. The starting point**
+**Fig 1. The starting point: a block of common variables (Z) and two block of specific, non-jointly-observed, variables (X and Y)**
 
-The basic assumption is that the number of individuals or units appearing in both samples (i.e., the overlap) is negligible. In this respect, the fundamental difference with respect to other methods such as _record linkage_ is that in the latter, we have identical units and we wish to find a correspondence between them; on the contrary, in in statistical matching, we _know_ the units are different, but we _wish_ to find similar ones.
+The aim is to obtain integrated analyses or results relating the non-jointly-observed variables (blocks _X_ and _Y_ in the figure), and to achieve this we need to make use of the common information between the files (block _Z_) in some efficient and reliable way.
+
+
+        * The basic assumption is that the number of individuals or units in both
+        samples (i.e., the overlap) is negligible. 
+        
+        The fundamental difference with respect to other methods such as "record
+        linkage" is that in the latter, we have identical units and we wish to 
+        find a correspondence between them to link the files. 
+        
+        In statistical matching, we "know" the units are different, but we "wish" 
+        to find similar ones.
 
 When should we use `micromatch`?
 -------------------------------
@@ -47,20 +64,20 @@ and we wish to relate the specific variables in order to produce combined statis
 What kind of result should we expect?
 -------------------------------------
 
-We will typically obtain one of these results:
+Depeding on the selected approach, we will obtain one of these results:
 
 * a synthetic file containing full information on the variables and all units from both sources. This _enhanced_ dataset can be used later to make combined statistical analyses.
 
 * particular estimates regarding variables living in separate files. The user might wish to estimate a contingency table or correlation coefficient, or any parameter of interest regarding variables in separate files. 
 
-The former is named the _micro_ approach; the latter is the _macro_ approach.
+The former is named the _micro_ approach. The latter is the _macro_ approach.
 
 What is the solution implemented in `micromatch`?
 -------------------------------------------------
 
-### Input and output
+As opposed to other packages such as `StatMatch` or `mice` that provide sophisticated functions to solve different statistical matching tasks, `micromatch` does not offer (genuinely) new functionality but rather a _context_ to make statistical matching easier, independently of which the chosen methodology is. That is: `micromatch` does not offer new functions to solve the statistical matching problem, but, on the contrary, it offers a _framework_ where the main methods implemented across other packages are integrated into a common context.
 
-Insertar un diagrama.
+To achieve this _unification_, `micromatch` uses S4 classes and methods so that the user will start defining particular attributes of the data related to the statistical matching context. In particular, every step needed to tackle a particular problem of statistical matching has its implementation (or definition) in `micromatch`. 
 
 ### The matching process
 
@@ -70,31 +87,30 @@ Insertar un diagrama.
 
 **Fig 2: The statistical matching process.**
 
-In a micro setting, we may want to fill one of the files. Then we say that:
+In a micro setting, we may want to fill one of the files. In this case, we say that:
 
-* The file to be completed is the _recipient_ file, whereas
-* The file that donates variables the other file is the _donor_. 
+        * The file to be completed is the _recipient_ file, whereas
+        * The file that donates variables the other file is the _donor_. 
 
-We may also want to fill variables in _both_ files: in this case no distinction is made between receptor and donor files, and we will say the files have a `symmetric` role.
-
+We may also want to fill variables in both files: when no distinction is made between receptor and donor files we will assume the files have a `symmetric` role.
 
 **`receptor` and `donor` files in `micromatch`**
 
-In a typical session with `micromatch`, we will start by defining a `receptor` and a `donor` file, or two `symmetric` files. These special _objects_ will contain not only the data frames with observations and variables (i.e. the microdata files themselves), but also some key information related to the statistical matching process. 
+In a typical session with `micromatch`, we will start by defining a `receptor` and a `donor` file, or two `symmetric` files. These special objects will contain not only the data frames with observations and variables (i.e. the microdata files themselves), but also some key information related to the statistical matching process. 
 
-In the following we will illustrate this working mechanism by means of real examples.
+In the following we will illustrate the use of `micromatch` by means of real examples.
 
 The first example: matching `ecv` and `pra`
 ===========================================
 
-Two microdata files have been included in `micromatch`, which correspond to two separate surveys conducted by Eustat (The Basque Statistical Office) during the 4th quarter of 2009: 
+`micromatch` includes data from two separate surveys conducted by Eustat (The Basque Statistical Office) during the 4th quarter of 2009: 
 
 1. the Labour Force Survey (Encuesta de Población en Relación con la Actividad, `pra`), and 
 2. the Living Conditions Survey (Encuesta de Condiciones de Vida, `ecv`)
 
 (Please refer to the package documentation for a full description of these datasets).
 
-In the following steps, we will see how a synthetic file can be obtained starting from these two separate data frames. Each step of the matching task (Fig 2) is covered by a set of functions in `micromatch`.
+In the following steps, we will see how a synthetic file can be obtained starting from these two separate data frames, `ecv` and `pra`. Each step of the matching task (Fig 2) is covered by a set of functions in `micromatch`.
 
 ### Step 1: Specify the purpose of matching
 
@@ -106,7 +122,7 @@ First of the main elements of the matching task need to be specified:
 * Optionally, some _stratum variables_, i.e. variables defining separate sub-groups on the population (typically sex or age)
 * Possibly, some _weight variables_, i.e. variables used for estimating values for all the population)
 
-`ecv` gives a bunch of living condition measures such as frequency of social relations, economic status, health problems, and so on. `pra` focuses on the labour market and produces a segmentation of the population in 5 categories. In this example we will try to obtain contingency tables crossing each of the `ecv` items with the labour market segmentation provieded by `pra`.
+`ecv` gives a bunch of living condition measures such as frequency of social relations, economic status, health problems, and so on. `pra` focuses on the labour market and produces a segmentation of the population in 5 categories. In this example the aim is to obtain contingency tables that cross each of the `ecv` items with the labour market segmentation provieded by `pra`.
 
 Because `pra` has more than twice as observations than `ecv`, `pra` will act as donor and `ecv` as recipient. This means that the unique specific variable in `pra` (i.e. the labour market segmentation) will be donated (i.e. imputed) into the `ecv` file. This will produce a synthetic file with one additional variable (column) in the initial `ecv` file.
 
@@ -467,3 +483,11 @@ Results are much better with variable selection.
         imputados de todos los estratos.Con esto, termina el ejemplo ecv-pra.
 
         *TODO. Siguiente ejemplo: pisa-talis y MICE sobre fichero concatenado.
+
+### References
+
+[1] D'Orazio, M., Di Zio, M., & Scanu, M. (2006). *Statistical matching: Theory and practice*. John Wiley & Sons.
+[2] Rässler, S. (2002). *Statistical matching*. Springer.
+[3] * *Data Integration* ESSnet project (http://www.cros-portal.eu/content/data-integration-finished)
+[4] * *ISAD* ESSnet project (http://www.cros-portal.eu/content/isad-finished)
+[5] Leulescu A. & Agafitei, M. *Statistical matching: a model based approach for data integration*, Eurostat methodologies and working papers, 2013.
