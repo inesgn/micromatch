@@ -10,17 +10,32 @@ predictvalue_var(data, vars_x, var_y, weights = NULL)
 
 \item{vars_x}{name of common variable(s)}
 
-\item{var_y}{name of specific variable}
+\item{var_y}{name of a specific variable}
 
 \item{weights}{weight vector name (optional)}
 }
+\value{
+A list with four components:
+\itemize{
+     \item \code{V} A vector with the estimated Cramer's V for each couple response-predictor.
+     \item \code{lambda} A vector with the values of Goodman-Kruscal lambda(R|C) for each couple response-predictor.
+     \item \code{tau} A vector with the values of Goodman-Kruscal tau(R|C) for each couple response-predictor.
+     \item \code{U} A vector whit the values of Theil's uncertainty coefficient U(R|C) for each couple response-predictor.
+}
+}
 \description{
-Evaluates predictive value of a common variable \texttt{x} with respect to a specific variable \texttt{y}
+Evaluates predictive value of a common variable \code{x}
+with respect to a specific variable \code{y}
 }
 \details{
-Dependencies: StatMatch
+This function relies on function \code{pw.assoc()} from
+\code{StatMatch} package.
 }
 \seealso{
-Other "Select matching variables": \code{\link{tabulate2cat}}
+Other "Select matching variables": \code{\link{compare_matchvars}};
+  \code{\link{compare_var_strata}};
+  \code{\link{compare_var}}; \code{\link{plot2cat}};
+  \code{\link{predictvalue}}; \code{\link{similarity2cat}};
+  \code{\link{tabulate2cat}}; \code{\link{uncert2vars}}
 }
 

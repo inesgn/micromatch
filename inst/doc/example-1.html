@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>About <code>micromatch</code></title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{micromatch package: Example}
+-->
+
+<h1>About <code>micromatch</code></h1>
+
+<p><code>micromatch</code> provides a set of utilities to ease the task of statistically matching microdata files from official statistics.</p>
+
+<p>For a general overview, please refer to the package vignette.</p>
+
+<h1>About this document</h1>
+
+<p>This documents presents the use of <code>micromatch</code> package through a real matching
+example with two independent surveys from Eustat, the Basque Statistical Office.</p>
+
+<h1>The example: matching <code>ecv</code> and <code>pra</code></h1>
+
+<p><code>micromatch</code> includes data from two separate surveys conducted by Eustat (The Basque Statistical Office) during the 4th quarter of 2009: </p>
+
+<ol>
+<li>the Labour Force Survey (Encuesta de Población en Relación con la Actividad, <code>pra</code>), and </li>
+<li>the Living Conditions Survey (Encuesta de Condiciones de Vida, <code>ecv</code>)</li>
+</ol>
+
+<p>(Please refer to the package documentation for a full description of these datasets).</p>
+
+<p>In the following steps, we will see how a synthetic file can be obtained starting from these two separate data frames, <code>ecv</code> and <code>pra</code>. Each step of the matching task (Fig 2) is covered by a set of functions in <code>micromatch</code>.</p>
+
+<h3>Step 1: Specify the purpose of matching</h3>
+
+<p>First of the main elements of the matching task need to be specified:</p>
+
+<ul>
+<li>The list of <em>shared variables</em> (i.e. the variables common to both files. Typically: age, sex, education level&hellip;)</li>
+<li>A list of <em>specific variables</em> for the first file, A</li>
+<li>A list of <em>specific variables</em> for the second file, B</li>
+<li>Optionally, some <em>stratum variables</em>, i.e. variables defining separate sub-groups on the population (typically sex or age)</li>
+<li>Possibly, some <em>weight variables</em>, i.e. variables used for estimating values for all the population)</li>
+</ul>
+
+<p><code>ecv</code> gives a bunch of living condition measures such as frequency of social relations, economic status, health problems, and so on. <code>pra</code> focuses on the labour market and produces a segmentation of the population in 5 categories. In this example the aim is to obtain contingency tables that cross each of the <code>ecv</code> items with the labour market segmentation provieded by <code>pra</code>.</p>
+
+<p>Because <code>pra</code> has more than twice as observations than <code>ecv</code>, <code>pra</code> will act as donor and <code>ecv</code> as recipient. This means that the unique specific variable in <code>pra</code> (i.e. the labour market segmentation) will be donated (i.e. imputed) into the <code>ecv</code> file. This will produce a synthetic file with one additional variable (column) in the initial <code>ecv</code> file.</p>
+
+<p>The specific variable in <code>pra</code> is the labour market segmentation (variable <code>labour</code>) with the following categories:</p>
+
+<pre><code class="r">library(micromatch)
+data(pra)
+levels(pra$labour)
+</code></pre>
+
+<pre><code>## [1] &quot;Occupied&quot;                                      
+## [2] &quot;Non-working activity (seeking job)&quot;            
+## [3] &quot;Unemployed (strict)&quot;                           
+## [4] &quot;Non-working activity (studying, housework,...)&quot;
+## [5] &quot;Inactive or retired&quot;
+</code></pre>
+
+<p>Since <code>ecv</code> is a quite long questionnaire measuring many different aspects of quality and style of life, a sample of interesting items was selected for inclusion in this package:</p>
+
+<pre><code class="r">data(ecv)
+str(ecv[,13:25])
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    4749 obs. of  13 variables:
+##  $ healthproblems: Factor w/ 2 levels &quot;Yes&quot;,&quot;No&quot;: 2 2 2 2 2 2 1 2 2 2 ...
+##  $ languages     : Factor w/ 4 levels &quot;Spanish&quot;,&quot;Sp+Others&quot;,..: 4 4 1 2 4 2 4 1 1 1 ...
+##  $ holidaydest   : Factor w/ 4 levels &quot;Basque country&quot;,..: 3 3 3 3 4 2 2 4 2 2 ...
+##  $ sparetime     : Factor w/ 3 levels &quot;&lt;2h&quot;,&quot;2-4h&quot;,&quot;+4h&quot;: 2 2 3 2 2 2 2 3 2 3 ...
+##  $ indsocial     : Factor w/ 3 levels &quot;Every day&quot;,&quot;At least once a month&quot;,..: 2 2 2 2 2 1 1 2 2 1 ...
+##  $ famsocial     : Factor w/ 3 levels &quot;Very frequent&quot;,..: 3 3 1 2 1 1 1 3 1 1 ...
+##  $ equipment     : Factor w/ 2 levels &quot;Scarce&quot;,&quot;Good&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ housemode     : Factor w/ 3 levels &quot;Owner&quot;,&quot;Rental&quot;,..: 1 1 1 1 1 1 2 2 1 1 ...
+##  $ ownvehicles   : Factor w/ 3 levels &quot;None&quot;,&quot;1 vehicle&quot;,..: 2 3 2 3 2 2 2 2 2 2 ...
+....
+</code></pre>
+
+<h3>Step 2: Select matching variables</h3>
+
+<p>The shared variables between <code>ecv</code> and <code>pra</code> are shown in Table 1:</p>
+
+<table><thead>
+<tr>
+<th>Variable</th>
+<th>Short Name</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Territory</td>
+<td>territory</td>
+<td>3 categories</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>age</td>
+<td>6 categories</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>sex</td>
+<td>2 categories</td>
+</tr>
+<tr>
+<td>Agesex</td>
+<td>agesex</td>
+<td>12 categories (combination of age and sex)</td>
+</tr>
+<tr>
+<td>Family size</td>
+<td>famsize</td>
+<td>3 categories</td>
+</tr>
+<tr>
+<td>Student?</td>
+<td>student</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr>
+<td>Seeking job?</td>
+<td>seekjob</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr>
+<td>Employed?</td>
+<td>employed</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr>
+<td>Unemployed?</td>
+<td>unemployed</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr>
+<td>Inactive?</td>
+<td>inactive</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr>
+<td>Hours at work</td>
+<td>workhours</td>
+<td>4 categories</td>
+</tr>
+<tr>
+<td>Dedication to housework</td>
+<td>housework</td>
+<td>2 categories</td>
+</tr>
+</tbody></table>
+
+<p><strong>Table 1: Shared variables between <code>ecv</code> and <code>pra</code></strong></p>
+
+<pre><code>    * Important Note: The data frames have been pre-processed in order to provide 
+    the same names for the common variables, and the same category levels for the
+    categorical values. These preprocessing task will have to be tackled prior to 
+    using `micromatch`.
+</code></pre>
+
+<p>The shared variables have been unified:</p>
+
+<pre><code class="r"># In the first data frame: pra
+str(pra[,1:12])
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    10865 obs. of  12 variables:
+##  $ territory : Factor w/ 3 levels &quot;Araba&quot;,&quot;Bizkaia&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ age       : Factor w/ 6 levels &quot;(15,24]&quot;,&quot;(24,34]&quot;,..: 6 6 6 6 6 2 1 5 5 5 ...
+##  $ sex       : Factor w/ 2 levels &quot;Male&quot;,&quot;Female&quot;: 1 2 2 1 2 2 2 1 2 1 ...
+##  $ agesex    : Factor w/ 12 levels &quot;Male.(15,24]&quot;,..: 11 12 12 11 12 4 2 9 10 9 ...
+##  $ famsize   : Ord.factor w/ 3 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3+&quot;: 2 2 1 2 2 2 2 2 2 3 ...
+##  $ student   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ seekjob   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ employed  : logi  FALSE FALSE FALSE FALSE FALSE TRUE ...
+##  $ unemployed: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+....
+</code></pre>
+
+<pre><code class="r"># In the second data frame: ecv
+str(ecv[,1:12])
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    4749 obs. of  12 variables:
+##  $ territory : Factor w/ 3 levels &quot;Araba&quot;,&quot;Bizkaia&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ age       : Factor w/ 6 levels &quot;(15,24]&quot;,&quot;(24,34]&quot;,..: 2 2 6 4 5 2 1 3 6 5 ...
+##  $ sex       : Factor w/ 2 levels &quot;Male&quot;,&quot;Female&quot;: 1 1 1 2 2 1 2 1 2 1 ...
+##  $ agesex    : Factor w/ 12 levels &quot;Male.(15,24]&quot;,..: 3 3 11 8 10 3 2 5 12 9 ...
+##  $ famsize   : Ord.factor w/ 3 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3+&quot;: 3 3 2 3 3 1 3 3 1 2 ...
+##  $ student   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ seekjob   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ employed  : logi  TRUE FALSE FALSE FALSE FALSE TRUE ...
+##  $ unemployed: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+....
+</code></pre>
+
+<p>Each data frame has its weight variable, named <code>weights</code>.</p>
+
+<p>For convenience, we will specify character vectors for each type of variable, as follows:</p>
+
+<pre><code class="r"># Shared variables
+varshared &lt;- c(&quot;territory&quot;, &quot;sex&quot;, &quot;age&quot;, &quot;agesex&quot;,
+            &quot;famsize&quot;, &quot;student&quot;, &quot;seekjob&quot;, &quot;employed&quot;,
+            &quot;unemployed&quot;, &quot;inactive&quot;, &quot;workhours&quot;, &quot;housework&quot;)
+# Specific variables in the 1st file
+varesp_A &lt;- &quot;labour&quot;
+# Specific variables in the 2nd file
+varesp_B &lt;- c(&quot;healthproblems&quot;, &quot;languages&quot;, &quot;holidaydest&quot;,&quot;sparetime&quot;,
+              &quot;indsocial&quot;, &quot;famsocial&quot;, &quot;equipment&quot;, &quot;housemode&quot;,
+              &quot;ownvehicles&quot;, &quot;ambientalcond&quot;, &quot;econstatus&quot;, &quot;income&quot;,&quot;moneyend&quot;)
+# Weight variables (named the same way for both files)
+weights &lt;- &quot;weights&quot;
+</code></pre>
+
+<p>Now we proceed to define the recipient and donor files with all the previous variables:</p>
+
+<pre><code class="r"># Create recipient and donor files
+# Donor: pra
+don &lt;- donor(data = pra, matchvars = varshared, specvars = varesp_A, weights = weights)
+# Receptor: ecv
+rec &lt;- receptor(data = ecv, matchvars = varshared, specvars = varesp_B, weights = weights)
+</code></pre>
+
+<p>Now we will manipulate these objets in order to we reach a final definition for the matching task. More specifically: </p>
+
+<ul>
+<li><p>we will select an optimal subset of <code>varshared</code>, which will act as the common variables (thus we will update the character vector for <code>mathcvars</code>), and </p></li>
+<li><p>we will introduce stratum (i.e. group) variables: <code>stratavars</code>.</p></li>
+</ul>
+
+<p>The common variables selected for matching must meet two conditions:</p>
+
+<ol>
+<li><p><strong>Coherence</strong>: The selected variables must show the same information across the files. The coherence refers both comparable definitions (i.e. wording of items in questionnaires) and to comparable empirical (observed) distributions.</p></li>
+<li><p><strong>Predictive value</strong>: The selected variables must be highly related to the specific variables in each of the files.</p></li>
+</ol>
+
+<p>If these two conditions are met, then statistical matching will produce results which are (at least) coherent with the original information sources. </p>
+
+<p>(Please refer to the chapter on Validation to see what other conditions must be met in order to produce high quality results from a broader point of view.)</p>
+
+<h4>Step 2-1: Compare empirical distributions</h4>
+
+<p>First we need to discard variables whose empirical distributions are not comparable between the files. (Note that lack of equivalence with respect to the definition of concepts i.e., wording of items in the questionnaires, is also an important criterion in this step). </p>
+
+<p>We can use the <code>tabulate2cat</code> function to tabulate a single categorical variable in both files. Using <code>weights</code> is optional, and we can choose absolute or relative cell values with the argument <code>cell_values</code>:</p>
+
+<pre><code class="r"># Tabulate &quot;territory&quot;, using weights and with absolute cell values
+tabulate2cat(data_A = ecv, data_B = pra, var_A = &quot;territory&quot;, var_B = &quot;territory&quot;, 
+             weights_A = &quot;weights&quot;, weights_B = &quot;weights&quot;, cell_values = &quot;abs&quot;)
+</code></pre>
+
+<pre><code>## $`Table for data:  ecv`
+## x_vector
+##    Araba  Bizkaia Gipuzkoa 
+##   272109  1001808   591097 
+## 
+## $`Table for data:  pra`
+## x_vector
+##    Araba  Bizkaia Gipuzkoa 
+##   273167  1000723   591500
+</code></pre>
+
+<pre><code class="r"># Proportions (i.e. cell values relative to totals)
+tabulate2cat(data_A = ecv, data_B = pra, var_A = &quot;territory&quot;, var_B = &quot;territory&quot;, 
+             weights_A = &quot;weights&quot;, weights_B = &quot;weights&quot;, cell_values = &quot;rel&quot;)
+</code></pre>
+
+<pre><code>## $`Table for data:  ecv`
+## x_vector
+##    Araba  Bizkaia Gipuzkoa 
+##   0.1459   0.5372   0.3169 
+## 
+## $`Table for data:  pra`
+## x_vector
+##    Araba  Bizkaia Gipuzkoa 
+##   0.1464   0.5365   0.3171
+</code></pre>
+
+<p><code>plot2cat</code> function produces a barplot for a single categorical variable. As before, <code>weights</code> is optional, and we can choose absolute or relative cell values with the argument <code>cell_values</code>:</p>
+
+<pre><code class="r"># Plot &quot;territory&quot;, using weights and with relative cell values (i.e. proportions)
+plot2cat(data_A = ecv, data_B = pra, var_A = &quot;territory&quot;, var_B = &quot;territory&quot;, 
+             weights_A = &quot;weights&quot;, weights_B = &quot;weights&quot;, cell_values = &quot;rel&quot;)
+</code></pre>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/plotExample.png" alt="plot of chunk plotExample"/> </p>
+
+<p>Finally <code>similarity2cat</code> produces disimilarity/similarity measures for empirical distributions based on <code>StatMatch</code> package. Again, <code>weights</code> is optional:</p>
+
+<pre><code class="r"># Plot &quot;territory&quot;, using weights and with relative cell values (i.e. proportions)
+similarity2cat(data_A = ecv, data_B = pra, var_A = &quot;territory&quot;, var_B = &quot;territory&quot;, 
+             weights_A = &quot;weights&quot;, weights_B = &quot;weights&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Measures for variable: territory&quot;
+</code></pre>
+
+<pre><code>##       tvd   overlap     Bhatt      Hell 
+## 0.0006901 0.9993099 0.9999996 0.0006061
+</code></pre>
+
+<p>Doing this on a variable-by-variable basis can be time-consuming; for this reason, specific methods have been included in <code>micromatch</code> that handle all variables defined as <code>matchvars</code> (i.e. common variables betwen the files) at once. Here is an illustration:</p>
+
+<p><strong>All common variables at once</strong></p>
+
+<ul>
+<li>Tables.</li>
+</ul>
+
+<pre><code class="r"># Tables: proportions and weights
+compare_matchvars(x = rec, y = don, cell_values = &quot;rel&quot;, weights = TRUE)
+</code></pre>
+
+<pre><code>## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##    Araba  Bizkaia Gipuzkoa 
+##   0.1459   0.5372   0.3169 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##    Araba  Bizkaia Gipuzkoa 
+##   0.1464   0.5365   0.3171 
+## 
+....
+</code></pre>
+
+<pre><code>## $territory
+## NULL
+## 
+## $sex
+## NULL
+## 
+## $age
+## NULL
+## 
+## $agesex
+....
+</code></pre>
+
+<ul>
+<li>Plots. </li>
+</ul>
+
+<pre><code class="r"># Plots: proportions and weights
+compare_matchvars(x = rec, y = don, type = &quot;plot&quot;, cell_values = &quot;rel&quot;, 
+                  weights = TRUE)
+</code></pre>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots1.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots2.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots3.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots4.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots5.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots6.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots7.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots8.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots9.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots10.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots11.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/compareMatchvarsPlots12.png" alt="plot of chunk compareMatchvarsPlots"/> </p>
+
+<pre><code>## $territory
+## NULL
+## 
+## $sex
+## NULL
+## 
+## $age
+## NULL
+## 
+## $agesex
+....
+</code></pre>
+
+<ul>
+<li>Disimilarity measures.</li>
+</ul>
+
+<pre><code class="r"># Measures: weights
+compare_matchvars(x = rec, y = don, type = &quot;measures&quot;, weights = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;Measures for variable: territory&quot;
+## [1] &quot;Measures for variable: sex&quot;
+## [1] &quot;Measures for variable: age&quot;
+## [1] &quot;Measures for variable: agesex&quot;
+## [1] &quot;Measures for variable: famsize&quot;
+## [1] &quot;Measures for variable: student&quot;
+## [1] &quot;Measures for variable: seekjob&quot;
+## [1] &quot;Measures for variable: employed&quot;
+## [1] &quot;Measures for variable: unemployed&quot;
+## [1] &quot;Measures for variable: inactive&quot;
+....
+</code></pre>
+
+<pre><code>##         territory       sex      age   agesex famsize  student seekjob
+## tvd     0.0006901 6.900e-05 0.002836 0.004081 0.06577 0.007087 0.01878
+## overlap 0.9993099 9.999e-01 0.997164 0.995919 0.93423 0.992913 0.98122
+## Bhatt   0.9999996 1.000e+00 0.999994 0.999988 0.99518 0.999911 0.99936
+## Hell    0.0006061 4.881e-05 0.002409 0.003403 0.06946 0.009434 0.02525
+##         employed unemployed inactive workhours housework
+## tvd     0.002644   0.007558 0.010202   0.08764   0.07521
+## overlap 0.997356   0.992442 0.989798   0.91236   0.92479
+## Bhatt   0.999997   0.999856 0.999947   0.99132   0.99710
+## Hell    0.001870   0.012018 0.007273   0.09319   0.05390
+....
+</code></pre>
+
+<p>Globally, we suspect there could be some type of incoherence in variables <code>famsize</code> (category 1 person), <code>unemployed</code> and <code>housework</code>. In any case, coherence between variables should be investigated further.</p>
+
+<p>In the <code>ecv</code>-<code>pra</code> example, age and sex groups are determinant both for the labour market segmentation and for living conditions. The combined variable, <code>agesex</code>, has been created to include as a group/strata variable. </p>
+
+<p>We now remove variable <code>age</code>, <code>sex</code> and <code>agesex</code> from the common variables and include it as <code>stratavars</code> variable. <code>micromatch</code> has specific functions for easy removal (<code>remove</code>) and inclusion (<code>include</code>) of variables:</p>
+
+<pre><code class="r">rec1 &lt;- remove(x = rec, vars = c(&quot;age&quot;, &quot;sex&quot;, &quot;agesex&quot;)) 
+#removes variables and creates new object
+rec2 &lt;- include(x = rec1, vars = &quot;agesex&quot;, as = &quot;stratavars&quot;) 
+#includes &#39;agesex&#39; as strata
+##
+don1 &lt;- remove(x = don, vars = c(&quot;age&quot;, &quot;sex&quot;, &quot;agesex&quot;))
+don2 &lt;- include(don1, vars = &quot;agesex&quot;, as = &quot;stratavars&quot;)
+</code></pre>
+
+<p>Now we will repeat the analyses with objects <code>rec2</code> and <code>don2</code>, which include <code>agesex</code> as stratum variables. By setting option <code>strata</code> to <code>TRUE</code> in <code>compare_matchvars</code> method we get the same answers as before, by each stratum value (12 groups of age and sex, in this case):</p>
+
+<p><strong>Results by <code>agesex</code> groups</strong></p>
+
+<ul>
+<li>Tables</li>
+</ul>
+
+<pre><code class="r"># Tables: proportions and weights
+compare_matchvars(x = rec2, y = don2, type = &quot;table&quot;, weights = TRUE, 
+                  cell_values = &quot;rel&quot;, strata = TRUE)
+</code></pre>
+
+<p>(Not printed)</p>
+
+<ul>
+<li>Plots</li>
+</ul>
+
+<pre><code class="r"># Plots: proportions and weights
+compare_matchvars(x = rec2, y = don2, type = &quot;plot&quot;, weights = TRUE, strata = TRUE, 
+                  cell_values = &quot;rel&quot;)
+</code></pre>
+
+<p>(Not printed)</p>
+
+<ul>
+<li>Measures</li>
+</ul>
+
+<pre><code class="r"># Measures: weights
+#compare_matchvars(x = rec2, y = don2, type = &quot;measures&quot;, weights = TRUE, strata = TRUE)
+#da error, porque hay casos con 0 casos en el estrato +65
+compare_matchvars(x = remove(rec2, vars=c(&quot;unemployed&quot;, &quot;employed&quot;, &quot;inactive&quot;, &quot;seekjob&quot;)), 
+                  y = remove(don2, vars=c(&quot;unemployed&quot;, &quot;employed&quot;, &quot;inactive&quot;, &quot;seekjob&quot;)),
+                  type = &quot;measures&quot;, weights = TRUE, strata = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;Measures for variable: territory&quot;
+## [1] &quot;Stratum:  Male.(15,24]&quot;
+##      tvd  overlap    Bhatt     Hell 
+## 0.006558 0.993442 0.999953 0.006857 
+## [1] &quot;Measures for variable: territory&quot;
+## [1] &quot;Stratum:  Female.(15,24]&quot;
+##      tvd  overlap    Bhatt     Hell 
+## 0.006561 0.993439 0.999955 0.006726 
+## [1] &quot;Measures for variable: territory&quot;
+## [1] &quot;Stratum:  Male.(24,34]&quot;
+....
+</code></pre>
+
+<pre><code>##       territory  famsize  student workhours housework
+##  [1,] 0.0065575 0.008604 0.070795   0.32800  0.060678
+##  [2,] 0.9934425 0.991396 0.929205   0.67200  0.939322
+##  [3,] 0.9999530 0.998998 0.997410   0.93960  0.996816
+##  [4,] 0.0068574 0.031660 0.050891   0.24577  0.056424
+##  [5,] 0.0065607 0.010524 0.129902   0.29283  0.056420
+##  [6,] 0.9934393 0.989476 0.870098   0.70717  0.943580
+##  [7,] 0.9999548 0.999831 0.990838   0.95052  0.998255
+##  [8,] 0.0067261 0.013016 0.095721   0.22244  0.041774
+##  [9,] 0.0027901 0.062548 0.045987   0.26785  0.111351
+....
+</code></pre>
+
+<p><strong>First selection</strong></p>
+
+<p>A first, tentative selection of variables by <code>agesex</code> values is done in table 2:</p>
+
+<table><thead>
+<tr>
+<th>Stratum</th>
+<th>Selected variables</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Male.15-24</td>
+<td>student, seekjob</td>
+</tr>
+<tr>
+<td>Female.15-24</td>
+<td>student, seekjob</td>
+</tr>
+<tr>
+<td>Male.25-34</td>
+<td>seekjob, housework</td>
+</tr>
+<tr>
+<td>Female.25-34</td>
+<td>unemployed, housework</td>
+</tr>
+<tr>
+<td>Male.35-44</td>
+<td>unemployed, famsize</td>
+</tr>
+<tr>
+<td>Female.35-44</td>
+<td>unemployed, occupied</td>
+</tr>
+<tr>
+<td>Male.45-54</td>
+<td>unemployed, seekjob</td>
+</tr>
+<tr>
+<td>Female.45-54</td>
+<td>unemployed, seekjob</td>
+</tr>
+<tr>
+<td>Male.55-64</td>
+<td>inactive, seekjob</td>
+</tr>
+<tr>
+<td>Female.55-64</td>
+<td>inactive</td>
+</tr>
+<tr>
+<td>Male.65+</td>
+<td>famsize</td>
+</tr>
+<tr>
+<td>Female.65+</td>
+<td>famsize</td>
+</tr>
+</tbody></table>
+
+<p><em>Table 2. A tentative selection of shared variables based on coherence study</em></p>
+
+<h4>Step 2-2: Assess predictive value</h4>
+
+<p>For the pre-selected variables, we will assess the predictive value with respect to the <code>specvars</code> in each of the files.</p>
+
+<p>We can use <code>predictvalue</code> method to assess the predictive value of <code>matchvars</code> with respect to <code>specvars</code>:</p>
+
+<ul>
+<li>In <code>pra</code> file, the (unique) specific variable is <code>labour</code>:</li>
+</ul>
+
+<pre><code class="r">predictvalue(x = remove(don, &quot;workhours&quot;)) 
+</code></pre>
+
+<pre><code>## [[1]]
+## [[1]]$V
+##  labour.territory        labour.sex        labour.age     labour.agesex 
+##           0.03193           0.43289           0.37585           0.48260 
+##    labour.famsize    labour.student    labour.seekjob   labour.employed 
+##           0.21081           0.30929           0.85599           1.00000 
+## labour.unemployed   labour.inactive  labour.housework 
+##           0.99892           0.99982           0.57507 
+## 
+## [[1]]$lambda
+....
+</code></pre>
+
+<pre><code>    * Note. `workhours` is excluded since the original function in `StatMatch`, 
+    `pw.assoc`, returns an error. This is because this variable only applies to 
+    occupied people:
+</code></pre>
+
+<pre><code class="r">table(pra$labour, pra$workhours)
+</code></pre>
+
+<pre><code>##                                                 
+##                                                  [0,14] (14,35] (35,44]
+##   Occupied                                          114    1324    3233
+##   Non-working activity (seeking job)                281       0       0
+##   Unemployed (strict)                               202       0       0
+##   Non-working activity (studying, housework,...)   3830       0       0
+##   Inactive or retired                              1342       0       0
+##                                                 
+##                                                  (44,99]
+##   Occupied                                           186
+....
+</code></pre>
+
+<ul>
+<li>In <code>ecv</code> file, we have a set of <code>specvars</code>:</li>
+</ul>
+
+<pre><code class="r">predictvalue(x = remove(rec, &quot;workhours&quot;))
+</code></pre>
+
+<pre><code>## Warning: Chi-squared approximation may be incorrect
+## Warning: Chi-squared approximation may be incorrect
+</code></pre>
+
+<pre><code>## [[1]]
+## [[1]]$V
+##  healthproblems.territory        healthproblems.sex 
+##                   0.12844                   0.01800 
+##        healthproblems.age     healthproblems.agesex 
+##                   0.30384                   0.30524 
+##    healthproblems.famsize    healthproblems.student 
+##                   0.17705                   0.10186 
+##    healthproblems.seekjob   healthproblems.employed 
+##                   0.07394                   0.27480 
+....
+</code></pre>
+
+<p>Now we should inspect what happens within levels of <code>agesex</code>, i.e. repeat the previous analysis by strata.</p>
+
+<p>For the pre-selected variables (see Table 2), the <code>select</code> and <code>predictvalue</code> methods can be easily combined to obtain results for <code>agesex</code> groups:</p>
+
+<p><strong>Example: strata Male.15-24</strong></p>
+
+<p>We inspect the predictive value of preselected variables: <code>student</code>, <code>seekjob</code> within this group.</p>
+
+<p>In <code>pra</code>:</p>
+
+<pre><code class="r">levels(ecv$agesex)
+</code></pre>
+
+<pre><code>##  [1] &quot;Male.(15,24]&quot;   &quot;Female.(15,24]&quot; &quot;Male.(24,34]&quot;   &quot;Female.(24,34]&quot;
+##  [5] &quot;Male.(34,44]&quot;   &quot;Female.(34,44]&quot; &quot;Male.(44,54]&quot;   &quot;Female.(44,54]&quot;
+##  [9] &quot;Male.(54,64]&quot;   &quot;Female.(54,64]&quot; &quot;Male.65+&quot;       &quot;Female.65+&quot;
+</code></pre>
+
+<pre><code class="r">don2.M1524 &lt;- select_strata(x = don2, value = &quot;Male.(15,24]&quot;)
+table(slot(don2.M1524, &quot;data&quot;)[,&quot;agesex&quot;]) #ok
+</code></pre>
+
+<pre><code>## 
+##   Male.(15,24] Female.(15,24]   Male.(24,34] Female.(24,34]   Male.(34,44] 
+##            512              0              0              0              0 
+## Female.(34,44]   Male.(44,54] Female.(44,54]   Male.(54,64] Female.(54,64] 
+##              0              0              0              0              0 
+##       Male.65+     Female.65+ 
+##              0              0
+</code></pre>
+
+<pre><code class="r">varshared[-c(6,7)] #variables to keep
+</code></pre>
+
+<pre><code>##  [1] &quot;territory&quot;  &quot;sex&quot;        &quot;age&quot;        &quot;agesex&quot;     &quot;famsize&quot;   
+##  [6] &quot;employed&quot;   &quot;unemployed&quot; &quot;inactive&quot;   &quot;workhours&quot;  &quot;housework&quot;
+</code></pre>
+
+<pre><code class="r">#
+predictvalue(x = remove(don2.M1524 , varshared[-c(6,7)]))
+</code></pre>
+
+<pre><code>## Warning: Chi-squared approximation may be incorrect
+## Warning: Chi-squared approximation may be incorrect
+</code></pre>
+
+<pre><code>## [[1]]
+## [[1]]$V
+## labour.student labour.seekjob 
+##         0.8857         0.9081 
+## 
+## [[1]]$lambda
+## labour.student labour.seekjob 
+##         0.5025         0.1823 
+## 
+## [[1]]$tau
+....
+</code></pre>
+
+<p>In this case the predictive value is high so we decide to keep both: <code>student</code> and <code>seekjob</code>.
+TODO: PRINT TABLES.</p>
+
+<p>Proceeding this way, we finally keep all variables in Table 2 and proceed to perform hot-deck imputation.</p>
+
+<h3>Step 3: Nearest neighbour hot-deck imputation</h3>
+
+<p>Take first 10 rows and concatenate</p>
+
+<pre><code class="r">rec2.prueba &lt;- select_observations(x = rec2, obs = 1:5)
+don2.prueba &lt;- select_observations(x = don2, obs = 1:5)
+concat.prueba &lt;- concatenate(x = rec2.prueba, y = don2.prueba)
+concat.prueba
+</code></pre>
+
+<pre><code>## An object of class &quot;fusedfile&quot;
+## Slot &quot;origin_specvars&quot;:
+##  [1] &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot;
+##  [9] &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file2&quot;
+## 
+## Slot &quot;origin_weights&quot;:
+## [1] &quot;file1&quot; &quot;file2&quot;
+## 
+## Slot &quot;method&quot;:
+## [1] &quot;concatenation&quot;
+....
+</code></pre>
+
+<p>Match via hot-deck</p>
+
+<pre><code class="r">filled.rec2.prueba &lt;- match.hotdeck(x = rec2.prueba, y = don2.prueba)
+</code></pre>
+
+<pre><code>## Warning: The  Manhattan  distance is being used
+## All the categorical matching variables in rec and don 
+##  data.frames, if present are recoded into dummies
+</code></pre>
+
+<pre><code class="r">filled.rec2.prueba
+</code></pre>
+
+<pre><code>## An object of class &quot;fusedfile&quot;
+## Slot &quot;origin_specvars&quot;:
+##  [1] &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot;
+##  [9] &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file1&quot; &quot;file2&quot;
+## 
+## Slot &quot;origin_weights&quot;:
+## [1] &quot;file1&quot;
+## 
+## Slot &quot;method&quot;:
+## [1] &quot;distance-hotdeck&quot;
+....
+</code></pre>
+
+<p>Match obsevations for strata &ldquo;Male.15-24&rdquo;.</p>
+
+<p><strong>With all variables!</strong></p>
+
+<ul>
+<li>Match</li>
+</ul>
+
+<pre><code class="r">#Select strata
+rec2.M1524 &lt;- select_strata(x = rec2, value = &quot;Male.(15,24]&quot;)
+don2.M1524 &lt;- select_strata(x = don2, value = &quot;Male.(15,24]&quot;)
+#Match
+filled.rec2.M1524 &lt;- match.hotdeck(x = rec2.M1524, y = don2.M1524)
+</code></pre>
+
+<ul>
+<li>Validate observed vs imputed <code>labour</code> variable.</li>
+</ul>
+
+<pre><code class="r">plot2cat(data_A = slot(filled.rec2.M1524, &quot;data&quot;), 
+             data_B = slot(don2.M1524, &quot;data&quot;),
+             var_A = &quot;labour&quot;,
+             var_B = &quot;labour&quot;,
+             weights_A = &quot;weights&quot;,
+             weights_B = &quot;weights&quot;,
+             cell_values = &quot;rel&quot;)
+</code></pre>
+
+<p>Bad results!</p>
+
+<p><strong>With variable selection</strong></p>
+
+<ul>
+<li>Match</li>
+</ul>
+
+<pre><code class="r">#Match
+varshared[-c(6,7)] #variables to keep
+filled.rec2.M1524 &lt;- match.hotdeck(x = remove(rec2.M1524, vars = varshared[-c(6,7)]),
+                                   y = remove(don2.M1524, vars = varshared[-c(6,7)]))
+</code></pre>
+
+<ul>
+<li>Validate</li>
+</ul>
+
+<pre><code class="r">plot2cat(data_A = slot(filled.rec2.M1524, &quot;data&quot;), 
+             data_B = slot(don2.M1524, &quot;data&quot;),
+             var_A = &quot;labour&quot;,
+             var_B = &quot;labour&quot;,
+             weights_A = &quot;weights&quot;,
+             weights_B = &quot;weights&quot;,
+             cell_values = &quot;rel&quot;)
+</code></pre>
+
+<p>Results are much better with variable selection.</p>
+
+<pre><code>    *TODO. Programar matching por estratos identificando una lista tipo...
+</code></pre>
+
+<pre><code class="r">#c(&quot;student&quot;, &quot;seekjob&quot;) %in% varshared
+#varselected &lt;- list(c(&quot;student&quot;, &quot;seekjob&quot;), )
+#luego lapply replicando lo hecho con el primer estrato.
+#englobar los resultados en un unico objeto.
+</code></pre>
+
+<pre><code>    *TODO.Validar los resultados con un objeto que englobe los &#39;fusedfile&#39; 
+    imputados de todos los estratos.Con esto, termina el ejemplo ecv-pra.
+
+    *TODO. Siguiente ejemplo: pisa-talis y MICE sobre fichero concatenado.
+</code></pre>
+
+</body>
+
+</html>

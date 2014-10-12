@@ -1,8 +1,4 @@
-#' Remove variables from a 'filetomatch' object
-#' 
-#' @family 'Utilities'
 #' @exportMethod remove
-
 setMethod("remove", 
           signature=list(x="filetomatch"), 
           function(x, vars,...){
@@ -10,23 +6,24 @@ setMethod("remove",
           }
 )
 
-#' Include variables to a 'filetomatch' object
-#' 
-#' @family 'Utilities'
 #' @exportMethod include
-
 setMethod("include", 
           signature=list(x="filetomatch"), 
-          function(x, vars, as,...){
+          function(x, vars, as){
                   .include(x = x, vars = vars, as = as)
           }
 )
 
-#' Select strata values in a 'filematch' object
-#' 
-#' @family 'Utilities'
-#' @exportMethod select_strata
+#' @exportMethod update
+setMethod("update", 
+          signature=list(x="filetomatch"), 
+          function(x,...){
+                  .update(x = x,...)
+          }
+)
 
+#Select strata values in a 'filematch' object
+#' @exportMethod select_strata
 setMethod("select_strata", 
           signature=list(x="filetomatch"), 
           function(x, value,...){
@@ -34,11 +31,7 @@ setMethod("select_strata",
           }
 )
 
-#' Select observations (i.e rows of data frame) in a 'filematch' object
-#' 
-#' @family 'Utilities'
 #' @exportMethod select_observations
-
 setMethod("select_observations", 
           signature=list(x="filetomatch"), 
           function(x, obs,...){
@@ -46,11 +39,7 @@ setMethod("select_observations",
           }
 )
 
-#' Compare a (single) shared variable across two 'filetomatch' objects
-#' 
-#' @family 'Select matching variables'
 #' @exportMethod compare_var
-
 setMethod("compare_var", 
           signature=list(x="filetomatch", y="filetomatch"), 
           function(x, y, var_A, var_B, type = "table", weights = FALSE,...){
@@ -94,11 +83,7 @@ setMethod("compare_var",
           }
 )
 
-#' Compare a (single) shared variable across two 'filetomatch' objects, by a stratum variable
-#' 
-#' @family 'Select matching variables'
 #' @exportMethod compare_var_strata
-
 setMethod("compare_var_strata", 
           signature=list(x="filetomatch", y="filetomatch"), 
           function(x, y, var_A, var_B, type = "table", weights = FALSE, stratavar, ...){
@@ -121,11 +106,7 @@ setMethod("compare_var_strata",
           }                  
 )
 
-#' Compare a (single) shared variable across two 'filetomatch' objects, by a stratum variable
-#' 
-#' @family 'Select matching variables'
-#' @exportMethod compare_var_strata
-
+#' @exportMethod compare_matchvars
 setMethod("compare_matchvars", 
           signature=list(x="filetomatch", y="filetomatch"), 
           function(x, y, type = "table", weights = FALSE, strata = FALSE, ...){
@@ -141,44 +122,37 @@ setMethod("compare_matchvars",
                   }
 })
     
-#' Assess predictive value of common variables w.r.t specific variables in a 'filetomatch' object
-#' 
-#' @family 'Select matching variables'
 #' @exportMethod predictvalue
-
 setMethod("predictvalue", 
           signature=list(x="filetomatch"), 
-          function(x,...){
+          function(x, weights = FALSE,...){
                   data <- slot(x, "data")
                   vars_x <- slot(x, "matchvars")
                   vars_y <- slot(x, "specvars")
+                  if(weights){ 
+                          weights = slot(x, "weights") 
+                  } else {
+                          weights = NULL
+                  }
                   lapply(vars_y, FUN = function(var){
                           predictvalue_var(data = data, vars_x = vars_x,
                                            var_y = var, weights = weights)
                   })
 })
 
-#' Concatenate two 'filetomatch' objects
-#' 
-#' @family 'Apply matching method'
 #' @exportMethod concatenate
-
 setMethod("concatenate", 
           signature=list(x="filetomatch", y="filetomatch"), 
           function(x,y){
-                  .convertToFusedfile(x=x, y=y, data=.concat(x,y), transformation="fillboth")
+                  .convertToFusedfile(x=x, y=y, data=.concat(x,y), method="concatenation", role="incomplete", transformation="fillboth")
           }
 )
 
-#' Match two 'filetomatch' objects via distance hot-deck
-#' 
-#' @family 'Apply matching method'
 #' @exportMethod match.hotdeck
-
 setMethod("match.hotdeck", 
           signature=list(x='filetomatch', y='filetomatch'), 
-          function(x,y){
-                  .convertToFusedfile(x=x, y=y, data=.match_disthotdeck(x,y), transformation="fillreceptor")
+          function(x,y,...){
+                  .convertToFusedfile(x = x, y = y, data = .match_disthotdeck(x,y,...), method = "distance-hotdeck", role = "complete", transformation = "fillreceptor")
           }
 )
 

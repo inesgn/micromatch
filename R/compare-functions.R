@@ -46,7 +46,7 @@ tabulate2cat <- function(data_A, data_B, var_A, var_B, weights_A = NULL, weights
 #' 
 #' @description 
 #' Barplots for a single categorical variable in two distinct, independent data frames
-#' @family 'Select matching variables'
+#' @family "Select matching variables"
 #' @import ggplot2
 #' @export plot2cat
 
@@ -97,7 +97,7 @@ plot2cat <- function(data_A, data_B, var_A, var_B, weights_A=NULL, weights_B=NUL
 #' 
 #' @description 
 #' Similarity/disimilarity measures based on observed empirical distributions in the two data frames.
-#' @family 'Select matching variables'
+#' @family "Select matching variables"
 #' @details Details about parameter values for Statmatch comp.prop function
 #' @export similarity2cat
 

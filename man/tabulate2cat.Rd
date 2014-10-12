@@ -34,6 +34,11 @@ Details.
 Ines Garmendia <ines.garmendia@gmail.com>
 }
 \seealso{
-Other "Select matching variables": \code{\link{predictvalue_var}}
+Other "Select matching variables": \code{\link{compare_matchvars}};
+  \code{\link{compare_var_strata}};
+  \code{\link{compare_var}}; \code{\link{plot2cat}};
+  \code{\link{predictvalue_var}};
+  \code{\link{predictvalue}}; \code{\link{similarity2cat}};
+  \code{\link{uncert2vars}}
 }
 

@@ -36,7 +36,7 @@ of strata variables (optional).
 "Ines Garmendia <ines.garmendia@gmail.com>"
 }
 \seealso{
-Other 'Matching definition step': \code{\link{donor}};
-  \code{\link{receptor}}
+Other "Matching definition step": \code{\link{donor}};
+  \code{\link{filetomatch-class}}; \code{\link{receptor}}
 }
 

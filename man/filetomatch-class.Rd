@@ -6,8 +6,31 @@
 \description{
 Microdata file to be matched: data plus information related to matching
 }
+\details{
+\code{filetomatch} objects contain all information needed for matching with
+other, independent \code{filetomatch} objects.
+
+\code{micromatch} provides specific functions to create \code{filetomatch} objects:
+\code{\link{receptor}}, \code{\link{donor}} and \code{\link{symmetric}}.
+(i.e. they should not be created manually by the user).
+}
+\section{Slots}{
+
+\describe{
+\item{\code{data}}{data frame}
+
+\item{\code{matchvars}}{name of shared variables with respecto to another independent \code{filetomatch} object}
+
+\item{\code{specvars}}{name of specific variables. Must be columns in \code{data}}
+
+\item{\code{stratavars}}{name of a strata variable (optional). Must be a column in \code{data}}
+
+\item{\code{weights}}{name of weight variables (optional). Must be columns in \code{data}}
+
+\item{\code{role}}{character indicating role of the file: \code{receptor}, \code{donor} or \code{symmetric}}
+}}
 \seealso{
-Other "Matching definition step": \code{\link{fusedfile-class}};
-  \code{\link{genericmatch-class}}
+Other "Matching definition step": \code{\link{donor}};
+  \code{\link{receptor}}; \code{\link{symmetric}}
 }
 

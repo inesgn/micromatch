@@ -2,12 +2,43 @@
 \docType{class}
 \name{fusedfile-class}
 \alias{fusedfile-class}
-\title{Microdata file after matching or concatenation w.r.t. another microdata file}
+\title{Result of either matching or concatenation of two or more \code{filetomatch} objects}
 \description{
-Microdata file after matching or concatenation w.r.t. another microdata file
+Result of either matching (by any method: hot deck, pmm,...) or concatenation of two
+or more \code{\link{filetomatch}} objects containing independent microdata files
 }
+\details{
+\code{fusedfile} objects contain the result of either matching or concatenation
+two or more \code{filetomatch} objects.
+
+\code{micromatch} provides specific functions to create \code{fusedfile} objects:
+\code{\link{match.hotdeck}}, \code{\link{concatenate}},...
+
+\code{fusedfile} objects should not be created manually by the user.
+}
+\section{Slots}{
+
+\describe{
+\item{\code{data}}{data frame}
+
+\item{\code{matchvars}}{name of shared variables with respecto to another independent \code{filetomatch} object}
+
+\item{\code{specvars}}{name of specific variables. Must be columns in \code{data}}
+
+\item{\code{stratavars}}{name of a strata variable (optional). Must be a column in \code{data}}
+
+\item{\code{weights}}{name of weight variables (optional). Must be columns in \code{data}}
+
+\item{\code{role}}{character indicating role of the file: \code{receptor}, \code{donor} or \code{symmetric}}
+
+\item{\code{origin_specvars}}{character vector to trace the origin of specific variables (i.e. \code{specvars} of the fused \code{\link{filetomatch}} objects)}
+
+\item{\code{origin_weights}}{character vector to trace the origin of weight variables (i.e. \code{weights} of the fused \code{\link{filetomatch}} objects)}
+
+\item{\code{method}}{method used to produce the \code{fusedfile} object: concatenation, hot-deck,...}
+}}
 \seealso{
-Other "Matching definition step": \code{\link{filetomatch-class}};
-  \code{\link{genericmatch-class}}
+Other "Apply matching method": \code{\link{concatenate}};
+  \code{\link{match.hotdeck}}
 }
 

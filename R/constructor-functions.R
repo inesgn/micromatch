@@ -16,7 +16,7 @@
 #' @param stratavars character vector with names of variables acting as strata (optional)
 #' @param weights character vector with the name of the vector with numeric weight (optional, but usually given in survey samples)
 #' @return Object of class filetomatch with receptor role
-#' @family 'Matching definition step'
+#' @family "Matching definition step"
 #' @details Some amount of pre-processing is needed is this file is to be matched to another independent file
 #' In particular, names of matchvars, specvars, stratavars and weights must be the same in all files to match.
 #' @export
@@ -56,7 +56,7 @@
 #' @param stratavars character vector with names of variables acting as strata (optional)
 #' @param weights character vector with the name of the vector with numeric weights (optional, but usually given in survey samples)
 #' @return Object of class filetomatch with donor role
-#' @family 'Matching definition step'
+#' @family "Matching definition step"
 #' @details Some amount of pre-processing is needed is this file is to be matched to another independent file
 #' In particular, names of matchvars, specvars, stratavars and weights must be the same in all files to match.
 #' @export
@@ -97,7 +97,7 @@
 #' @param stratavars character vector with names of variables acting as strata (optional)
 #' @param weights character vector with the name of the vector with numeric weights (optional, but usually given in survey samples)
 #' @return Object of class filetomatch with symetric role
-#' @family 'Matching definition step'
+#' @family "Matching definition step"
 #' @details Some amount of pre-processing is needed is this file is to be matched to another independent file
 #' In particular, names of matchvars, specvars, stratavars and weights must be the same in all files to match.
 #' @export

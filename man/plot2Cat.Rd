@@ -10,10 +10,11 @@ plot2cat(data_A, data_B, var_A, var_B, weights_A = NULL, weights_B = NULL,
 Barplots for a single categorical variable in two distinct, independent data frames
 }
 \seealso{
-Other 'Select matching variables': \code{\link{compare_matchvars,filetomatch,filetomatch-method}};
-  \code{\link{compare_var,filetomatch,filetomatch-method}};
-  \code{\link{compare_var_strata,filetomatch,filetomatch-method}};
-  \code{\link{predictvalue,filetomatch-method}};
-  \code{\link{similarity2cat}}
+Other "Select matching variables": \code{\link{compare_matchvars}};
+  \code{\link{compare_var_strata}};
+  \code{\link{compare_var}};
+  \code{\link{predictvalue_var}};
+  \code{\link{predictvalue}}; \code{\link{similarity2cat}};
+  \code{\link{tabulate2cat}}; \code{\link{uncert2vars}}
 }
 

@@ -1,5 +1,15 @@
 # Update 'filetomatch' objects with new slot values
 
+".update" <- function(x = "filetomatch", data = NULL, matchvars = NULL, specvars = NULL, stratavars = NULL, weights = NULL, role = NULL){
+        if(!is.null(data)){ x <- initialize(x, data = data) }
+        if(!is.null(matchvars)) { x <- initialize(x, matchvars = matchvars) }
+        if(!is.null(specvars)) { x <- initialize(x, specvars = specvars) }
+        if(!is.null(stratavars)) { x <- initialize(x, stratavars = stratavars) }
+        if(!is.null(weights)) { x <- initialize(x, weights = weights) }
+        if(!is.null(role)) { x <- initialize(x, role = role) }
+        return(x)
+}
+
 ".add_matchvar" <- function(x = "filetomatch", var = "character"){
         initialize(x, matchvars = c(slot(x,"matchvars"), var))
 }

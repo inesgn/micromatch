@@ -1,12 +1,23 @@
 #' 
 #' Assess predictive value of a variable w.r.t. another variable in a data frame
 #'   
-#' @description Evaluates predictive value of a common variable \texttt{x} with respect to a specific variable \texttt{y}
+#' @description Evaluates predictive value of a common variable \code{x} 
+#' with respect to a specific variable \code{y}
+#' 
+#' @details This function relies on function \code{pw.assoc()} from 
+#' \code{StatMatch} package.
+#' 
 #' @param data name of data frame containing both x and y
 #' @param vars_x name of common variable(s) 
-#' @param var_y name of specific variable
+#' @param var_y name of a specific variable
 #' @param weights weight vector name (optional)
-#' @details Dependencies: StatMatch
+#' @return A list with four components:
+#' \itemize{
+#'      \item \code{V} A vector with the estimated Cramer's V for each couple response-predictor.
+#'      \item \code{lambda} A vector with the values of Goodman-Kruscal lambda(R|C) for each couple response-predictor.
+#'      \item \code{tau} A vector with the values of Goodman-Kruscal tau(R|C) for each couple response-predictor.
+#'      \item \code{U} A vector whit the values of Theil's uncertainty coefficient U(R|C) for each couple response-predictor.
+#' }
 #' @family "Select matching variables"
 #' @import StatMatch
 #' @export predictvalue_var

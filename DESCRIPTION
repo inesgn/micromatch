@@ -1,17 +1,18 @@
 Package: micromatch
 Type: Package
-Title: micromatch new version
+Title: micromatch: Utilities and functions for statistical matching
 Version: 1.0
 Date: 2014-09-10
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Ines Garmendia <ines.garmendia@gmail.com>
+Maintainer: Ines Garmendia <ines.garmendia@gmail.com>
+Description: micromatch provides utilities and functions to help
+    in the process of statistically matching independent microdata files
+    referred to the same population of interest
+License: GPL-3
 Depends:
-    R (>= 3.1.0),
+    R (>= 3.1.1),
     methods,
     StatMatch,
-    mice,
     plyr,
     ggplot2,
     gridExtra,

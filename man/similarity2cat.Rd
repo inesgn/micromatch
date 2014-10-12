@@ -13,10 +13,11 @@ Similarity/disimilarity measures based on observed empirical distributions in th
 Details about parameter values for Statmatch comp.prop function
 }
 \seealso{
-Other 'Select matching variables': \code{\link{compare_matchvars,filetomatch,filetomatch-method}};
-  \code{\link{compare_var,filetomatch,filetomatch-method}};
-  \code{\link{compare_var_strata,filetomatch,filetomatch-method}};
-  \code{\link{plot2cat}};
-  \code{\link{predictvalue,filetomatch-method}}
+Other "Select matching variables": \code{\link{compare_matchvars}};
+  \code{\link{compare_var_strata}};
+  \code{\link{compare_var}}; \code{\link{plot2cat}};
+  \code{\link{predictvalue_var}};
+  \code{\link{predictvalue}}; \code{\link{tabulate2cat}};
+  \code{\link{uncert2vars}}
 }
 
