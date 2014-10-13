@@ -2,7 +2,7 @@
 title: "`micromatch` package:"
 subtitle: "Utilities and functions for statistical matching"
 author: "Ines Garmendia"
-date: "2014-10-13"
+date: "??"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{micromatch package}
@@ -15,9 +15,9 @@ About this document
 
 <p align="justify">This is the main vignette for `micromatch` package. This package provides a set of utilities to ease the task of statistically matching independent microdata files, with a focus to official statistics. 
 
-The main methods in `micromatch` are described in two books (see [1] and [2]), and are a result of two Eurostat projects in Data Integration and Statistical Matching (see [3] and [4]). `micromatch` heavily relies on `StatMatch`, the R package that implements the methods in those sources.</p>
+The main methods in `micromatch` are described in two books (see [1] and [2]), and are a result of two Eurostat projects in Data Integration and Statistical Matching (see [3] and [4]). `micromatch` heavily relies on `StatMatch`, an R package that implements the main methods in the mentioned sources.</p>
 
-<p align="justify">This document has two main parts. In the first chapter you will find an overview of the main concepts in statistical matching methodology. In the second chapter you will see how `micromatch` can be used in practice, to solve diverse matching tasks.</p>
+<p align="justify">This document has two main parts. In the first chapter the reader will find an overview of the main concepts in statistical matching methodology. The second chapter deals with the use of `micromatch` in practice.</p>
 
 <p align="justify">`micromatch` package also provides vignettes for specific examples with real data. These additional documents can be found in the package documentation.</p>
 
@@ -32,7 +32,7 @@ Fundamentals of Statistical Matching
 
 <p align="justify">In official statistics, it can be used to link different aspects that are usually studied separately for the same target population (i.e. the inhabitants in a country or a particular geographic area). A unique questionnaire covering all aspects such as population health, income, consumption, labour market, social capital... is seldom conceived: such a questionnaire would be too long, leading to a higher response burden, and to poor quality.</p>
 
-<p align="justify">On the contrary, a separate survey is usually conducted to study each specific aspect of the population, the drawback being that the responses will eventually lie in separate files. Statistical matching tries to overcome this limitation, by making use of shared information in order to infer some type of "new" knowledge about aspects measured by independent surveys.</p>
+<p align="justify">A separate survey is usually conducted to study each specific aspect of the population, the drawback being that the responses will eventually lie in separate files. Statistical matching tries to overcome this limitation, by making use of shared information in order to infer some type of "new" knowledge about aspects measured through independent surveys.</p>
 
 The starting point (the input)
 ------------------------------
@@ -42,7 +42,7 @@ In statistical matching, we "know" the units are different, but we "wish" to fin
 
 <p align="justify">Consider two independent surveys conducted on the same population of interest, each of which produces measures regarding a specific field (e.g. living styles and consumer behavior).</p> 
 
-<p align="justify">The surveys share a block of variables (sociodemographic variables such as the age, sex, or social status). When putting all the observations surveys together, a particular missing data pattern emerges due to the non-observed values (i.e. answers we don't have in one survey just because they correspond to the other, independent survey), see Fig 1.</p>
+<p align="justify">The surveys share a block of variables (sociodemographic variables such as the age, sex, or social status). When putting observations from distinct sources together, a particular missing data pattern emerges due to the non-observed values (i.e. answers we don't have in one survey just because they correspond to the other, and viceversa), see Fig 1.</p>
 
 <div align="center"><img src="./fig1.png"><figcaption>Fig 1. The starting point: a block of common variables (Z) and two block of specific, non-jointly-observed, variables (X and Y)</figcaption></div>
 
@@ -64,29 +64,30 @@ The matching process
 
 <p align="justify">Regardless of the matching method itself —that is, the computational method by means of which we will produce a synthetic file (in the micro case) or estimations for certain parameters of the joint distributions (in the macro case)—, the matching task involves a series of <strong>pre-processing steps</strong> that have to be tackled in practice:</p>
 
-1. The choice of target variables (X and Y), i.e. the variables observed in distinct surveys.
+1. The choice of target variables (X and Y), i.e. the variables observed separately in distinct surveys.
 
-2. Identification of the variables shared by the sources, and the study of the degree of coherence taking into account not only the wording of questions (which can be different, leading to non-agreeable measures), but also the marginal distributions observed in the data files. Variables that fail to show a minimum degree of coherence must be discarded. This step can be time-consuming but can also the key for a successful matching. 
+2. Identification of the variables shared by the sources, and the study of their degree of coherence taking into account not only the wording of questions (which can be different, leading to non-agreeable measures), but also the marginal distributions observed separately in the data files. Variables that fail to show a minimum degree of coherence must be discarded. This step can be time-consuming but can also the key for a successful matching. 
 
 3. Possibly, discarding further variables that are not predictive (i.e. are not related to) for the target variables, o are redundant with others. This can be of a relevant step, depending on the computational method. 
 
 4. The choice of a matching framework (parametric, non-parametric, mixed) in a specific setting (micro or macro), and applying the corresponding matching/imputation/estimation algorithm. This algorithm will make use of the chosen subset of shared variables in steps 2 and 3 (namely, the _common matching variables_) to relate target variables fixed in step 1 (the _specific variables_).
 
-5. A validation of results.
+5. A thorough validation of results.
 
 Using `micromatch`
 =================
 
-<p align="justify">In this chapter you will find how `micromatch` may be used to tackle a specific matching task with real data, and how this package relates to —and is based on— other packages.</p>
+        * The idea is that the user should start defining particular attributes of the 
+        data files related to the statistical matching context, i.e. common and specific 
+        variables, weights, and so on. In this way, each step in the matching process 
+        has its implementation (or definition) by means of functions or methods that 
+        "act" on these special objects.
 
-Relation to other packages
----------------------------
+<p align="justify">This chapter deals with using `micromatch` in practice, and shows how functions in this package may be used to tackle a specific matching task with real data.</p>
 
-<p align="justify">As opposed to other packages such as `StatMatch` or `mice` that provide sophisticated functions to solve different statistical matching tasks, `micromatch` does not offer new algorithms for matching but, rather, provides a context the matching task is made easier, independently of the chosen methodology.</p>
+<p align="justify">Well-known `R` packages such as `StatMatch` or `mice` provide sophisticated algorithms to solve different statistical matching tasks. `micromatch` does not offer new algorithms for matching; rather, it provides a "context" where the matching task is made easier, independently of the chosen methodology. In this way, alternative methodologies available through independent packages are integrated in a common "matching pipeline".</p>
 
-<p align="justify">Specifically, `micromatch` does not offer new functions to solve the statistical matching problem, but a <strong>framework</strong> where the main methods implemented in other packages become related.</p>
-
-<p align="justify">To achieve this integration, `micromatch` uses S4 classes and methods so that the user will start defining particular attributes of the data related to the statistical matching context. In particular, each step in the matching process has its implementation (or definition) in `micromatch`.</p>
+<p align="justify">From the programming point of view, `micromatch` makes use of S4 classes to create special objects which are adapted to the statistical matching task.</p>
 
 A simple example
 ----------------
@@ -94,49 +95,6 @@ A simple example
 <p align="justify">To illustrate the use of `micromatch` we will be using data frames data `samp.A` and `samp.B` included in `StatMatch` package. These examples provide some artificial data simulating typical variables present in the European Union Statistics on Income and Living Conditions Survey (EU-SILC).</p>
 
 
-```r
-library(StatMatch)
-data(samp.A) #loads data into workspace
-data(samp.B) #loads data to workspace
-str(samp.A)
-```
-
-```
-## 'data.frame':	3009 obs. of  13 variables:
-##  $ HH.P.id : chr  "10149.01" "17154.02" "5628.01" "15319.01" ...
-##  $ area5   : Factor w/ 5 levels "NE","NO","C",..: 1 1 2 4 4 3 4 5 4 3 ...
-##  $ urb     : Factor w/ 3 levels "1","2","3": 1 1 2 1 2 2 2 2 2 2 ...
-##  $ hsize   : int  1 2 1 2 5 2 4 3 4 4 ...
-##  $ hsize5  : Factor w/ 5 levels "1","2","3","4",..: 1 2 1 2 5 2 4 3 4 4 ...
-##  $ age     : num  85 78 48 78 17 28 26 51 60 21 ...
-##  $ c.age   : Factor w/ 5 levels "[16,34]","(34,44]",..: 5 5 3 5 1 1 1 3 4 1 ...
-##  $ sex     : Factor w/ 2 levels "1","2": 2 1 1 1 1 2 2 2 2 2 ...
-##  $ marital : Factor w/ 3 levels "1","2","3": 3 2 3 2 1 2 1 2 2 1 ...
-##  $ edu7    : Factor w/ 7 levels "0","1","2","3",..: 4 4 4 2 2 6 6 3 2 4 ...
-##  $ n.income: num  1677 13520 20000 12428 0 ...
-##  $ c.neti  : Factor w/ 7 levels "(-Inf,0]","(0,10]",..: 2 3 4 3 1 1 2 3 1 1 ...
-##  $ ww      : num  3592 415 2735 1240 5363 ...
-```
-
-```r
-str(samp.B)
-```
-
-```
-## 'data.frame':	6686 obs. of  12 variables:
-##  $ HH.P.id: chr  "5.01" "5.02" "24.01" "24.02" ...
-##  $ area5  : Factor w/ 5 levels "NE","NO","C",..: 5 5 3 3 1 1 2 2 2 2 ...
-##  $ urb    : Factor w/ 3 levels "1","2","3": 3 3 2 2 1 1 2 2 2 2 ...
-##  $ hsize  : int  2 2 2 2 2 2 3 3 3 3 ...
-##  $ hsize5 : Factor w/ 5 levels "1","2","3","4",..: 2 2 2 2 2 2 3 3 3 3 ...
-##  $ age    : num  45 18 76 74 47 46 53 55 21 53 ...
-##  $ c.age  : Factor w/ 5 levels "[16,34]","(34,44]",..: 3 1 5 5 3 3 3 4 1 3 ...
-##  $ sex    : Factor w/ 2 levels "1","2": 2 2 1 2 1 2 2 1 2 1 ...
-##  $ marital: Factor w/ 3 levels "1","2","3": 3 1 2 2 1 1 2 2 1 2 ...
-##  $ edu7   : Factor w/ 7 levels "0","1","2","3",..: 4 3 2 3 3 6 4 4 4 3 ...
-##  $ labour5: Factor w/ 5 levels "1","2","3","4",..: 3 5 4 4 1 5 5 1 5 1 ...
-##  $ ww     : num  179 179 330 330 1116 ...
-```
 
 The independent sources `samp.A` and `samp.B`, separately contain:
 
@@ -160,550 +118,167 @@ The independent sources `samp.A` and `samp.B`, separately contain:
 
 For more information on these data files please refer to `StatMatch` package documentation.
 
-What follows is an illustration of how the matching task can be tackled with `micromatch`, in each of the mentioned steps:
+Now we will illustrate how the matching task can be tackled with `micromatch`, step by step.
 
 #### Step 1: 
 
-The specific (target) variables are the income and the labour status, and it is advisable to store their name. For this example we will use the categorical version of variable income, `c.neti`.
+The specific (target) variables are the income and the labour status, and it is advisable to store their name in the `R` session. 
+
+For this example we will use the categorical version of variable income, `c.neti`:
 
 
-```r
-varesp_A <- "c.neti" # specific variable in file samp.A
-varesp_B <- "labour5" # specific variable in file samp.B
-```
 
 #### Step 2: 
 
 <p align="justify">The shared variables are the remaining variables (excluding the identifier, `HH.P.id`, and the weight variable, `ww`). For this example we will use the categorical versions of the variables and one geographic area: `urb`.</p>
 
 
-```r
-varshared <- c("urb", "c.age", "hsize5", "sex", "marital", "edu7") # shared variables
-```
 
-There is also a weight variable with the same name in both files. (Note that naming the same variables equally is in general a good practice).
+<p align="justify">There is also a weight variable, with the same name in both files. Note that naming the same variables equally is in general a good practice.</p>
 
 
-```r
-weights <- "ww" # weight variable (same name in samp.A and samp.B)
-```
 
 Now that we have all the information, the purpose of matching can be made concrete: 
 
         * We want to relate variables `c.neti` and `labour5` by applying some matching
-        method that will use a subset of `varshared` variables, and producing a synthetic, 
-        complete file. Specifically, we will fill `samp.A` -which therefore will act as the 
-        receptor file-, with variable `labour5` from `samp.B` -which will be the donor file
-        -.
+        method that will use a subset of `varshared` variables to produce a synthetic, 
+        complete file. Specifically, we will fill `samp.A` -the receptor file-, by adding
+        variable `labour5` from `samp.B` -the donor file-.
 
 **Important Note**
-In general, the file with less observations is used as receptor. The reason is that, otherwise, observations would have to be used many times in order to "fill"" the bigger file.
+<p align="justify">In general, the file with less observations will be used as receptor. Otherwise, donor observations would have to be used many times to "fill"" the bigger file.</p>
 
-In `micromatch`, we have a way to express this by means of `receptor` and `donor` constructor functions:
+In `micromatch`, we have a way to assign these roles to the original data frames thanks to the `receptor` and `donor` constructor functions. 
 
+We may also want to fill both files. In this case we will not assign any specific role to the files, and we may say they have a `symmetric` role.
 
-```r
-library(micromatch)
-# create the receptor object
-rec <- receptor(data = samp.A, matchvars = varshared, specvars = varesp_A, weights=weights) # create the donor object
-don <- donor(data = samp.B, matchvars = varshared, specvars = varesp_B, weights=weights)
-```
-
-We can check the parameter (slot) values by using `str`:
+In either case, the first thing in `micromatch` will be to create `receptor` and `donor` pairs (or two `symmetric` objects, not shown here):
 
 
-```r
-str(rec)
-```
 
-```
-## Formal class 'filetomatch' [package "micromatch"] with 6 slots
-##   ..@ role      : chr "receptor"
-##   ..@ data      :'data.frame':	3009 obs. of  13 variables:
-##   .. ..$ HH.P.id : chr [1:3009] "10149.01" "17154.02" "5628.01" "15319.01" ...
-##   .. ..$ area5   : Factor w/ 5 levels "NE","NO","C",..: 1 1 2 4 4 3 4 5 4 3 ...
-##   .. ..$ urb     : Factor w/ 3 levels "1","2","3": 1 1 2 1 2 2 2 2 2 2 ...
-##   .. ..$ hsize   : int [1:3009] 1 2 1 2 5 2 4 3 4 4 ...
-##   .. ..$ hsize5  : Factor w/ 5 levels "1","2","3","4",..: 1 2 1 2 5 2 4 3 4 4 ...
-##   .. ..$ age     : num [1:3009] 85 78 48 78 17 28 26 51 60 21 ...
-##   .. ..$ c.age   : Factor w/ 5 levels "[16,34]","(34,44]",..: 5 5 3 5 1 1 1 3 4 1 ...
-##   .. ..$ sex     : Factor w/ 2 levels "1","2": 2 1 1 1 1 2 2 2 2 2 ...
-##   .. ..$ marital : Factor w/ 3 levels "1","2","3": 3 2 3 2 1 2 1 2 2 1 ...
-##   .. ..$ edu7    : Factor w/ 7 levels "0","1","2","3",..: 4 4 4 2 2 6 6 3 2 4 ...
-##   .. ..$ n.income: num [1:3009] 1677 13520 20000 12428 0 ...
-##   .. ..$ c.neti  : Factor w/ 7 levels "(-Inf,0]","(0,10]",..: 2 3 4 3 1 1 2 3 1 1 ...
-##   .. ..$ ww      : num [1:3009] 3592 415 2735 1240 5363 ...
-##   ..@ matchvars : chr [1:6] "urb" "c.age" "hsize5" "sex" ...
-##   ..@ specvars  : chr "c.neti"
-##   ..@ stratavars: NULL
-##   ..@ weights   : chr "ww"
-```
+Parameter (slot) values can be checked by using `str` function:
 
-```r
-str(don)
-```
 
-```
-## Formal class 'filetomatch' [package "micromatch"] with 6 slots
-##   ..@ role      : chr "donor"
-##   ..@ data      :'data.frame':	6686 obs. of  12 variables:
-##   .. ..$ HH.P.id: chr [1:6686] "5.01" "5.02" "24.01" "24.02" ...
-##   .. ..$ area5  : Factor w/ 5 levels "NE","NO","C",..: 5 5 3 3 1 1 2 2 2 2 ...
-##   .. ..$ urb    : Factor w/ 3 levels "1","2","3": 3 3 2 2 1 1 2 2 2 2 ...
-##   .. ..$ hsize  : int [1:6686] 2 2 2 2 2 2 3 3 3 3 ...
-##   .. ..$ hsize5 : Factor w/ 5 levels "1","2","3","4",..: 2 2 2 2 2 2 3 3 3 3 ...
-##   .. ..$ age    : num [1:6686] 45 18 76 74 47 46 53 55 21 53 ...
-##   .. ..$ c.age  : Factor w/ 5 levels "[16,34]","(34,44]",..: 3 1 5 5 3 3 3 4 1 3 ...
-##   .. ..$ sex    : Factor w/ 2 levels "1","2": 2 2 1 2 1 2 2 1 2 1 ...
-##   .. ..$ marital: Factor w/ 3 levels "1","2","3": 3 1 2 2 1 1 2 2 1 2 ...
-##   .. ..$ edu7   : Factor w/ 7 levels "0","1","2","3",..: 4 3 2 3 3 6 4 4 4 3 ...
-##   .. ..$ labour5: Factor w/ 5 levels "1","2","3","4",..: 3 5 4 4 1 5 5 1 5 1 ...
-##   .. ..$ ww     : num [1:6686] 179 179 330 330 1116 ...
-##   ..@ matchvars : chr [1:6] "urb" "c.age" "hsize5" "sex" ...
-##   ..@ specvars  : chr "labour5"
-##   ..@ stratavars: NULL
-##   ..@ weights   : chr "ww"
-```
 
 #### Step 3-1 (assess coherence) 
 
-We now inspect the concordance of marginal distributions of the shared variables. In `micromatch` three kind of tools are implemented: frequency tables, plots and empirical measures (as computed by `comp.prop` function in `StatMatch`).
+<p align="justify">First we must inspect the concordance of marginal distributions of the shared variables. In `micromatch` three kind of tools are implemented: frequency tables, plots and empirical measures (as computed by `comp.prop` function in `StatMatch`).</p>
 
-Because we have previously stored information about each type of variable we only need to choose the options, i.e. 
+<p align="justify">Because we have previously stored information about each type of variable in `receptor` and `donor` objects, all we need is to choose some options in the method `compare_matchvars`:</p>
 
 * `type`: equal to `table`, `plot` or `measures`; 
-* `cell_values`: `abs` (absolute numbers) `rel` (relative, i.e. percents) for type `table` or `plot
+* `cell_values`: `abs` (absolute numbers) `rel` (relative, i.e. percents) for type `table` or `plot`
 * `weights`: `TRUE` or `FALSE`;
-* `strata`: `TRUE` or `FALSE`
-
-The third option may be used when a strata variable is introduced, i.e. in case we want to perform matching separately for distinct groups in the population (male and female, etc).
+* `strata`: `TRUE` or `FALSE`: to be used when we want to study distributions separately for specific groups in the population (male and female, etc)
  
 
-```r
-# tables
-compare_matchvars(x = rec, y = don, type = "table", cell_values = 'abs', weights = TRUE)
-```
 
-```
-## $`Table for data:  slot(x, "data")`
-## x_vector
-##       1       2       3 
-## 2192673 2060570  841709 
-## 
-## $`Table for data:  slot(y, "data")`
-## x_vector
-##       1       2       3 
-## 2264015 2080967  812600 
-## 
-## $`Table for data:  slot(x, "data")`
-## x_vector
-##  [16,34]  (34,44]  (44,54]  (54,64] (64,104] 
-##  1221890   987127   936503   727844  1221589 
-## 
-## $`Table for data:  slot(y, "data")`
-## x_vector
-##  [16,34]  (34,44]  (44,54]  (54,64] (64,104] 
-##  1210076  1039953   890703   759901  1256950 
-## 
-## $`Table for data:  slot(x, "data")`
-## x_vector
-##       1       2       3       4     >=5 
-##  889539 2093652 1194842  726198  190722 
-## 
-## $`Table for data:  slot(y, "data")`
-## x_vector
-##       1       2       3       4     >=5 
-##  854453 2213844 1182355  740957  165973 
-## 
-## $`Table for data:  slot(x, "data")`
-## x_vector
-##       1       2 
-## 2454480 2640472 
-## 
-## $`Table for data:  slot(y, "data")`
-## x_vector
-##       1       2 
-## 2512704 2644878 
-## 
-## $`Table for data:  slot(x, "data")`
-## x_vector
-##       1       2       3 
-## 1525656 2838298  730998 
-## 
-## $`Table for data:  slot(y, "data")`
-## x_vector
-##       1       2       3 
-## 1511497 2858124  787961 
-## 
-## $`Table for data:  slot(x, "data")`
-## x_vector
-##       0       1       2       3       4       5       6 
-##  135596  943911 1586638 1709141  143383  558240   18042 
-## 
-## $`Table for data:  slot(y, "data")`
-## x_vector
-##       0       1       2       3       4       5       6 
-##  149580  997272 1604171 1687398  141107  564486   13568
-```
+<p align="justify">Overall, for the these marginal distributions, the previous results indicate that the shared variables are highly concordant between the data frames.</p>
 
-```
-## $urb
-## NULL
-## 
-## $c.age
-## NULL
-## 
-## $hsize5
-## NULL
-## 
-## $sex
-## NULL
-## 
-## $marital
-## NULL
-## 
-## $edu7
-## NULL
-```
+Note that four types of empirical measures are used:
 
-```r
-# plots
-compare_matchvars(x = rec, y = don, type = "plot", cell_values = 'rel', weights = TRUE)
-```
+* Dissimilarity index or total variation distance, `D`
 
-```
-## ymax not defined: adjusting position using y instead
-```
+* Overlap between two distributions, `O`
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-41.png) 
+* Bhattacharyya coefficient, `B`
 
-```
-## ymax not defined: adjusting position using y instead
-```
+* Hellinger's distance, `d_H`
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-42.png) 
+For more information on these measures please refer to `StatMatch` or Agresti's book ([6]).
 
-```
-## ymax not defined: adjusting position using y instead
-```
-
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-43.png) 
-
-```
-## ymax not defined: adjusting position using y instead
-```
-
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-44.png) 
-
-```
-## ymax not defined: adjusting position using y instead
-```
-
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-45.png) 
-
-```
-## ymax not defined: adjusting position using y instead
-```
-
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-46.png) 
-
-```
-## $urb
-## NULL
-## 
-## $c.age
-## NULL
-## 
-## $hsize5
-## NULL
-## 
-## $sex
-## NULL
-## 
-## $marital
-## NULL
-## 
-## $edu7
-## NULL
-```
-
-```r
-# disimilarity measures
-compare_matchvars(x = rec, y = don, type = "measures", weights = TRUE)
-```
-
-```
-## [1] "Measures for variable: urb"
-## [1] "Measures for variable: c.age"
-## [1] "Measures for variable: hsize5"
-## [1] "Measures for variable: sex"
-## [1] "Measures for variable: marital"
-## [1] "Measures for variable: edu7"
-```
-
-```
-##              urb   c.age  hsize5      sex  marital    edu7
-## tvd     0.008606 0.01632 0.01944 0.005439 0.009302 0.01048
-## overlap 0.991394 0.98368 0.98056 0.994561 0.990698 0.98952
-## Bhatt   0.999933 0.99983 0.99973 0.999985 0.999908 0.99987
-## Hell    0.008181 0.01287 0.01654 0.003848 0.009599 0.01147
-```
-
-Overall, for the these marginal distributions, both tables and graphics indicate that the shared variables are highly concordant. 
-
-In particular, Hellinger's distance (Hell) is below 0.05 in all cases (an usual rule of thumb in statistical matching).
+<p align="justify">In the example, Hellinger's distance (Hell) is below 0.05 in all cases (an usual rule of thumb in statistical matching, see reference [5]).</p>
 
 #### Step 3-2 (assess predictive value)
 
-Now we will assess the predictive value of the common variables with respect to the specific ones, in order to discard unnecessary information.
+<p align="justify">Now we should assess the predictive value of the common variables with respect to the specific ones, in order to discard unnecessary information (i.e. variables that are not predictive).</p>
 
-In `micromatch`, for categorical variables we can use `predictvalue` which relies on `StatMatch` function `pw.assoc`. This function returns four well-known statistical association measures for all the combinations of variables, based on Chi-Square and others:
+<p align="justify">In `micromatch`, we can use `predictvalue` which relies on `StatMatch` function `pw.assoc`. This function returns four well-known statistical association measures for all the combinations of variables, based on Chi-Square and others. (Note that currently `predictvalue` only accepts categorical variables)</p>
 
 * Cramer's `V`
+
 * Goodman-Kruskal `lambda`
+
 * Goodman-Kruskal `tau`
+
 * Theil's uncertainty coefficient `U`
 
 For more information on these measures please refer to `StatMatch` or Agresti's book ([6]).
 
 
-```r
-predictvalue(x = rec) # predictive value in file samp.A
-```
-
-```
-## Warning: Chi-squared approximation may be incorrect
-```
-
-```
-## [[1]]
-## [[1]]$V
-##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
-##        0.06198        0.22634        0.12084        0.35188        0.18533 
-##    c.neti.edu7 
-##        0.16891 
-## 
-## [[1]]$lambda
-##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
-##        0.00000        0.08683        0.02994        0.04448        0.03636 
-##    c.neti.edu7 
-##        0.04534 
-## 
-## [[1]]$tau
-##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
-##       0.001131       0.040176       0.011965       0.022123       0.013850 
-##    c.neti.edu7 
-##       0.027589 
-## 
-## [[1]]$U
-##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
-##       0.002091       0.053322       0.017561       0.034456       0.019466 
-##    c.neti.edu7 
-##       0.041839
-```
-
-```r
-predictvalue(x = don) # predictive value in file samp.B
-```
-
-```
-## Warning: Chi-squared approximation may be incorrect
-```
-
-```
-## [[1]]
-## [[1]]$V
-##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
-##         0.03222         0.39412         0.11126         0.32181 
-## labour5.marital    labour5.edu7 
-##         0.23630         0.23968 
-## 
-## [[1]]$lambda
-##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
-##         0.00000         0.29530         0.02598         0.08789 
-## labour5.marital    labour5.edu7 
-##         0.04587         0.15386 
-## 
-## [[1]]$tau
-##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
-##       0.0004783       0.1988406       0.0142621       0.0329951 
-## labour5.marital    labour5.edu7 
-##       0.0299137       0.0776071 
-## 
-## [[1]]$U
-##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
-##       0.0007065       0.2485754       0.0166305       0.0371158 
-## labour5.marital    labour5.edu7 
-##       0.0420075       0.0803915
-```
 
 A simple, temptative choice would be to keep varibles `c.age`, `sex` and `edu7`. Also, it can be a good idea to introduce `sex` as a group or strata variable. 
 
 **Note**
 
-This variable selection is also backed by the reduction-of-uncertainty analyses in the `StatMatch` package vignette. This functionality has not been implemented in `micromatch`.
+<p align="justify">This variable selection is also backed by the reduction of uncertainty approach illustrated in the `StatMatch` package vignette. This functionality has not been implemented yet in `micromatch`.</p>
 
-We now proceed to update the information in the `receptor` and `donor` objects by using `update` function in `micromatch`. Note that the new objects must be stored in the session:
+<p align="justify">We now proceed to update the information in the `receptor` and `donor` objects by using `update` function in `micromatch`. This function allows to re-define the objects by just updating the needed information (and keeping the rest of values unchanged).</p>
+
+Note that the new objects must be stored in the session:
 
 
-```r
-rec1 <- update(x = rec, matchvars = c("c.age", "edu7"), stratavars = "sex") # update variables for file A (receptor)
-don1 <- update(x = don, matchvars = c("c.age", "edu7"), stratavars = "sex") # update variables for file B (donor)
-```
 
 #### Step 4:
 
-In this example distance hot-deck imputation will be used to fill the non-observed values (variable `labour5` from `samp.B`) in file `samp.A`. 
+<p align="justify">In this example distance hot-deck imputation will be used to fill the non-observed values (variable `labour5` from `samp.B`) in file `samp.A`.</p>
 
-In `micromatch` we can use the `match.hotdek` function, which in turn calls to `NND.hotdeck` function in `StatMatch`. This function finds the closest donor record in `don` for each file in `rec`, based on the chosen matching variables, in this case, `c.age` and `edu7` (variables defined in `matchvars`). The search is made within levels of `sex`, that is, separately for male and female.
+<p align="justify">In `micromatch` we can use the `match.hotdek` function, which in turn calls to `NND.hotdeck` function in `StatMatch`. This function finds the closest donor record in `donor` for each record in `receptor`, based on the chosen matching variables.</p>
 
-After receptor, donor pairs are formed the algorithm imputes the value observed in the donor register to the receptor register. In this way, the receptor file is 'completed'. The function `match.hotdeck` performs the two steps as a result of only one command:
-
-
-```r
-result <- match.hotdeck(x = rec, y = don)
-```
-
-```
-## Warning: The  Manhattan  distance is being used
-## All the categorical matching variables in rec and don 
-##  data.frames, if present are recoded into dummies
-```
-
-Now we can access the data and see the imputed values (last column, `labour5`). Note that the new data frame is stored in the session with the name `A.imputed`:
+<p align="justify">In this case, `c.age` and `edu7` will be used to find similar donors, these being the variables stored as `matchvars`. We also need to indicate that the strata variable in `stratavars`, i.e. `sex` should be used as such. That is, we want the search to be made within levels of `sex`, i.e., separately for male and female:</p>
 
 
-```r
-samp.A.imp <- slot(result, "data")
-head(samp.A.imp)
-```
 
-```
-##        HH.P.id area5 urb hsize hsize5 age    c.age sex marital edu7
-## 21384 10149.01    NE   1     1      1  85 (64,104]   2       3    3
-## 35973 17154.02    NE   1     2      2  78 (64,104]   1       2    3
-## 11774  5628.01    NO   2     1      1  48  (44,54]   1       3    3
-## 32127 15319.01     S   1     2      2  78 (64,104]   1       2    1
-## 6301   2973.05     S   2     5    >=5  17  [16,34]   1       1    1
-## 12990  6206.02     C   2     2      2  28  [16,34]   2       2    5
-##       n.income   c.neti     ww labour5
-## 21384     1677   (0,10] 3591.9       4
-## 35973    13520  (10,15]  415.2       4
-## 11774    20000  (15,20] 2735.4       1
-## 32127    12428  (10,15] 1239.5       4
-## 6301         0 (-Inf,0] 5362.8       1
-## 12990        0 (-Inf,0] 2077.7       1
-```
+This functions inherits other options available in the original function (`NND.hotdeck` in `StatMatch`). The most important are `dist.fun` and `constr.alg`:
+
+* dist.fun: Choice of distance function. Available options are “Manhattan” (aka “City block”; default), “Euclidean”, “Mahalanobis”,“exact” or “exact matching”, “Gower”, “minimax” or one of the distance functions available in `proxy` package. For more information check `?NND.hotdeck`
+
+* constr.alg: `TRUE` or `FALSE`. Indicates if the algorithm should be constrined, i.e. donor records should be used only once to fill the receptor records.
+
+<p align="justify">The procedure has two main steps. First (receptor, donor) pairs are formed which are similar in terms of `matchvars`. Second, value observed in the donor record to is picked to fill the receptor record in each pair. In this way, the `receptor` file is 'completed'. The function returns an object of type `fusedfile`, in which `receptor` data are stored with additional (imputed) columns (in the example, an unique column, `labour5`).</p>
+
+<p align="justify">The completed data can be re-used for further computations by extracting and storing the data frame in the session, as follows. (In the example our case we store the new data contains the additional column `labour5` and is stored with the name `A.imputed`):</p>
+
+
 
 TODO. Details about the receptor and donor pairs can be obtained by means of the `details` function.
 
 #### Step 5:
 
-The first, reasonable validation is to check the concordance of imputed vs observed marginal distributions.
+Now we should assess the validity of the resulting data frame, in terms of its usefulness to perform statistical analyses relating not-jointly observed variables (in our case, person's net income, `c.neti` and self-defined labour status, `labour5`).
 
-In our example the first validation would consist in comparing the distribution for variable `labour5` in the original file `samp.B` versus the imputed variable in `samp.A.imp` file. 
+The first, reasonable validation should be to check the similarity of imputed versus observed marginal distributions. For this purpose, we can use `tabulate2cat`, `plot2cat` and `similarity2cat` functions in `micromatch`, which essentially provide the same functionality as `compare_matchvars` (see Step 3-1 above). 
 
-For this purpose, we can use `tabulate2cat`, `plot2cat` and `similarity2cat` functions in `micromatch`, which essentially provide the same functionality as `compare_matchvars` (seen in step 3-1). 
+In our example the distribution for variable `labour5` in the original file `samp.B` whould be compared to the imputed variable in `samp.A.imp` file. In `tabulate2cat`, `plot2cat` and `similarity2cat` functions, data frames have to be introduced directly as parameter values: in the example, `samp.B` and `samp.A.imp`.
 
-Note that, instead of handling special objets, here we use the data frames directly: in this case, `samp.B` and `samp.A.imp`. The variable to compare is `labour5` in both files, so, for convenience, we can store it as a character. The same happens with `ww`, the weights variable:
+* TODO. create `validate1` method that will act on rec.fused, don pairs with options type=table, plot or measures.
 
-
-```r
-var <- "labour5"
-weights <- "ww"
-# raw tables
-tabulate2cat(data_A = samp.B, data_B = samp.A.imp, var_A = var, var_B = var, weights_A = weights, weights_B = weights, cell_values = "rel")
-```
-
-```
-## $`Table for data:  samp.B`
-## x_vector
-##       1       2       3       4       5 
-## 0.35125 0.09243 0.05730 0.21069 0.28833 
-## 
-## $`Table for data:  samp.A.imp`
-## x_vector
-##       1       2       3       4       5 
-## 0.34404 0.08454 0.07113 0.20919 0.29111
-```
-
-```r
-# plots with percents
-plot2cat(data_A = samp.B, data_B = samp.A.imp, var_A = var, var_B = var, weights_A = weights, weights_B = weights, cell_values = "rel") # blue bar corresponds to imputed values
-```
-
-```
-## ymax not defined: adjusting position using y instead
-```
-
-![plot of chunk validateFirstOrder](figure/validateFirstOrder.png) 
-
-```r
-# empirical measures
-similarity2cat(data_A = samp.B, data_B = samp.A.imp, var_A = var, var_B = var, weights_A = weights, weights_B = weights) 
-```
-
-```
-## [1] "Measures for variable: labour5"
-```
-
-```
-##     tvd overlap   Bhatt    Hell 
-## 0.01661 0.98339 0.99952 0.02201
-```
-
-The results are quite acceptable, but we should continue comparing distributions conditioned on other variables.
-
-<p align="justify">For example, a natural comparison would be to check distributions conditioned on `sex`, which was in fact used as strata variable. This can be done in with the same functions, by iterating over strata values, as follows:</p
+The variable to be compared is `labour5` in both files. The distributions are based on weighted data i.e. using the weights variable `ww`:
 
 
-```r
-levels(samp.B$sex) # codes for gender: 1-male, 2-female, check ?samp.A
-```
 
-```
-## [1] "1" "2"
-```
+<p align="justify">The results are quite acceptable, but we should also compare distributions conditioned on other variables common to both files.</p>
 
-```r
-# Gender equal to "1" = male
-similarity2cat(data_A = subset(samp.B, sex == "1"), data_B = subset(samp.A.imp, sex == "1"), var_A = var, var_B = var, weights_A = weights, weights_B = weights)
-```
+<p align="justify">For example, a natural comparison would be to check distributions conditioned on `sex`, which was in fact used as strata variable. This can be done in with the same functions, by subseting over strata values, as follows:</p
 
-```
-## [1] "Measures for variable: labour5"
-```
 
-```
-##     tvd overlap   Bhatt    Hell 
-## 0.02463 0.97537 0.99955 0.02114
-```
-
-```r
-# Gender equal to "2" = female
-similarity2cat(data_A = subset(samp.B, sex == "2"), data_B = subset(samp.A.imp, sex == "2"), var_A = var, var_B = var, weights_A = weights, weights_B = weights)
-```
-
-```
-## [1] "Measures for variable: labour5"
-```
-
-```
-##     tvd overlap   Bhatt    Hell 
-## 0.03154 0.96846 0.99869 0.03620
-```
 
 Results seem to be 'good' by strata too.
 
-<p align="justify">However, in statistical matching the validation should imply a lot more effort. The reason is that most matching algorithms assume what is known as the _conditional independence assumption_, which amounts to taking for granted that common variables (Z) explain (or _mediate_ between), all the (non-observed) relation between specific variables (X and Y).</p>
+*TODO. implement option `strata` true, false in `validate1` method.
 
-<p align="justify">Such an assumption is particularly strong and seldom holds in practice. What is worse, in default of complete observations —possibly in the form of a third independent file `C`, that may contain observatins for all variables, maybe from a previous wave of the same surveys, and not too distant in time so that it refers to almost the same population of interest—, we will lack of the necessary data in order to check how far we are from the ideal situation.</p>
+<p align="justify">However, in statistical matching the validation should imply a bit more effort. The reason is that most matching algorithms assume what is known as the <em>conditional independence assumption</em>, which amounts to saying that the common variables (Z) explain (or "mediate between") all the (non-observed) relation between specific variables (X and Y).</p>
 
-One recommended approach is to perform an uncertainty analysis.
+<p align="justify">Such an assumption is particularly strong and seldom holds in practice. What is worse, in abscence of complete observations —possibly in the form of a third independent file `C`, that may contain observatins for all variables, maybe from a previous wave of the same surveys, and not too distant in time so that it refers to almost the same population of interest—, we will lack of the necessary information to check how far we are from the ideal situation.</p>
 
-**Note** 
+One recommended approach is to perform an <em>uncertainty analysis</em>. In the case of categorical variables, the ultimate aim will is to estimate contingency tables between variables observed in separate files, and <em>Frèchet bounds</em> can be computed to compute a range of possible vaues, i.e. numeric results that are coherent with the independently observed marginal distributions (i.e. `X` versus `Z` and `Y` versus `Z`). For more information Frèchet bounds please refer to [1] or to the `StatMatch` package vignette.</p>
 
-Additional functions will be soon implemented to accept iteration over strata variable groups.
+* TODO. Here, an illustration of uncertainty in cell values in contingency table between net income and labour status
+
+
+
+
+
 
 Additional features
 -------------------
