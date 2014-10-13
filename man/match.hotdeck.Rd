@@ -10,6 +10,8 @@ match.hotdeck(x = "filetomatch", y = "filetomatch", ...)
 
 \item{y}{\code{filetomatch} object}
 
+\item{strata}{TRUE or FALSE. Defaults to FALSE. Indicates whether matching should be made in groups (donation classes) defined by a strata variable}
+
 \item{dist.fun}{distance function. Default is "Gower"}
 
 \item{constrained}{logical (\code{TRUE} or \code{FALSE}). Default is \code{FALSE}.}
@@ -17,19 +19,21 @@ match.hotdeck(x = "filetomatch", y = "filetomatch", ...)
 \value{
 A \code{\link{fusedfile}} object for which \code{data} contains complete observations
 from the receptor file.
-
-Missing values are filled via distance hot-deck imputation by means of
-\code{NDD.hotdeck} function from \code{StatMatch} package.
 }
 \description{
 \code{math.hotdeck} takes two \code{\link{filetomatch}} objects
-and produces a \code{\link{fusedfile}} object with complete \code{data} for the
+and produces a \code{\link{fusedfile}} object with complete (imputed) \code{data} for the
 object playing the \code{receptor} role.
+
+The imputation method is distance hot-deck. Essentially, the method finds a record in the
+\code{donor} data for each record in \code{receptor} data, which is the closest (i.e. most
+similar) in terms of the common variables (defined as \code{mathvars}).
 }
 \details{
-In the resulting \code{\link{fusedfile}} object, \code{data} contains
-all rows (observations) and columns (variables) in the object acting as \code{receptor},
-Additionaly the resulting \code{fusedfile} will store additional information, namely:
+In the resulting \code{\link{fusedfile}} object, \code{data} will contain
+all rows (observations) and columns (variables) in the object acting as \code{receptor}.
+
+Also the resulting \code{fusedfile} will store additional information, namely:
 
 \itemize{
      \item \code{origin_specvars} with the source of \code{specvars} in the original files, in this case, the object acting as \code{receptor}.
@@ -39,8 +43,9 @@ Additionaly the resulting \code{fusedfile} will store additional information, na
 The missing values are filled via hot-deck imputation.
 
 Specifically, function \code{NND.hotdeck} from \code{StatMatch} package is used. This function
-finds a donor record for each receptor record. In the unconstrained case it searches for the
-closest donor
+finds a donor record for each receptor record based on a distance function.
+
+In the unconstrained case the donors are used only once.
 }
 \seealso{
 Other "Apply matching method": \code{\link{concatenate}};

@@ -234,12 +234,17 @@ setGeneric("concatenate",
 #' Match two 'filetomatch' objects via distance hot-deck
 #' 
 #' @description \code{math.hotdeck} takes two \code{\link{filetomatch}} objects 
-#' and produces a \code{\link{fusedfile}} object with complete \code{data} for the
+#' and produces a \code{\link{fusedfile}} object with complete (imputed) \code{data} for the
 #' object playing the \code{receptor} role.
 #' 
-#' @details In the resulting \code{\link{fusedfile}} object, \code{data} contains
-#' all rows (observations) and columns (variables) in the object acting as \code{receptor},
-#' Additionaly the resulting \code{fusedfile} will store additional information, namely:
+#' The imputation method is distance hot-deck. Essentially, the method finds a record in the
+#' \code{donor} data for each record in \code{receptor} data, which is the closest (i.e. most 
+#' similar) in terms of the common variables (defined as \code{mathvars}).
+#' 
+#' @details In the resulting \code{\link{fusedfile}} object, \code{data} will contain
+#' all rows (observations) and columns (variables) in the object acting as \code{receptor}.
+#' 
+#' Also the resulting \code{fusedfile} will store additional information, namely:
 #' 
 #' \itemize{
 #'      \item \code{origin_specvars} with the source of \code{specvars} in the original files, in this case, the object acting as \code{receptor}.
@@ -249,19 +254,20 @@ setGeneric("concatenate",
 #' The missing values are filled via hot-deck imputation. 
 #' 
 #' Specifically, function \code{NND.hotdeck} from \code{StatMatch} package is used. This function
-#' finds a donor record for each receptor record. In the unconstrained case it searches for the 
-#' closest donor
+#' finds a donor record for each receptor record based on a distance function. 
+#' 
+#' In the unconstrained case the donors are used only once.
 #' 
 #' @family "Apply matching method"
 #' @param x \code{filetomatch} object
 #' @param y \code{filetomatch} object
+#' @param strata TRUE or FALSE. Defaults to FALSE. Indicates whether matching should be made in groups (donation classes) defined by a strata variable
 #' @param dist.fun distance function. Default is "Gower"
 #' @param constrained logical (\code{TRUE} or \code{FALSE}). Default is \code{FALSE}.
+#' 
 #' @return A \code{\link{fusedfile}} object for which \code{data} contains complete observations
 #' from the receptor file. 
 #' 
-#' Missing values are filled via distance hot-deck imputation by means of
-#' \code{NDD.hotdeck} function from \code{StatMatch} package.
 #' 
 #' @export
 setGeneric("match.hotdeck",
@@ -269,3 +275,20 @@ setGeneric("match.hotdeck",
                    standardGeneric("match.hotdeck")
 })
 
+###Uncertainty evaluation
+#' Frechet uncertainty bounds for categorical variables observed in separate files
+#' 
+#' @description here,
+#'  
+#' @param x a \code{\link{filetomatch}} object
+#' @param y a \code{\link{filetomatch}} object
+#' @param var_x Specific variable in \code{x}
+#' @param var_y Specific variable in \code{y}
+#' @param print.f type desired result: "tables" (default) or "data.frame"
+#' @param tol tolerance used in comparing joint distributions for common (Z) variables, stored as \code{matchvars}
+#' @family "Validation of results"
+#' @export
+setGeneric("frechet.uncertainty",
+           function(x = "filetomatch", y ="filetomatch",...) {
+                   standardGeneric("frechet.uncertainty")
+           })

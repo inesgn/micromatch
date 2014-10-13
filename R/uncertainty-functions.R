@@ -59,3 +59,6 @@ uncert2vars <- function(var_x, var_y, data_A, data_B, base = NULL, weights_A = N
                   'OvUncert'=bestval)
         return(l)
 }
+
+
+

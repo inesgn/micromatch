@@ -151,11 +151,41 @@ setMethod("concatenate",
 #' @exportMethod match.hotdeck
 setMethod("match.hotdeck", 
           signature=list(x='filetomatch', y='filetomatch'), 
-          function(x,y,...){
-                  .convertToFusedfile(x = x, y = y, data = .match_disthotdeck(x,y,...), method = "distance-hotdeck", role = "complete", transformation = "fillreceptor")
+          function(x, y, strata = FALSE,...){
+                  if(strata == TRUE){
+                          #checks
+                          stopifnot(!is.null(slot(x, "stratavars")))
+                          stopifnot(!is.null(slot(y, "stratavars")))
+                          stopifnot(identical(slot(x, "stratavars"), slot(y, "stratavars")))
+                          #hot deck with donation classes
+                          data <- .match_disthotdeck(x, y, don.class = slot(x, "stratavars"),...)
+                  } 
+                  if(strata == FALSE){
+                          data <- .match_disthotdeck(x, y,...)
+                  }
+                  #convert to fused file
+                  .convertToFusedfile(x = x, y = y, data = data, method = "distance-hotdeck", role = "complete", transformation = "fillreceptor")
           }
 )
 
+#' @exportMethod frechet.uncertainty
+setMethod("frechet.uncertainty", 
+          signature=list(x='filetomatch', y='filetomatch'), 
+          function(x, y, var_x, var_y, base, print.f,...){
+                  #compute formulas
+                  stopifnot(identical(slot(x, "matchvars"), slot(y, "matchvars")))
+                  mvars <- slot(x, "matchvars")
+                  formulazz <- as.formula(paste("~", paste(mvars, collapse= "+")))
+                  formulaxz <- as.formula(paste("~", paste(var_x,"+",paste(mvars, collapse= "+"))))
+                  formulayz <- as.formula(paste("~", paste(var_y,"+",paste(mvars, collapse= "+"))))
+                  #compute tables based on formulas
+                  tab.zz <- xtabs(formulazz, data = slot(base, "data"))
+                  tab.xz <- xtabs(formulaxz, data = slot(x, "data"))
+                  tab.yz <- xtabs(formulayz, data = slot(y, "data"))
+                  # Compute Frechet bounds
+                  StatMatch::Frechet.bounds.cat(tab.zz, tab.xz, tab.yz, print.f = print.f,...)
+          }
+)
 
 # Generic: as.data.frame
 #   applies to all 'genericmatch'
