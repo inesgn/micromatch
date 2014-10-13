@@ -1,9 +1,8 @@
 ---
 title: "`micromatch` package:"
-subtitle: "Utilities and functions for statistical matching"
 author: "Ines Garmendia"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: html_vignette
 vignette: >
   %\VignetteIndexEntry{micromatch package}
   %\VignetteEngine{knitr::rmarkdown}
