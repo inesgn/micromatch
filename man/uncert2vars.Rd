@@ -4,7 +4,7 @@
 \title{Variable selection by uncertainty evaluation}
 \usage{
 uncert2vars(var_x, var_y, data_A, data_B, base = NULL, weights_A = NULL,
-  weights_B = NULL, matchvars)
+  weights_B = NULL, matchvars, n)
 }
 \arguments{
 \item{var_x}{name of (specific) variable in the first file}
@@ -21,7 +21,7 @@ uncert2vars(var_x, var_y, data_A, data_B, base = NULL, weights_A = NULL,
 
 \item{weights_B}{name of weights variable in data2 (optional)}
 
-\item{matchvars}{list of common variables present in both files, candidates for matching}
+\item{matchvars}{list of common variables present in both files, candidates for selection}
 }
 \value{
 list: name of varx, name of vary, best overall uncertainty, variable list for best ov.uncertainty

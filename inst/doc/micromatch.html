@@ -17,7 +17,45 @@ window.onload = function() {
 };
 </script>
 
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
 
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
 
 
 
@@ -165,84 +203,131 @@ hr {
 <body>
 <h1>About this document</h1>
 
-<p align="justify">This is the main vignette for micromatch package. This package provides a set of utilities to ease the task of statistically matching independent microdata files, with a focus to official statistics. 
+<p align="justify">This is the main vignette for micromatch package. This package provides a set of utilities to ease the task of statistically matching independent microdata files, with a focus to official statistics.</p>
 
-The main methods in micromatch are described in two books (see [1] and [2]), and are a result of two Eurostat projects in Data Integration and Statistical Matching (see [3] and [4]). micromatch heavily relies on StatMatch, an R package that implements the main methods in the mentioned sources.</p>
+<p align="justify">The main methods in micromatch are described in two books (see [1] and [2]), and are a result of two Eurostat projects in Data Integration and Statistical Matching (see [3] and [4]).</p>
 
 <p align="justify">This document has two main parts. In the first chapter the reader will find an overview of the main concepts in statistical matching methodology. The second chapter deals with the use of micromatch in practice.</p>
 
-<p align="justify">micromatch package also provides vignettes for specific examples with real data. These additional documents can be found in the package documentation.</p>
+<p align="justify">micromatch package also provides a vignette with a case based on real data from Eustat, the Basque Statistical Office. This document can be found in the package documentation.</p>
 
 <h1>Fundamentals of Statistical Matching</h1>
 
 <blockquote>
-<p>Statistical matching provides a methodology to explore ways for producing combined analyses or indicators for independent surveys referred to the same population of interest, from data with to distinct observations and stored in separate files, but sharing a common block of information</p>
+<p>Statistical matching provides ways for producing combined analyses or integrated indicators for independent surveys referred to the same population of interest, from data containing distinct observations and stored in separate files, but sharing a common block of information</p>
 </blockquote>
 
-<p align="justify"><strong>Statistical matching</strong> (also known as data fusion, data merging or synthetic matching) is set of techniques for providing joint information on variables or indicators collected through multiple sources, usually, surveys drawn from the same population of interest. The potential benefits of this approach lie in the possibility to enhance the complementary use and analytical potential of existing data sources. ([5] A. Leulescu & M. Agafitei, 2013).</p>
+<p align="justify"><strong>Statistical matching</strong> (also known as data fusion, data merging or synthetic matching) is a set of techniques for providing joint information on variables or indicators collected through multiple sources, usually, surveys drawn from the same population of interest. The potential benefits of this approach lie in the possibility to enhance the complementary use and analytical potential of existing data sources (see [5] A. Leulescu & M. Agafitei, 2013).</p>
 
 <p align="justify">Statistical matching has been widely used in market research, to link consumer behavior data and media consumption data.</p>
 
-<p align="justify">In official statistics, it can be used to link different aspects that are usually studied separately for the same target population (i.e. the inhabitants in a country or a particular geographic area). A unique questionnaire covering all aspects such as population health, income, consumption, labour market, social capital&hellip; is seldom conceived: such a questionnaire would be too long, leading to a higher response burden, and to poor quality.</p>
+<p align="justify">In official statistics, it can be used to link different aspects that are usually studied separately for the same target population (e.g. inhabitants in a country at a particular time). A unique questionnaire covering all aspects such as population health, income, consumption, labour market, social capital&hellip; is seldom conceived: such a questionnaire would be too long, leading to a higher response burden, and to poor quality.</p>
 
-<p align="justify">A separate survey is usually conducted to study each specific aspect of the population, the drawback being that the responses will eventually lie in separate files. Statistical matching tries to overcome this limitation, by making use of shared information in order to infer some type of &ldquo;new&rdquo; knowledge about aspects measured through independent surveys.</p>
+<p align="justify">A separate survey is usually conducted to study each specific aspect of the population, the drawback being that responses will eventually lie in separate files. Statistical matching tries to overcome this limitation by making use of the shared information between the sources (typical sociodemographic variables such as age, sex and family size), in order to infer some type of &ldquo;new&rdquo; knowledge about aspects collected separately.</p>
 
 <h2>The starting point (the input)</h2>
 
 <blockquote>
-<p>The basic assumption is that the number of individuals or units in both samples (i.e., the overlap) is negligible. In fact, the fundamental difference with respect to other methods such as &ldquo;record linkage&rdquo; is that in the latter, we have identical units and we wish to find a correspondence between them to link the files. 
-In statistical matching, we &ldquo;know&rdquo; the units are different, but we &ldquo;wish&rdquo; to find similar ones.</p>
+<p>The basic assumption is that the number of individuals or units in both samples (i.e. the overlap) is negligible. The fundamental difference with respect to other methods such as &ldquo;record linkage&rdquo; is that in the latter, we have identical units and we wish to find a correspondence between them in order to link the files. In statistical matching, we &ldquo;know&rdquo; the units are different, but we &ldquo;wish&rdquo; to find similar ones.</p>
 </blockquote>
 
-<p align="justify">Consider two independent surveys conducted on the same population of interest, each of which produces measures regarding a specific field (e.g. living styles and consumer behavior).</p> 
+<p align="justify">Consider two independent surveys conducted on the same population of interest, each of which produces measures regarding a specific aspect (e.g. living styles or consumer behavior).</p> 
 
-<p align="justify">The surveys share a block of variables (sociodemographic variables such as the age, sex, or social status). When putting observations from distinct sources together, a particular missing data pattern emerges due to the non-observed values (i.e. answers we don&rsquo;t have in one survey just because they correspond to the other, and viceversa), see Fig 1.</p>
+<p align="justify">We suppose that the surveys share a block of variables (sociodemographic variables such as the age, sex, or family size). When putting observations from distinct sources together, a particular missing data pattern emerges due to the non-observed values (i.e. answers we don&rsquo;t have in one survey because they belong to the other survey, and viceversa), see Fig 1.</p>
 
 <div align="center"><img src="data:image/png;base64,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7QI8uwmYQErAnylJUThjAiZgAiZgAibQSgJ2SlpJ33ObgAmYgAmYgAmkBOyUpCicMQETMAETMAETaCUBOyWtpO+5TcAETMAETMAEUgJ2SlIUzpiACZiACZiACbSSgJ2SVtL33CZgAiZgAiZgAikBOyUpCmdMwARMwARMwARaScBOSSvpe24TMAETMAETMIGUgJ2SFIUzJmACJmACJmACrSRgp6SV9D23CZiACZiACZhASsBOSYrCGRMwARMwARMwgVYSsFPSSvqe2wRMwARMwARMICVgpyRF4YwJmIAJmIAJmEArCdgpaSV9z20CJmACJmACJpASsFOSonDGBEzABEzABEyglQTslLSSvuc2ARMwARMwARNICdgpSVE4YwImYAImYAIm0EoCdkpaSd9zm4AJmIAJmIAJpATslKQonDEBEzABEzABE2glATslraTvuU3ABEzABEzABFICdkpSFM6YgAmYgAmYgAm0koCdklbS99wmYAImYAImYAIpATslKQpnTMAETMAETMAEWknATkkr6XtuEzABEzABEzCBlICdkhSFMyZgAiZgAiZgAq0kYKeklfQ9twmYgAmYgAmYQErATkmKwhkTMAETMAETMIFWErBT0kr6ntsETMAETMAETCAlYKckReGMCZiACZiACZhAKwnYKWklfc9tAiZgAiZgAiaQErBTkqJwxgRMwARMwARMoJUE7JS0kr7nNgETMAETMAETSAnYKUlROGMCJmACJmACJtBKAnZKWknfc5uACZiACZiACaQE7JSkKJwxARMwARMwARNoJQE7Ja2k77lNwARMwARMwARSAnZKUhTOmIAJmIAJmIAJtJKAnZJW0vfcJmACJmACJmACKQE7JSkKZ0zABEzABEzABFpJwE5JK+l7bhMwARMwARMwgZSAnZIUhTMmYAImYAImYAKtJGCnpJX0PbcJmIAJmIAJmEBKwE5JisIZEzABEzABEzCBVhKwU9JK+p7bBEzABEzABEwgJdCT5pwxARNoSwI/3/7TdF0v+/2XR4rZkK1/yUteGk16xYHZaudNwARMoGMI+ElJxxyVFzoeCTz60APR/DnvjY553yHRJ//sT6Nv3PCPOQxbHv1RLD/uqHdGJ8w+Iuq/+opcvQsmYAIm0EkE9ssu9oADDti7YevOrMh5E6iZwPTXTYqsRzVjq9hh5y+fio57/zuj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KHu7mwmYQKMI6MWs375pFE2PYwImYAImYAImUBcBOyV14XNnEzABEzABEzCBRhGwU9Iokh7HBEzABEzABEygLgJ2SurC584mYAImYAImYAKNImCnpFEkPY4JmIAJmIAJmEBdBOyU1IXPnU3ABEzABEzABBpFwE5Jo0h6HBMwARMwARMwgboI2CmpC587m4AJmIAJmIAJNIqAnZJGkfQ4JmACJmACJmACdRGwU1IXPnc2ARMwARMwARNoFAE7JY0i6XFMwARMwARMwATqImCnpC587mwCJmACJmACJtAoAnZKGkXS45iACZiACZiACdRFwE5JXfjc2QRMwARMwARMoFEE7JQ0iqTHMQETMAETMAETqIuAnZK68LmzCZiACZiACZhAowjYKWkUSY9jAiZgAiZgAiZQFwE7JXXhc2cTMAETMAETMIFGEbBT0iiSHscETMAETMAETKAuAnZK6sLnziZgAiZgAiZgAo0iYKekUSQ9jgmYgAmYgAmYQF0E7JTUhc+dTcAETMAETMAEGkXATkmjSHocEzABEzABEzCBugjYKakLnzubgAmYgAmYgAk0ioCdkkaR9DgmYAImYAImYAJ1EbBTUhc+dzYBEzABEzABE2gUATsljSLpcUzABEzABEzABOoiYKekLnzubAImYAImYAIm0CgCPY0ayOOYgAmYgAmYQDMJ/OiBH0S/fvbZeMpXv+a10asn/3Fu+pHqc41daAsCdkra4hi8CBMwARMwgVoIPPrQA9Glnz87+tEPfxC9/V1HRO+ecVR0yqfPSYcYePzH0RUXnx/JMXn15NdGR82aE/3l2X+T1jvTngTslLTnuXhVJmACJmACwxB445vfGn3ttn+JjjvqndH8RadFfX/yoVzrwsFviOadtCi6eflQdM03vh29+Pcm5OpdaE8C/kxJe56LV2UCJmACJlAFgfmnnBZ9/YZ/KGm5cf19Uf8/fjn68nUr7JCU0GlfgZ2S9j0br8wETMAETGAEAh+Z97Fo65Yfx2/ThKZ66+YLf3V6dOlV/dGkVxwYxE47gICdkg44JC/RBEzABEygPAG9LfNR3qb52j9dGTfY+cunonMWfzz6/N9eFektHIfOImCnpLPOy6s1ARMwARMoInD8gr+I1t29Oto28J/R//rkidEpn/mr6O2HHl7UysVOIGCnpBNOyWs0ARMwAROoSEBv0XzwuBOiTxz7/uiIvg9Esz48t2JbV7Q3ATsl7X0+Xp0JmIAJmEAVBN579J9Gr+Ptmuy/BVfRzU3ajICdkjY7EC/HBEzABEygdgJbHv1RNP3wI2vv6B5tRcBOSVsdhxdjAiZgAiYwGgIP/uD70Zve+o7RdHWfNiJgp6SNDsNLMQETMAETGB2BB36wPjpk+mGj6+xebUPATknbHIUXYgImYAImMBoCv3jiZ1FPT4+/k2Q08Nqsj79mvs0OxMsxARMwARMYmYC+sfX796yNG277yX/yra2/F117xSVxuTDlDf4PnJERtmULOyVteSxelAmYgAmYwHAEdj3zq7T6Na99faQYQs8BvrUFFp2W+uQ67cS8XhMwARMwgejI98+Ko1F0FwF/pqS7ztO7MQETMAETMIGOJWCnpGOPzgs3ARMwARMwge4iYKeku87TuzEBEzABEzCBjiVgp6Rjj84LNwETMAETMIHuImCnpLvO07sxARMwARMwgY4lYKekY4/OCzcBEzABEzCB7iJgp6S7ztO7MQETMAETMIGOJWCnpGOPzgs3ARMwARMwge4iYKeku87TuzEBEzABEzCBjiVgp6Rjj84LNwETMAETMIHuImCnpLvO07sxARMwARMwgY4lYKekY4/OCzcBEzABEzCB7iJgp6S7ztO7MQETMAETMIGOJWCnpGOPzgs3ARMwARMwge4iYKeku87TuzEBEzABEzCBjiVgp6Rjj84LNwETMAETMIHuImCnpLvO07sxARMwARMwgY4lYKekY4/OCzcBEzABEzCB7iJgp6S7ztO7MQETMAETMIGOJWCnpGOPzgs3ARMwARMwge4iYKeku87TuzEBEzABEzCBjiVgp6Rjj84LNwETMAETMIHuImCnpLvO07sxARMwARMwgY4lYKekY4/OCzcBEzABEzCB7iKwX3Y7B/7BK/fu/OVgVuS8CdRMYL/99ov27t1bcz93MIFWELC+toK65zSBUgLcN3b8f3VdUqGU+QABAAAAAElFTkSuQmCC"><figcaption>Fig 1. The starting point: a block of common variables (Z) and two block of specific, non-jointly-observed, variables (X and Y)</figcaption></div>
 
-<p align="justify">The aim is to obtain integrated analyses or results relating the non-jointly-observed variables (blocks X and Y in the figure), and to achieve this we need to make use of the common information between the files (block Z) in some efficient and reliable way.</p>
+<p align="justify">The aim is to obtain integrated analyses or results relating the not-jointly observed variables (blocks X and Y in the figure); to achieve this, we make use of the common information between the files (block Z) in some systematic way.</p>
 
 <h2>The results (the output)</h2>
 
-<p align="justify">After matching will typically obtain one of these results:</p>
+<p align="justify">After matching we will typically obtain (one of these) 2 types of results:</p>
 
 <ul>
-<li><p>a synthetic file containing full information on the variables and all units from both sources. This enhanced dataset can be used later to make combined statistical analyses.</p></li>
+<li><p>a &ldquo;synthetic file&rdquo;, i.e. a single file which contains full information on the variables and all units from both sources. The file is called synthetic because it contains variables that are not a result of direct observation. </p></li>
 <li><p>particular estimates regarding variables living in separate files. The user might wish to estimate a contingency table or correlation coefficient, or any parameter of interest regarding variables in separate files. </p></li>
 </ul>
 
 <p>The former is named the <strong>micro</strong> approach. The latter is the <strong>macro</strong> approach.</p>
 
+<p>In the micro approach, the synthetic dataset is used to make statistical analyses combining the variables of interest.</p>
+
 <h2>The matching process</h2>
 
-<p align="justify">Regardless of the matching method itself —that is, the computational method by means of which we will produce a synthetic file (in the micro case) or estimations for certain parameters of the joint distributions (in the macro case)—, the matching task involves a series of <strong>pre-processing steps</strong> that have to be tackled in practice:</p>
+<p align="justify">Regardless of the matching method itself —i.e. the computational method by means of which a synthetic file or direct parameter estimations are produced—, the matching task involves a series of steps:</p>
 
 <ol>
-<li><p>The choice of target variables (X and Y), i.e. the variables observed separately in distinct surveys.</p></li>
-<li><p>Identification of the variables shared by the sources, and the study of their degree of coherence taking into account not only the wording of questions (which can be different, leading to non-agreeable measures), but also the marginal distributions observed separately in the data files. Variables that fail to show a minimum degree of coherence must be discarded. This step can be time-consuming but can also the key for a successful matching. </p></li>
-<li><p>Possibly, discarding further variables that are not predictive (i.e. are not related to) for the target variables, o are redundant with others. This can be of a relevant step, depending on the computational method. </p></li>
-<li><p>The choice of a matching framework (parametric, non-parametric, mixed) in a specific setting (micro or macro), and applying the corresponding matching/imputation/estimation algorithm. This algorithm will make use of the chosen subset of shared variables in steps 2 and 3 (namely, the <em>common matching variables</em>) to relate target variables fixed in step 1 (the <em>specific variables</em>).</p></li>
+<li><p align="justify">The choice of target variables (X and Y), i.e. the variables observed separately in distinct surveys.</p></li>
+<li><p align="justify">Identification of the variables shared by the sources, and the study of their degree of coherence taking into account not only the wording of questions (which can be different, leading to non-agreeable measures), but also the marginal distributions observed separately in the data files. Variables that fail to show a minimum degree of coherence must be discarded. This step can be time-consuming, but it can also be the key for a successful matching.</p></li>
+<li><p align="justify">Possibly, discarding further variables that are not predictive (i.e. are not related to) for the target variables, or are redundant with others.</p></li>
+<li><p align="justify">The choice of a matching framework (parametric, non-parametric, mixed&hellip;) in a specific setting (micro or macro), and applying a matching/imputation/estimation algorithm. The algorithm will make use of the chosen subset of shared variables in steps 2 and 3 (namely, the _common matching variables_) to relate target variables fixed in step 1 (the _specific variables_).</p></li>
 <li><p>A thorough validation of results.</p></li>
 </ol>
 
 <h1>Using <code>micromatch</code></h1>
 
-<pre><code>    * The idea is that the user should start defining particular attributes of the 
-    data files related to the statistical matching context, i.e. common and specific 
-    variables, weights, and so on. In this way, each step in the matching process 
-    has its implementation (or definition) by means of functions or methods that 
-    &quot;act&quot; on these special objects.
-</code></pre>
+<blockquote>
+<p>The idea is that user should start defining specific objects
+that will contain not only the original data, but also some attributes related 
+to the matching task. 
+Each step will be solved by means of functions/methods that 
+take those specific objects as parameters.
+The benefit is that the user will only
+need to pass the information once.</p>
+</blockquote>
 
-<p align="justify">This chapter deals with using micromatch in practice, and shows how functions in this package may be used to tackle a specific matching task with real data.</p>
+<p align="justify">This chapter shows how functions in micromatch may be used to solve a specific matching task in practice.</p>
 
-<p align="justify">Well-known R packages such as StatMatch or mice provide sophisticated algorithms to solve different statistical matching tasks. micromatch does not offer new algorithms for matching; rather, it provides a &ldquo;context&rdquo; where the matching task is made easier, independently of the chosen methodology. In this way, alternative methodologies available through independent packages are integrated in a common &ldquo;matching pipeline&rdquo;.</p>
+<p align="justify">R packages such as StatMatch or mice provide algorithms to solve the statistical matching problem. micromatch does not offer new algorithms for matching; rather, it provides a _context_ where the matching process is made easier, independently of the chosen methodology. In this way, alternative methodologies are integrated in a common context.</p>
 
-<p align="justify">From the programming point of view, micromatch makes use of S4 classes to create special objects which are adapted to the statistical matching task.</p>
+<p align="justify">micromatch uses S4 classes to create a hierarchy of objects specific for matching. In the following, we will see how objects from this hierarchy may be created, and how they can be used to solve different steps.</p>
 
 <h2>A simple example</h2>
 
-<p align="justify">To illustrate the use of micromatch we will be using data frames data samp.A and samp.B included in StatMatch package. These examples provide some artificial data simulating typical variables present in the European Union Statistics on Income and Living Conditions Survey (EU-SILC).</p>
+<p align="justify">To illustrate the use of micromatch, we will be using data frames samp.A and samp.B included in StatMatch package. These examples provide some artificial data simulating typical variables present in the European Union Statistics on Income and Living Conditions Survey (EU-SILC). For more information on these data files please refer to StatMatch package documentation (type ?samp.A and ?samp.B).</p>
+
+<pre><code class="r">library(StatMatch)
+data(samp.A) #loads data into workspace
+data(samp.B) # load data to workspace
+str(samp.A)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    3009 obs. of  13 variables:
+##  $ HH.P.id : chr  &quot;10149.01&quot; &quot;17154.02&quot; &quot;5628.01&quot; &quot;15319.01&quot; ...
+##  $ area5   : Factor w/ 5 levels &quot;NE&quot;,&quot;NO&quot;,&quot;C&quot;,..: 1 1 2 4 4 3 4 5 4 3 ...
+##  $ urb     : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 1 1 2 1 2 2 2 2 2 2 ...
+##  $ hsize   : int  1 2 1 2 5 2 4 3 4 4 ...
+##  $ hsize5  : Factor w/ 5 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 2 5 2 4 3 4 4 ...
+##  $ age     : num  85 78 48 78 17 28 26 51 60 21 ...
+##  $ c.age   : Factor w/ 5 levels &quot;[16,34]&quot;,&quot;(34,44]&quot;,..: 5 5 3 5 1 1 1 3 4 1 ...
+##  $ sex     : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 2 1 1 1 1 2 2 2 2 2 ...
+##  $ marital : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 2 3 2 1 2 1 2 2 1 ...
+##  $ edu7    : Factor w/ 7 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 4 4 4 2 2 6 6 3 2 4 ...
+##  $ n.income: num  1677 13520 20000 12428 0 ...
+##  $ c.neti  : Factor w/ 7 levels &quot;(-Inf,0]&quot;,&quot;(0,10]&quot;,..: 2 3 4 3 1 1 2 3 1 1 ...
+##  $ ww      : num  3592 415 2735 1240 5363 ...
+</code></pre>
+
+<pre><code class="r">str(samp.B)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    6686 obs. of  12 variables:
+##  $ HH.P.id: chr  &quot;5.01&quot; &quot;5.02&quot; &quot;24.01&quot; &quot;24.02&quot; ...
+##  $ area5  : Factor w/ 5 levels &quot;NE&quot;,&quot;NO&quot;,&quot;C&quot;,..: 5 5 3 3 1 1 2 2 2 2 ...
+##  $ urb    : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 3 2 2 1 1 2 2 2 2 ...
+##  $ hsize  : int  2 2 2 2 2 2 3 3 3 3 ...
+##  $ hsize5 : Factor w/ 5 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 2 2 2 2 2 2 3 3 3 3 ...
+##  $ age    : num  45 18 76 74 47 46 53 55 21 53 ...
+##  $ c.age  : Factor w/ 5 levels &quot;[16,34]&quot;,&quot;(34,44]&quot;,..: 3 1 5 5 3 3 3 4 1 3 ...
+##  $ sex    : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 2 2 1 2 1 2 2 1 2 1 ...
+##  $ marital: Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 1 2 2 1 1 2 2 1 2 ...
+##  $ edu7   : Factor w/ 7 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 4 3 2 3 3 6 4 4 4 3 ...
+##  $ labour5: Factor w/ 5 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 5 4 4 1 5 5 1 5 1 ...
+##  $ ww     : num  179 179 330 330 1116 ...
+</code></pre>
+
+<pre><code class="r">levels(samp.B$labour5) &lt;- c(&quot;employee&quot;, &quot;self-employed&quot;, &quot;unemployed&quot;, &quot;retirement&quot;, &quot;other&quot;) # assign descriptive levels 
+</code></pre>
 
 <p>The independent sources <code>samp.A</code> and <code>samp.B</code>, separately contain:</p>
 
@@ -261,81 +346,310 @@ In statistical matching, we &ldquo;know&rdquo; the units are different, but we &
 <li><p>one specific variable in each of the files:</p>
 
 <ul>
-<li>in file <code>samp.A</code>: <code>n.income</code> and <code>c.neti</code>, net personal income (numeric and categorized, thousand of euros)</li>
+<li>in file <code>samp.A</code>: <code>n.income</code> and <code>c.neti</code>, net personal income (numeric and categorized, measured in thousands of euros)<br/></li>
 <li>in file <code>samp.B</code>: <code>labour5</code>, the person&#39;s self-defined economic status.</li>
 </ul></li>
-<li><p>a weight variable,    <code>ww</code>, with the same name in both files</p></li>
+<li><p>a weight variable,<code>ww</code></p></li>
 </ul>
 
-<p>For more information on these data files please refer to <code>StatMatch</code> package documentation.</p>
+<p><strong>Important Note</strong> </p>
 
-<p>Now we will illustrate how the matching task can be tackled with <code>micromatch</code>, step by step.</p>
+<p align="justify">Note that the data frames have been prepared so that the names of corresponding variables are the same in both files. (For example, the weight variable is named ww in both samp.A and samp.B). This is a good idea in general: prior to matching, the user should study the potential shared variables carefully, naming the &ldquo;same&rdquo; variables equally in both files. Also, in the case of categorical variables, levels should be aggregated and harmonized to achieve comparable groups.</p>
 
-<h4>Step 1:</h4>
+<p align="justify">From this starting point, in the following we will illustrate how the matching task can be tackled with micromatch, step by step.</p>
 
-<p>The specific (target) variables are the income and the labour status, and it is advisable to store their name in the <code>R</code> session. </p>
+<h4>Step 1-Specific variables:</h4>
 
-<p>For this example we will use the categorical version of variable income, <code>c.neti</code>:</p>
+<p align="justify">The specific (target) variables in samp.A and samp.B are the income and the labour status, and it is advisable to store their name in the R session. For this example, we will use the categorical version of variable income, c.neti:</p>
 
-<h4>Step 2:</h4>
-
-<p align="justify">The shared variables are the remaining variables (excluding the identifier, HH.P.id, and the weight variable, ww). For this example we will use the categorical versions of the variables and one geographic area: urb.</p>
-
-<p align="justify">There is also a weight variable, with the same name in both files. Note that naming the same variables equally is in general a good practice.</p>
-
-<p>Now that we have all the information, the purpose of matching can be made concrete: </p>
-
-<pre><code>    * We want to relate variables `c.neti` and `labour5` by applying some matching
-    method that will use a subset of `varshared` variables to produce a synthetic, 
-    complete file. Specifically, we will fill `samp.A` -the receptor file-, by adding
-    variable `labour5` from `samp.B` -the donor file-.
+<pre><code class="r">varesp_A &lt;- &quot;c.neti&quot; # specific variable in file samp.A
+varesp_B &lt;- &quot;labour5&quot; # specific variable in file samp.B
 </code></pre>
 
-<p><strong>Important Note</strong></p>
+<h4>Step 2-Common variables:</h4>
 
-<p align="justify">In general, the file with less observations will be used as receptor. Otherwise, donor observations would have to be used many times to &ldquo;fill&rdquo;&ldquo; the bigger file.</p>
+<p align="justify">The shared variables are the remaining variables (excluding the identifier, HH.P.id, and the weight variable, ww). For this example we will use the categorical versions of the variables, and a single geographic variable, urb:</p>
 
-<p>In <code>micromatch</code>, we have a way to assign these roles to the original data frames thanks to the <code>receptor</code> and <code>donor</code> constructor functions. </p>
+<pre><code class="r">varshared &lt;- c(&quot;urb&quot;, &quot;c.age&quot;, &quot;hsize5&quot;, &quot;sex&quot;, &quot;marital&quot;, &quot;edu7&quot;) # define shared variables
+</code></pre>
 
-<p>We may also want to fill both files. In this case we will not assign any specific role to the files, and we may say they have a <code>symmetric</code> role.</p>
+<p align="justify">There is also a weight variable, ww, with the same name in both files:</p>
 
-<p>In either case, the first thing in <code>micromatch</code> will be to create <code>receptor</code> and <code>donor</code> pairs (or two <code>symmetric</code> objects, not shown here):</p>
+<pre><code class="r">weights &lt;- &quot;ww&quot; # weight variable (same name in samp.A and samp.B)
+</code></pre>
+
+<p>Now that all variables have been checked and given a role, the purpose of matching can be made concrete: </p>
+
+<blockquote>
+<p>We want to relate variables &ldquo;c.neti&rdquo; and &ldquo;labour5&rdquo; by applying some matching
+algorithm that will use some subset of &ldquo;varshared&rdquo; variables to produce a synthetic, 
+complete file. 
+Specifically, we will fill &ldquo;samp.A&rdquo; -the receptor file-, by adding
+variable &ldquo;labour5&rdquo; from &ldquo;samp.B&rdquo; -the donor file-.</p>
+</blockquote>
+
+<p><strong>A basic distinction: <code>receptor</code> and <code>donor</code> files</strong></p>
+
+<p align="justify">In many matching problems, the solution consists of one the files receiving (one or more) variables from the other, independent file. In such situations, the file receiving &ldquo;new&rdquo; information is called the receptor, whereas the file lending it is the donor.</p>
+
+<p align="justify">In general, the file with less observations will be used as receptor. Otherwise, donor observations would have to be used many times to &ldquo;fill&rdquo; the bigger file.</p>
+
+<p align="justify">In micromatch, we will assign roles to the original data frames by using two constructor functions: receptor and donor. We may also want to fill _both_ files, meaning that the files will have symmetric roles (i.e. both receive and lend variables). For such cases we will use the symmetric constructor function, for both files.</p>
+
+<p align="justify">Whatever the case is, the first task in micromatch will be to create a pair of receptor and donor objects (or two symmetric objects, not shown here):</p>
+
+<pre><code class="r">library(micromatch)
+# create the receptor object
+rec &lt;- receptor(data = samp.A, matchvars = varshared, specvars = varesp_A, weights=weights)
+#
+# create the donor object
+don &lt;- donor(data = samp.B, matchvars = varshared, specvars = varesp_B, weights=weights)
+</code></pre>
 
 <p>Parameter (slot) values can be checked by using <code>str</code> function:</p>
 
+<pre><code class="r">str(rec)
+</code></pre>
+
+<pre><code>## Formal class &#39;filetomatch&#39; [package &quot;micromatch&quot;] with 6 slots
+##   ..@ role      : chr &quot;receptor&quot;
+##   ..@ data      :&#39;data.frame&#39;:   3009 obs. of  13 variables:
+##   .. ..$ HH.P.id : chr [1:3009] &quot;10149.01&quot; &quot;17154.02&quot; &quot;5628.01&quot; &quot;15319.01&quot; ...
+##   .. ..$ area5   : Factor w/ 5 levels &quot;NE&quot;,&quot;NO&quot;,&quot;C&quot;,..: 1 1 2 4 4 3 4 5 4 3 ...
+##   .. ..$ urb     : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 1 1 2 1 2 2 2 2 2 2 ...
+##   .. ..$ hsize   : int [1:3009] 1 2 1 2 5 2 4 3 4 4 ...
+##   .. ..$ hsize5  : Factor w/ 5 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 2 5 2 4 3 4 4 ...
+##   .. ..$ age     : num [1:3009] 85 78 48 78 17 28 26 51 60 21 ...
+##   .. ..$ c.age   : Factor w/ 5 levels &quot;[16,34]&quot;,&quot;(34,44]&quot;,..: 5 5 3 5 1 1 1 3 4 1 ...
+##   .. ..$ sex     : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 2 1 1 1 1 2 2 2 2 2 ...
+##   .. ..$ marital : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 2 3 2 1 2 1 2 2 1 ...
+##   .. ..$ edu7    : Factor w/ 7 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 4 4 4 2 2 6 6 3 2 4 ...
+##   .. ..$ n.income: num [1:3009] 1677 13520 20000 12428 0 ...
+##   .. ..$ c.neti  : Factor w/ 7 levels &quot;(-Inf,0]&quot;,&quot;(0,10]&quot;,..: 2 3 4 3 1 1 2 3 1 1 ...
+##   .. ..$ ww      : num [1:3009] 3592 415 2735 1240 5363 ...
+##   ..@ matchvars : chr [1:6] &quot;urb&quot; &quot;c.age&quot; &quot;hsize5&quot; &quot;sex&quot; ...
+##   ..@ specvars  : chr &quot;c.neti&quot;
+##   ..@ stratavars: NULL
+##   ..@ weights   : chr &quot;ww&quot;
+</code></pre>
+
+<pre><code class="r">str(don)
+</code></pre>
+
+<pre><code>## Formal class &#39;filetomatch&#39; [package &quot;micromatch&quot;] with 6 slots
+##   ..@ role      : chr &quot;donor&quot;
+##   ..@ data      :&#39;data.frame&#39;:   6686 obs. of  12 variables:
+##   .. ..$ HH.P.id: chr [1:6686] &quot;5.01&quot; &quot;5.02&quot; &quot;24.01&quot; &quot;24.02&quot; ...
+##   .. ..$ area5  : Factor w/ 5 levels &quot;NE&quot;,&quot;NO&quot;,&quot;C&quot;,..: 5 5 3 3 1 1 2 2 2 2 ...
+##   .. ..$ urb    : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 3 2 2 1 1 2 2 2 2 ...
+##   .. ..$ hsize  : int [1:6686] 2 2 2 2 2 2 3 3 3 3 ...
+##   .. ..$ hsize5 : Factor w/ 5 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 2 2 2 2 2 2 3 3 3 3 ...
+##   .. ..$ age    : num [1:6686] 45 18 76 74 47 46 53 55 21 53 ...
+##   .. ..$ c.age  : Factor w/ 5 levels &quot;[16,34]&quot;,&quot;(34,44]&quot;,..: 3 1 5 5 3 3 3 4 1 3 ...
+##   .. ..$ sex    : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 2 2 1 2 1 2 2 1 2 1 ...
+##   .. ..$ marital: Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 1 2 2 1 1 2 2 1 2 ...
+##   .. ..$ edu7   : Factor w/ 7 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 4 3 2 3 3 6 4 4 4 3 ...
+##   .. ..$ labour5: Factor w/ 5 levels &quot;employee&quot;,&quot;self-employed&quot;,..: 3 5 4 4 1 5 5 1 5 1 ...
+##   .. ..$ ww     : num [1:6686] 179 179 330 330 1116 ...
+##   ..@ matchvars : chr [1:6] &quot;urb&quot; &quot;c.age&quot; &quot;hsize5&quot; &quot;sex&quot; ...
+##   ..@ specvars  : chr &quot;labour5&quot;
+##   ..@ stratavars: NULL
+##   ..@ weights   : chr &quot;ww&quot;
+</code></pre>
+
+<p align="justify">In the class hierarchy, it is useful to know that receptor, donor and symmetric are all filetomatch objects, the only difference being that they have disctint value of role.</p>
+
 <h4>Step 3-1 (assess coherence)</h4>
 
-<p align="justify">First we must inspect the concordance of marginal distributions of the shared variables. In micromatch three kind of tools are implemented: frequency tables, plots and empirical measures (as computed by comp.prop function in StatMatch).</p>
+<p align="justify">First we must inspect the concordance between the marginal distributions of the shared variable, observed in both files. In micromatch three kind of tools are available: frequency tables, plots and empirical disimilarity measures (as computed by comp.prop function in StatMatch).</p>
 
-<p align="justify">Because we have previously stored information about each type of variable in receptor and donor objects, all we need is to choose some options in the method compare_matchvars:</p>
-
-<ul>
-<li><code>type</code>: equal to <code>table</code>, <code>plot</code> or <code>measures</code>; </li>
-<li><code>cell_values</code>: <code>abs</code> (absolute numbers) <code>rel</code> (relative, i.e. percents) for type <code>table</code> or <code>plot</code></li>
-<li><code>weights</code>: <code>TRUE</code> or <code>FALSE</code>;</li>
-<li><code>strata</code>: <code>TRUE</code> or <code>FALSE</code>: to be used when we want to study distributions separately for specific groups in the population (male and female, etc)</li>
-</ul>
-
-<p align="justify">Overall, for the these marginal distributions, the previous results indicate that the shared variables are highly concordant between the data frames.</p>
-
-<p>Note that four types of empirical measures are used:</p>
+<p align="justify">Because we have previously stored information about each type of variable in receptor and donor objects, all we need is to choose some options in compare_matchvars method:</p>
 
 <ul>
-<li><p>Dissimilarity index or total variation distance, <code>D</code></p></li>
-<li><p>Overlap between two distributions, <code>O</code></p></li>
-<li><p>Bhattacharyya coefficient, <code>B</code></p></li>
-<li><p>Hellinger&#39;s distance, <code>d_H</code></p></li>
+<li><code>type</code>: the wanted result, values <code>table</code>, <code>plot</code> or <code>measures</code>; </li>
+<li><code>cell_values</code>: for type <code>table</code> or <code>plot</code>, values <code>abs</code> (absolute numbers) or <code>rel</code> (relative, i.e. percents) </li>
+<li><code>weights</code>: Should weights be considered? Values <code>TRUE</code> or <code>FALSE</code>;</li>
+<li><code>strata</code>: Should a strata variable be introduced? Values <code>TRUE</code> or <code>FALSE</code>. To be used when we want to study distributions separately for specific groups in the population (male and female, etc)</li>
 </ul>
 
-<p>For more information on these measures please refer to <code>StatMatch</code> or Agresti&#39;s book ([6]).</p>
+<p>Now we will ask for the three types of results: tables, plots and disimilarity measures for the previously defined objects, <code>rec</code> and <code>don</code>:</p>
 
-<p align="justify">In the example, Hellinger&rsquo;s distance (Hell) is below 0.05 in all cases (an usual rule of thumb in statistical matching, see reference [5]).</p>
+<pre><code class="r"># tables
+compare_matchvars(x = rec, y = don, type = &quot;table&quot;, cell_values = &#39;abs&#39;, weights = TRUE)
+</code></pre>
+
+<pre><code>## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##       1       2       3 
+## 2192673 2060570  841709 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##       1       2       3 
+## 2264015 2080967  812600 
+## 
+## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##  [16,34]  (34,44]  (44,54]  (54,64] (64,104] 
+##  1221890   987127   936503   727844  1221589 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##  [16,34]  (34,44]  (44,54]  (54,64] (64,104] 
+##  1210076  1039953   890703   759901  1256950 
+## 
+## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##       1       2       3       4     &gt;=5 
+##  889539 2093652 1194842  726198  190722 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##       1       2       3       4     &gt;=5 
+##  854453 2213844 1182355  740957  165973 
+## 
+## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##       1       2 
+## 2454480 2640472 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##       1       2 
+## 2512704 2644878 
+## 
+## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##       1       2       3 
+## 1525656 2838298  730998 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##       1       2       3 
+## 1511497 2858124  787961 
+## 
+## $`Table for data:  slot(x, &quot;data&quot;)`
+## x_vector
+##       0       1       2       3       4       5       6 
+##  135596  943911 1586638 1709141  143383  558240   18042 
+## 
+## $`Table for data:  slot(y, &quot;data&quot;)`
+## x_vector
+##       0       1       2       3       4       5       6 
+##  149580  997272 1604171 1687398  141107  564486   13568
+</code></pre>
+
+<pre><code>## $urb
+## NULL
+## 
+## $c.age
+## NULL
+## 
+## $hsize5
+## NULL
+## 
+## $sex
+## NULL
+## 
+## $marital
+## NULL
+## 
+## $edu7
+## NULL
+</code></pre>
+
+<pre><code class="r"># plots
+compare_matchvars(x = rec, y = don, type = &quot;plot&quot;, cell_values = &#39;rel&#39;, weights = TRUE)
+</code></pre>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-41.png" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-42.png" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-43.png" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-44.png" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-45.png" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-46.png" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<pre><code>## $urb
+## NULL
+## 
+## $c.age
+## NULL
+## 
+## $hsize5
+## NULL
+## 
+## $sex
+## NULL
+## 
+## $marital
+## NULL
+## 
+## $edu7
+## NULL
+</code></pre>
+
+<pre><code class="r"># disimilarity measures
+compare_matchvars(x = rec, y = don, type = &quot;measures&quot;, weights = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;Measures for variable: urb&quot;
+## [1] &quot;Measures for variable: c.age&quot;
+## [1] &quot;Measures for variable: hsize5&quot;
+## [1] &quot;Measures for variable: sex&quot;
+## [1] &quot;Measures for variable: marital&quot;
+## [1] &quot;Measures for variable: edu7&quot;
+</code></pre>
+
+<pre><code>##              urb   c.age  hsize5      sex  marital    edu7
+## tvd     0.008606 0.01632 0.01944 0.005439 0.009302 0.01048
+## overlap 0.991394 0.98368 0.98056 0.994561 0.990698 0.98952
+## Bhatt   0.999933 0.99983 0.99973 0.999985 0.999908 0.99987
+## Hell    0.008181 0.01287 0.01654 0.003848 0.009599 0.01147
+</code></pre>
+
+<p align="justify">Overall, the results indicate that the shared variables are highly concordant between the data frames, in terms of the inspected marginal distributions.</p>
+
+<p>Note that 4 types of empirical measures are used:</p>
+
+<ul>
+<li><p>Dissimilarity index or total variation distance, <code>tvd</code></p></li>
+<li><p>Overlap between two distributions, <code>overlap</code></p></li>
+<li><p>Bhattacharyya coefficient, <code>Bhatt</code></p></li>
+<li><p>Hellinger&#39;s distance, <code>Hell</code></p></li>
+</ul>
+
+<p align="justify">For more information on these measures, please refer to StatMatch (?comp.prop) or Agresti&rsquo;s book ([6]).</p>
+
+<p align="justify">In the example, Hellinger&rsquo;s distance (Hell) is below 0.05 in all cases (a usual rule of thumb in statistical matching, see reference [5]).</p>
 
 <h4>Step 3-2 (assess predictive value)</h4>
 
 <p align="justify">Now we should assess the predictive value of the common variables with respect to the specific ones, in order to discard unnecessary information (i.e. variables that are not predictive).</p>
 
-<p align="justify">In micromatch, we can use predictvalue which relies on StatMatch function pw.assoc. This function returns four well-known statistical association measures for all the combinations of variables, based on Chi-Square and others. (Note that currently predictvalue only accepts categorical variables)</p>
+<p align="justify">In micromatch, we can use predictvalue which relies on StatMatch function pw.assoc. This function admits a single object each time, and returns 4 statistical association measures for all the combinations of variables, based on Chi-Square and others. (Note that currently predictvalue only accepts categorical variables):</p>
 
 <ul>
 <li><p>Cramer&#39;s <code>V</code></p></li>
@@ -344,74 +658,374 @@ In statistical matching, we &ldquo;know&rdquo; the units are different, but we &
 <li><p>Theil&#39;s uncertainty coefficient <code>U</code></p></li>
 </ul>
 
-<p>For more information on these measures please refer to <code>StatMatch</code> or Agresti&#39;s book ([6]).</p>
+<p>For more information on these measures please refer to <code>StatMatch</code> (<code>?pw.assoc</code>) or Agresti&#39;s book ([6]).</p>
+
+<pre><code class="r">predictvalue(x = rec) # predictive value of matchvars for target variable (&quot;c.neti&quot;) in file samp.A
+</code></pre>
+
+<pre><code>## Warning: Chi-squared approximation may be incorrect
+</code></pre>
+
+<pre><code>## [[1]]
+## [[1]]$V
+##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
+##        0.06198        0.22634        0.12084        0.35188        0.18533 
+##    c.neti.edu7 
+##        0.16891 
+## 
+## [[1]]$lambda
+##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
+##        0.00000        0.08683        0.02994        0.04448        0.03636 
+##    c.neti.edu7 
+##        0.04534 
+## 
+## [[1]]$tau
+##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
+##       0.001131       0.040176       0.011965       0.022123       0.013850 
+##    c.neti.edu7 
+##       0.027589 
+## 
+## [[1]]$U
+##     c.neti.urb   c.neti.c.age  c.neti.hsize5     c.neti.sex c.neti.marital 
+##       0.002091       0.053322       0.017561       0.034456       0.019466 
+##    c.neti.edu7 
+##       0.041839
+</code></pre>
+
+<pre><code class="r">predictvalue(x = don) # predictive value of matchvars for target variable (&quot;labour5&quot;) in file samp.B
+</code></pre>
+
+<pre><code>## Warning: Chi-squared approximation may be incorrect
+</code></pre>
+
+<pre><code>## [[1]]
+## [[1]]$V
+##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
+##         0.03222         0.39412         0.11126         0.32181 
+## labour5.marital    labour5.edu7 
+##         0.23630         0.23968 
+## 
+## [[1]]$lambda
+##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
+##         0.00000         0.29530         0.02598         0.08789 
+## labour5.marital    labour5.edu7 
+##         0.04587         0.15386 
+## 
+## [[1]]$tau
+##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
+##       0.0004783       0.1988406       0.0142621       0.0329951 
+## labour5.marital    labour5.edu7 
+##       0.0299137       0.0776071 
+## 
+## [[1]]$U
+##     labour5.urb   labour5.c.age  labour5.hsize5     labour5.sex 
+##       0.0007065       0.2485754       0.0166305       0.0371158 
+## labour5.marital    labour5.edu7 
+##       0.0420075       0.0803915
+</code></pre>
 
 <p>A simple, temptative choice would be to keep varibles <code>c.age</code>, <code>sex</code> and <code>edu7</code>. Also, it can be a good idea to introduce <code>sex</code> as a group or strata variable. </p>
 
 <p><strong>Note</strong></p>
 
-<p align="justify">This variable selection is also backed by the reduction of uncertainty approach illustrated in the StatMatch package vignette. This functionality has not been implemented yet in micromatch.</p>
+<p align="justify">The variable selection shown here is limited because it only considers pairwise relations. That is, it could be the case that two common variables Z1, Z2 are discarded because they are not predictive for, say, target variable Y in  file A. However, we could be missing the point that the _combination_ of the two, (Z1, Z2) _could in fact_ be predictive for Y. In this sense, some multivariate procedure such as regression modelling or random forests could be used, these are not implemented in micromatch</p>
 
-<p align="justify">We now proceed to update the information in the receptor and donor objects by using update function in micromatch. This function allows to re-define the objects by just updating the needed information (and keeping the rest of values unchanged).</p>
+<p align="justify">Specifically for matching, there exists a specific approach to this problem, namely, the selection of variables based on the reduction of uncertainty. The idea is to choose the variables that most help to reduce the degree of uncertainty about the non-observed relation between the specific (target) variables. For the interested user, an additional paragraph has been included at the end of this vignette: Selection based on uncertainty reduction (for categorical variables).</p>
 
-<p>Note that the new objects must be stored in the session:</p>
+<h3>Final selection of common variables</h3>
 
-<h4>Step 4:</h4>
+<p>Based on the previous analyses we will keep variables <code>c.age</code> and <code>edu7</code> as <code>matchvars</code>, and introduce <code>sex</code> as <code>stratavars</code> (see the note above). </p>
 
-<p align="justify">In this example distance hot-deck imputation will be used to fill the non-observed values (variable labour5 from samp.B) in file samp.A.</p>
+<p>These changes can be easily introduced by using <code>update</code> method. Note that the new objects must be stored in the session:</p>
 
-<p align="justify">In micromatch we can use the match.hotdek function, which in turn calls to NND.hotdeck function in StatMatch. This function finds the closest donor record in donor for each record in receptor, based on the chosen matching variables.</p>
+<pre><code class="r"># update variables for file A (receptor)
+rec1 &lt;- update(x = rec, matchvars = c(&quot;c.age&quot;, &quot;edu7&quot;), stratavars = &quot;sex&quot;) 
+#
+# update variables for file B (donor)
+don1 &lt;- update(x = don, matchvars = c(&quot;c.age&quot;, &quot;edu7&quot;), stratavars = &quot;sex&quot;) 
+</code></pre>
 
-<p align="justify">In this case, c.age and edu7 will be used to find similar donors, these being the variables stored as matchvars. We also need to indicate that the strata variable in stratavars, i.e. sex should be used as such. That is, we want the search to be made within levels of sex, i.e., separately for male and female:</p>
+<h4>Step 4 (apply a matching algorithm)</h4>
 
-<p>This functions inherits other options available in the original function (<code>NND.hotdeck</code> in <code>StatMatch</code>). The most important are <code>dist.fun</code> and <code>constr.alg</code>:</p>
+<p align="justify">In this example distance _hot-deck_ imputation will be used to fill the non-observed values (variable labour5 from samp.B) in file samp.A. In this algorithm, for each record in the receptor file samp.A, a similar record is searched in the donor file samp.B, and its value of labour5 (i.e. an observed value) is given to the record in samp.A</p>
+
+<p align="justify">In micromatch we can use the match.hotdek function, which in turn calls to NND.hotdeck function in StatMatch. This function finds the closest donor record in donor for each record in receptor, based on the chosen matching variables. Usually the _exact match_ is not possible to attain (i.e. for the receptor records it is not possible to find donor records having exactly the same values in the matching variables), and a distance function is introduced to find the most similar pairs.</p>
+
+<p align="justify">In the example, c.age and edu7 will be used to find similar donors, these being the variables stored as matchvars. We will also indicate that the strata variable in stratavars, sex should be used to define separate matching groups. That is, we want the search to be made within levels of sex, i.e., separately for male and female:</p>
+
+<pre><code class="r"># hot-deck distance matching
+result &lt;- match.hotdeck(x = rec1, y = don1, strata = TRUE)
+</code></pre>
+
+<pre><code>## Warning: The  Manhattan  distance is being used
+## All the categorical matching variables in rec and don 
+##  data.frames, if present are recoded into dummies
+</code></pre>
+
+<p>This function inherits other options available in the original function (<code>NND.hotdeck</code> in <code>StatMatch</code>). The most important are <code>dist.fun</code> and <code>constr.alg</code>:</p>
 
 <ul>
-<li><p>dist.fun: Choice of distance function. Available options are “Manhattan” (aka “City block”; default), “Euclidean”, “Mahalanobis”,“exact” or “exact matching”, “Gower”, “minimax” or one of the distance functions available in <code>proxy</code> package. For more information check <code>?NND.hotdeck</code></p></li>
-<li><p>constr.alg: <code>TRUE</code> or <code>FALSE</code>. Indicates if the algorithm should be constrined, i.e. donor records should be used only once to fill the receptor records.</p></li>
+<li><p><code>dist.fun</code>: Choice of distance function. Available options are “Manhattan” (aka “City block”; default), “Euclidean”, “Mahalanobis”,“exact” or “exact matching”, “Gower”, “minimax” or one of the distance functions available in <code>proxy</code> package. For more information check <code>?NND.hotdeck</code></p></li>
+<li><p><code>constr.alg</code>: <code>TRUE</code> or <code>FALSE</code>. Indicates if the algorithm should be constrined, i.e. donor records should be used only once to fill the receptor records.</p></li>
 </ul>
 
 <p align="justify">The procedure has two main steps. First (receptor, donor) pairs are formed which are similar in terms of matchvars. Second, value observed in the donor record to is picked to fill the receptor record in each pair. In this way, the receptor file is &lsquo;completed&rsquo;. The function returns an object of type fusedfile, in which receptor data are stored with additional (imputed) columns (in the example, an unique column, labour5).</p>
 
 <p align="justify">The completed data can be re-used for further computations by extracting and storing the data frame in the session, as follows. (In the example our case we store the new data contains the additional column labour5 and is stored with the name A.imputed):</p>
 
-<p>TODO. Details about the receptor and donor pairs can be obtained by means of the <code>details</code> function.</p>
+<pre><code class="r"># Extract the new, &#39;complete&#39; data and store it under the name &#39;A.imputed&#39;
+samp.A.imp &lt;- slot(result, &quot;data&quot;)
+#
+# First 6 records. 
+# The last column contains the imputed values for variable &#39;labour5&#39;.
+head(samp.A.imp)
+</code></pre>
 
-<h4>Step 5:</h4>
+<pre><code>##        HH.P.id area5 urb hsize hsize5 age    c.age sex marital edu7
+## 35973 17154.02    NE   1     2      2  78 (64,104]   1       2    3
+## 11774  5628.01    NO   2     1      1  48  (44,54]   1       3    3
+## 32127 15319.01     S   1     2      2  78 (64,104]   1       2    1
+## 6301   2973.05     S   2     5    &gt;=5  17  [16,34]   1       1    1
+## 27740 13206.01    NO   1     3      3  61  (54,64]   1       2    3
+## 21483 10198.01    NE   2     1      1  54  (44,54]   1       2    3
+##       n.income   c.neti     ww       labour5
+## 35973    13520  (10,15]  415.2    retirement
+## 11774    20000  (15,20] 2735.4 self-employed
+## 32127    12428  (10,15] 1239.5    retirement
+## 6301         0 (-Inf,0] 5362.8 self-employed
+## 27740    22823  (20,25]  277.9    unemployed
+## 21483        0 (-Inf,0]  985.7 self-employed
+</code></pre>
 
-<p>Now we should assess the validity of the resulting data frame, in terms of its usefulness to perform statistical analyses relating not-jointly observed variables (in our case, person&#39;s net income, <code>c.neti</code> and self-defined labour status, <code>labour5</code>).</p>
+<ul>
+<li>TODO. Details about the receptor and donor pairs should be obtained by means of a <code>details</code> function.</li>
+<li>TODO. create a extractor function data(&ldquo;filetomatch&rdquo;): avoid the use of slot()</li>
+</ul>
 
-<p>The first, reasonable validation should be to check the similarity of imputed versus observed marginal distributions. For this purpose, we can use <code>tabulate2cat</code>, <code>plot2cat</code> and <code>similarity2cat</code> functions in <code>micromatch</code>, which essentially provide the same functionality as <code>compare_matchvars</code> (see Step 3-1 above). </p>
+<h4>Step 5 (validate results)</h4>
 
-<p>In our example the distribution for variable <code>labour5</code> in the original file <code>samp.B</code> whould be compared to the imputed variable in <code>samp.A.imp</code> file. In <code>tabulate2cat</code>, <code>plot2cat</code> and <code>similarity2cat</code> functions, data frames have to be introduced directly as parameter values: in the example, <code>samp.B</code> and <code>samp.A.imp</code>.</p>
+<p align="justify">Now we should assess the validity of the resulting data frame in terms of its usefulness to perform good estimations for the relation between not-jointly observed variables (in our case, person&rsquo;s net income, c.neti and self-defined labour status, labour5).</p>
+
+<p align="justify">The first, reasonable validation should be to check the similarity of imputed versus observed marginal distributions. For this purpose, we can use tabulate2cat, plot2cat and similarity2cat functions in micromatch, which essentially provide the same functionality as compare_matchvars (see Step 3-1 above).</p>
+
+<p align="justify">In our example the distribution for variable labour5 in the original file samp.B whould be compared to the imputed variable in samp.A.imp file. In tabulate2cat, plot2cat and similarity2cat functions, data frames have to be introduced directly as parameter values: in the example, samp.B and samp.A.imp.</p>
 
 <ul>
 <li>TODO. create <code>validate1</code> method that will act on rec.fused, don pairs with options type=table, plot or measures.</li>
 </ul>
 
-<p>The variable to be compared is <code>labour5</code> in both files. The distributions are based on weighted data i.e. using the weights variable <code>ww</code>:</p>
+<p align="justify">The variable to be compared is labour5 in both files. The distributions are based on weighted data i.e. using the weights variable ww:</p>
+
+<pre><code class="r"># Comparison of imputed vs observed distribution for variable &#39;labour5&#39;
+#
+# store names in the session (for convenience)
+var &lt;- &quot;labour5&quot;
+weights &lt;- &quot;ww&quot;
+#
+# Compute raw tables
+tabulate2cat(data_A = samp.B, data_B = samp.A.imp, var_A = var, var_B = var, weights_A = weights, weights_B = weights, cell_values = &quot;rel&quot;)
+</code></pre>
+
+<pre><code>## $`Table for data:  samp.B`
+## x_vector
+##      employee self-employed    unemployed    retirement         other 
+##       0.35125       0.09243       0.05730       0.21069       0.28833 
+## 
+## $`Table for data:  samp.A.imp`
+## x_vector
+##      employee self-employed    unemployed    retirement         other 
+##       0.34259       0.10422       0.06183       0.22051       0.27085
+</code></pre>
+
+<pre><code class="r">#
+# Plots with percents
+plot2cat(data_A = samp.B, data_B = samp.A.imp, var_A = var, var_B = var, weights_A = weights, weights_B = weights, cell_values = &quot;rel&quot;) # blue bar corresponds to imputed values
+</code></pre>
+
+<pre><code>## ymax not defined: adjusting position using y instead
+</code></pre>
+
+<p><img src="figure/validateFirstOrder.png" alt="plot of chunk validateFirstOrder"/> </p>
+
+<pre><code class="r">#
+# Empirical measures
+similarity2cat(data_A = samp.B, data_B = samp.A.imp, var_A = var, var_B = var, weights_A = weights, weights_B = weights) 
+</code></pre>
+
+<pre><code>## [1] &quot;Measures for variable: labour5&quot;
+</code></pre>
+
+<pre><code>##     tvd overlap   Bhatt    Hell 
+## 0.02613 0.97387 0.99956 0.02096
+</code></pre>
 
 <p align="justify">The results are quite acceptable, but we should also compare distributions conditioned on other variables common to both files.</p>
 
-<p align="justify">For example, a natural comparison would be to check distributions conditioned on sex, which was in fact used as strata variable. This can be done in with the same functions, by subseting over strata values, as follows:</p
+<p align="justify">For example, a natural comparison would be to check distributions conditioned on sex, which was in fact used as strata variable. This can be done in with the same functions, by subseting over strata values, as follows:</p>
 
+<pre><code class="r">levels(samp.B$sex) # codes for gender: 1-male, 2-female, check ?samp.A
+</code></pre>
 
+<pre><code>## [1] &quot;1&quot; &quot;2&quot;
+</code></pre>
 
-Results seem to be 'good' by strata too.
+<pre><code class="r">#
+# Gender equal to &quot;1&quot; = male
+similarity2cat(data_A = subset(samp.B, sex == &quot;1&quot;), data_B = subset(samp.A.imp, sex == &quot;1&quot;), var_A = var, var_B = var, weights_A = weights, weights_B = weights)
+</code></pre>
 
-*TODO. implement option `strata` true, false in `validate1` method.
+<pre><code>## [1] &quot;Measures for variable: labour5&quot;
+</code></pre>
 
-<p align="justify">However, in statistical matching the validation should imply a bit more effort. The reason is that most matching algorithms assume what is known as the <em>conditional independence assumption</em>, which amounts to saying that the common variables (Z) explain (or &quot;mediate between&rdquo;) all the (non-observed) relation between specific variables (X and Y).</p>
+<pre><code>##     tvd overlap   Bhatt    Hell 
+## 0.02865 0.97135 0.99914 0.02933
+</code></pre>
 
-<p align="justify">Such an assumption is particularly strong and seldom holds in practice. What is worse, in abscence of complete observations —possibly in the form of a third independent file C, that may contain observatins for all variables, maybe from a previous wave of the same surveys, and not too distant in time so that it refers to almost the same population of interest—, we will lack of the necessary information to check how far we are from the ideal situation.</p>
+<pre><code class="r">#
+# Gender equal to &quot;2&quot; = female
+similarity2cat(data_A = subset(samp.B, sex == &quot;2&quot;), data_B = subset(samp.A.imp, sex == &quot;2&quot;), var_A = var, var_B = var, weights_A = weights, weights_B = weights)
+</code></pre>
 
-<p>One recommended approach is to perform an <em>uncertainty analysis</em>. In the case of categorical variables, the ultimate aim will is to estimate contingency tables between variables observed in separate files, and <em>Frèchet bounds</em> can be computed to compute a range of possible vaues, i.e. numeric results that are coherent with the independently observed marginal distributions (i.e. <code>X</code> versus <code>Z</code> and <code>Y</code> versus <code>Z</code>). For more information Frèchet bounds please refer to [1] or to the <code>StatMatch</code> package vignette.</p></p>
+<pre><code>## [1] &quot;Measures for variable: labour5&quot;
+</code></pre>
+
+<pre><code>##     tvd overlap   Bhatt    Hell 
+## 0.04034 0.95966 0.99887 0.03362
+</code></pre>
+
+<p>Results seem to be &#39;good&#39; by strata too.</p>
 
 <ul>
-<li>TODO. Here, an illustration of uncertainty in cell values in contingency table between net income and labour status</li>
+<li>TODO. implement option <code>strata</code> true, false in <code>validate1</code> method.</li>
 </ul>
 
 <h2>Additional features</h2>
+
+<h4>Evaluation of uncertainty</h4>
+
+<blockquote>
+<p>After producing a synthetic file, how can be sure that the true relations between non-jointly observed variables correctly reflect the &ldquo;true&rdquo; relations in the population?</p>
+</blockquote>
+
+<p align="justify">In statistical matching, the validation should imply a bit more effort. The primary reason is the lack of information about the non-jointly observed information (X and Y variables): after the synthetic file is produced, there&rsquo;s no direct way to check whether it correctly reflects the &ldquo;true&rdquo; relations between not-jointly observed variables in the population.</p>
+
+<p align="justify">In abscence of additional information to check the fidelity of the estimations —possibly in the form of a third independent file C, that may contain observations for all variables, maybe from a previous wave of the same surveys, and not too distant in time—, a recommended approach is to perform an uncertainty analysis</p>.
+
+<p align="justify">Specifically, in the case of categorical variables, _Frechet bounds_ can be used to produce a range of possible values for relative frequencies in the contingency table of X vs Y. The idea is that the distributions P(X|Z), P(Y|Z) and P(Z), which are estimated from the available data, are used to limit the range of possible values for P(X, Y); for more details, see [1] and last chapter StatMatch package vignette; also type ?Frechet.bounds.cat.</p> 
+
+<p align="justify">Frechet bounds can be computed by using frechet.uncertainty method. We need to pass the receptorand donor objects, and additionaly the name of the target variables for which we want Frechet bounds to be computed. In the example the only variables are c.neti and labour5. The function uses the common Z variables matchvars to derive a range of values for each combination of c.neti and labour5 levels. Note that 2 types of output can be chosen:</p>
+
+<ul>
+<li>a table: <code>print.f</code> equals to <code>tables</code> (default)</li>
+<li>a data frame: <code>print.f</code> equals to <code>data.frame</code></li>
+</ul>
+
+<pre><code class="r">frechet.uncertainty(x = rec, y = don, var_x = &quot;c.neti&quot;, var_y = &quot;labour5&quot;, base = don, print.f = &quot;data.frame&quot;)
+</code></pre>
+
+<pre><code>## Warning: The marginal distr. of the X variables 
+##  in tab.xy is not equal to tab.x
+## Warning: The marginal distr. of the X variables 
+##  in tab.xy and in tab.xz are not equal
+</code></pre>
+
+<pre><code>## $bounds
+##       c.neti       labour5 low.u    low.cx      CIA    up.cx    up.u
+## 1   (-Inf,0]      employee     0 0.0101598 0.051297 0.092309 0.18744
+## 2     (0,10]      employee     0 0.0089131 0.042499 0.082317 0.22300
+## 3    (10,15]      employee     0 0.0131615 0.045643 0.083148 0.17979
+## 4    (15,20]      employee     0 0.0183774 0.053945 0.092110 0.16617
+## 5    (20,25]      employee     0 0.0142931 0.038704 0.062918 0.10203
+## 6    (25,35]      employee     0 0.0124055 0.036317 0.057836 0.09040
+## 7  (35, Inf]      employee     0 0.0045539 0.016968 0.028723 0.05118
+## 8   (-Inf,0] self-employed     0 0.0023931 0.011601 0.030445 0.10036
+## 9     (0,10] self-employed     0 0.0008226 0.010430 0.034115 0.10036
+## 10   (10,15] self-employed     0 0.0015704 0.012854 0.038402 0.10036
+## 11   (15,20] self-employed     0 0.0031658 0.017161 0.046047 0.10036
+## 12   (20,25] self-employed     0 0.0026922 0.012398 0.036206 0.10036
+## 13   (25,35] self-employed     0 0.0026673 0.013119 0.036431 0.09040
+## 14 (35, Inf] self-employed     0 0.0023532 0.008588 0.023068 0.05118
+## 15  (-Inf,0]    unemployed     0 0.0035255 0.015227 0.032296 0.06087
+## 16    (0,10]    unemployed     0 0.0014957 0.009696 0.030168 0.06087
+## 17   (10,15]    unemployed     0 0.0013461 0.007923 0.026388 0.06087
+## 18   (15,20]    unemployed     0 0.0017200 0.007873 0.022957 0.06087
+## 19   (20,25]    unemployed     0 0.0004487 0.003373 0.012559 0.06087
+## 20   (25,35]    unemployed     0 0.0006730 0.004021 0.013784 0.06087
+## 21 (35, Inf]    unemployed     0 0.0000000 0.001095 0.005382 0.05118
+## 22  (-Inf,0]    retirement     0 0.0015517 0.012621 0.023400 0.18744
+## 23    (0,10]    retirement     0 0.0307526 0.058284 0.082794 0.22300
+## 24   (10,15]    retirement     0 0.0287910 0.052624 0.074987 0.17979
+## 25   (15,20]    retirement     0 0.0183876 0.036740 0.051501 0.16617
+## 26   (20,25]    retirement     0 0.0071455 0.018299 0.027249 0.10203
+## 27   (25,35]    retirement     0 0.0062282 0.014640 0.021543 0.09040
+## 28 (35, Inf]    retirement     0 0.0033092 0.010201 0.016090 0.05118
+## 29  (-Inf,0]         other     0 0.0401325 0.082918 0.136839 0.18744
+## 30    (0,10]         other     0 0.0207716 0.069930 0.127249 0.22300
+## 31   (10,15]         other     0 0.0052369 0.043109 0.087779 0.17979
+## 32   (15,20]         other     0 0.0023477 0.026898 0.061573 0.16617
+## 33   (20,25]         other     0 0.0026174 0.012968 0.031681 0.10203
+## 34   (25,35]         other     0 0.0017449 0.009250 0.023930 0.09040
+## 35 (35, Inf]         other     0 0.0004986 0.004552 0.011995 0.05118
+## 
+## $uncertainty
+##    av.u   av.cx overall 
+## 0.11599 0.03971 0.17286
+</code></pre>
+
+<p align="justify">Note that a warning message is produced when the marginal distribution of matchvars is not comparable between the two data frames. Note, however, that 6 Z variables were introduced as matchvars, which makes the possibility to meet coherence harder.</p>
+
+<p>Note that two types of bounds are estimated:</p>
+
+<ul>
+<li><code>low.u</code> and <code>up.u</code>: lower and upper bounds for relative frequencies without conditioning on the <code>Z</code> variables</li>
+<li><code>low.cx</code> and <code>up.cx</code>: lower and upper bounds for relative frequencies, when conditioning on the <code>Z</code> variables</li>
+</ul>
+
+<p align="justify">Also, a special unique estimated relative frequency is computed, CIA, which stands for the _conditional independent assumption_. Under this assumption, variables Z are supposed to be sufficient to estimate the unobserved relation between X and Y. In this extreme case, the estimated relative frequency of each cell is the product of the marginals: p(X=i,Y=k) = p(X=j|Z=i)*p(Y=k|Z=i)*p(Z=i).</p>
+
+<h4>Selection based on uncertainty reduction</h4>
+
+<p align="justify">Finally we will show how uncert2vars function can be used to study how _overall uncertainty_ based on Frechet bounds changes when varying the set of matching variables. Note that, although introducing more variables will eventually reduce the uncertainty, ideally a small subset of variables should be retained.</p>
+
+<p align="justify">Following our example, we now use uncert2vars to extract the overall uncertainty level associated with the &lsquo;best&rsquo; 12 combinations of variables in varshared for the strata defied by sex, as follows. Results indicate that it could be a good idea to select distinct variables for each strata value. Also, the overall uncertainty is higher for female:</p>
+
+<pre><code class="r"># sex == 1 (Male)
+uncert2vars(var_x = &quot;c.neti&quot;, var_y = &quot;labour5&quot;, data_A = subset(samp.A, sex==&quot;1&quot;), data_B = subset(samp.B, sex==&quot;1&quot;), weights_A = &quot;ww&quot;, weights_B = &quot;ww&quot;, matchvars = c(&quot;urb&quot;, &quot;c.age&quot;, &quot;hsize5&quot;, &quot;marital&quot;, &quot;edu7&quot;), base = subset(samp.A,sex==&quot;1&quot;), n=6)
+</code></pre>
+
+<pre><code>## $Best
+## [1] &quot;|urb&quot;                           &quot;|urb+c.age+hsize5+marital+edu7&quot;
+## [3] &quot;|hsize5&quot;                        &quot;|c.age&quot;                        
+## [5] &quot;|edu7&quot;                          &quot;|marital&quot;                      
+## 
+## $NumberVariables
+## [1] 1 5 1 1 1 1
+## 
+## $NumberCells
+## [1]    3 1575    5    5    7    3
+## 
+## $OvUncert
+## [1] 0.1452 0.1509 0.1511 0.1528 0.1539 0.1550
+</code></pre>
+
+<pre><code class="r"># sex == 2 (Female)
+uncert2vars(var_x = &quot;c.neti&quot;, var_y = &quot;labour5&quot;, data_A = subset(samp.A, sex==&quot;2&quot;), data_B = subset(samp.B, sex==&quot;2&quot;), weights_A = &quot;ww&quot;, weights_B = &quot;ww&quot;, matchvars = c(&quot;urb&quot;, &quot;c.age&quot;, &quot;hsize5&quot;, &quot;marital&quot;, &quot;edu7&quot;), base = subset(samp.A,sex==&quot;2&quot;), n=6)
+</code></pre>
+
+<pre><code>## $Best
+## [1] &quot;|urb&quot;                           &quot;|urb+c.age+hsize5+marital+edu7&quot;
+## [3] &quot;|marital&quot;                       &quot;|hsize5&quot;                       
+## [5] &quot;|urb+marital&quot;                   &quot;|edu7&quot;                         
+## 
+## $NumberVariables
+## [1] 1 5 1 1 2 1
+## 
+## $NumberCells
+## [1]    3 1575    3    5    9    7
+## 
+## $OvUncert
+## [1] 0.1848 0.1856 0.1996 0.2010 0.2012 0.2024
+</code></pre>
 
 <h1>References</h1>
 
